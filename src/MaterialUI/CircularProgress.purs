@@ -62,5 +62,5 @@ type CircularProgressClasses =
 circularProgress' :: forall o classes
                    . Subrow o (CircularProgressPropsO { | classes})
                   => Subrow classes CircularProgressClasses
-                  => CircularProgressProps o -> ReactElement
-circularProgress' props = createElement circularProgressImpl props []
+                  => CircularProgressProps o -> Array ReactElement -> ReactElement
+circularProgress' = createElement circularProgressImpl

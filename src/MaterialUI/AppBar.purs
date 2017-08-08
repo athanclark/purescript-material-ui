@@ -68,5 +68,5 @@ type AppBarClasses =
 appBar' :: forall o classes
                    . Subrow o (AppBarPropsO { | classes })
                   => Subrow classes AppBarClasses
-                  => AppBarProps o -> ReactElement
-appBar' props = createElement appBarImpl props []
+                  => AppBarProps o -> Array ReactElement -> ReactElement
+appBar' = createElement appBarImpl

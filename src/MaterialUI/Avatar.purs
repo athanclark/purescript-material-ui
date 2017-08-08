@@ -40,5 +40,5 @@ type AvatarClasses =
 avatar' :: forall o classes componentProps
          . Subrow o (AvatarPropsO componentProps { | classes })
         => Subrow classes AvatarClasses
-        => AvatarProps o -> ReactElement
-avatar' props = createElement avatarImpl props []
+        => AvatarProps o -> Array ReactElement -> ReactElement
+avatar' = createElement avatarImpl

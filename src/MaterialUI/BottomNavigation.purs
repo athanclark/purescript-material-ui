@@ -19,7 +19,7 @@ type BottomNavigationProps o =
 
 
 type BottomNavigationPropsO eff classes =
-  ( children :: ReactElement
+  ( children :: Array ReactElement
   , classes :: classes
   , onChange :: EffFn1 (props :: ReactProps, refs :: ReactRefs ReadOnly, state :: ReactState ReadWrite | eff)
                   Event Unit

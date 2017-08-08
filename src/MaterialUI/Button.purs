@@ -20,7 +20,7 @@ type ButtonProps o =
 
 
 type ButtonPropsO componentProps classes =
-  ( children :: ReactElement
+  ( children :: Array ReactElement
   , classes :: classes
   , color :: Color
   , component :: ReactClass componentProps

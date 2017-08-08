@@ -1,11 +1,10 @@
 module MaterialUI.AppBar
-  ( appBar', AppBarProps, AppBarPropsO
+  ( appBar', AppBarProps, AppBarPropsO, AppBarClasses
   , Color, inherit, primary, accent, default'
   , Position, static, fixed, absolute
   ) where
 
 import MaterialUI.Types (Styles)
-import MaterialUI.Color (Color)
 
 import Prelude
 import React (Event, ReactClass, createElement, ReactElement, ReactProps, ReactState, ReactRefs, ReadOnly, ReadWrite)
@@ -35,7 +34,7 @@ accent = Color "accent"
 default' :: Color
 default' = Color "default"
 
-newtype Position = Position
+newtype Position = Position String
 
 static :: Position
 static = Position "static"
@@ -67,7 +66,7 @@ type AppBarClasses =
 
 
 appBar' :: forall o classes
-                   . Subrow o (AppBarPropsO classes)
+                   . Subrow o (AppBarPropsO { | classes })
                   => Subrow classes AppBarClasses
                   => AppBarProps o -> ReactElement
 appBar' props = createElement appBarImpl props []

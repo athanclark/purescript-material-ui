@@ -4,7 +4,6 @@ module MaterialUI.CircularProgress
   ) where
 
 import MaterialUI.Types (Styles)
-import MaterialUI.Color (Color)
 
 import Prelude
 import React (Event, ReactClass, createElement, ReactElement, ReactProps, ReactState, ReactRefs, ReadOnly, ReadWrite)
@@ -61,7 +60,7 @@ type CircularProgressClasses =
 
 
 circularProgress' :: forall o classes
-                   . Subrow o (CircularProgressPropsO classes)
+                   . Subrow o (CircularProgressPropsO { | classes})
                   => Subrow classes CircularProgressClasses
                   => CircularProgressProps o -> ReactElement
 circularProgress' props = createElement circularProgressImpl props []

@@ -1,12 +1,11 @@
 module MaterialUI.Typography
   ( typography', TypographyProps, TypographyPropsO, TypographyClasses
-  , Alignment, left, right, center, justify
-  , Color, secondary, accent, default'
+  , Alignment, left, right, center, justify, inheritAlign
+  , Color, secondary, accent, default', inheritColor
   , Type', button, caption, body1, body2, subheading, title, headline, display1, display2, display3, display4
   ) where
 
 import MaterialUI.Types (Styles)
-import MaterialUI.Overloaded (class InheritTerm, inherit)
 
 import Prelude
 import React (Event, ReactClass, createElement, ReactElement, ReactProps, ReactState, ReactRefs, ReadOnly, ReadWrite)
@@ -24,8 +23,8 @@ type TypographyProps o =
 
 newtype Alignment = Alignment String
 
-instance inheritTermAlignment :: InheritTerm Alignment where
-  inherit = Alignment "inherit"
+inheritAlign :: Alignment
+inheritAlign = Alignment "inherit"
 
 left :: Alignment
 left = Alignment "left"
@@ -42,8 +41,8 @@ justify = Alignment "justify"
 
 newtype Color = Color String
 
-instance inheritTermColor :: InheritTerm Color where
-  inherit = Color "inherit"
+inheritColor :: Color
+inheritColor = Color "inherit"
 
 secondary :: Color
 secondary = Color "secondary"

@@ -5,6 +5,7 @@ import MaterialUI.MuiThemeProvider (muiThemeProvider', createMuiTheme)
 import MaterialUI.AppBar (appBar')
 import MaterialUI.AppBar as AppBar
 import MaterialUI.Toolbar (toolbar')
+import MaterialUI.Typography (typography', title, inheritColor)
 
 import Prelude
 import Control.Monad.Eff (Eff)
@@ -32,15 +33,20 @@ spec = T.simpleSpec performAction render
     render :: T.Render State _ Action
     render dispatch props state children =
       [ muiThemeProvider' {theme: createMuiTheme unit} $ R.div []
-          [ appBar' { position: AppBar.static
-                    , color: AppBar.primary
-                    , classes: {}
-                    }
-            [ toolbar' {classes: {}}
-              [ R.text "bar"]
+        [ appBar' { position: AppBar.static
+                  , color: AppBar.primary
+                  , classes: {}
+                  }
+          [ toolbar' {classes: {}}
+            [ typography'
+                { "type": title
+                , color: inheritColor
+                , classes: {}
+                } [R.text "bar"]
             ]
-          , R.text "Yo!"
           ]
+        , R.text "Yo!"
+        ]
       ]
 
 

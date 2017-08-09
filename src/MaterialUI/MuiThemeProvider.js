@@ -1,8 +1,9 @@
 "use strict";
 
-var MuiThemeProvider = require('material-ui/styles/MuiThemeProvider').default;
+var modules = require('material-ui/styles');
 
-var createMuiTheme = require('material-ui/styles/createMuiTheme').default;
+var MuiThemeProvider = modules.MuiThemeProvider;
+var createMuiTheme = modules.createMuiTheme;
 
 
 exports.muiThemeProviderImpl = MuiThemeProvider;

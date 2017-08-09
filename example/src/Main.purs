@@ -1,5 +1,6 @@
 module Main where
 
+import MaterialUI.InjectTapEvent (INJECT_TAP_EVENT, injectTapEvent)
 import MaterialUI.MuiThemeProvider (muiThemeProvider')
 
 import Prelude
@@ -32,10 +33,13 @@ spec = T.simpleSpec performAction render
 
 
 main :: forall eff
-      . Eff ( console :: CONSOLE
-            , dom     :: DOM
+      . Eff ( console        :: CONSOLE
+            , dom            :: DOM
+            , injectTapEvent :: INJECT_TAP_EVENT
             | eff) Unit
 main = do
   log "Hello sailor!"
+
+  injectTapEvent
 
   T.defaultMain spec initialState unit

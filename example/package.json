@@ -12,8 +12,12 @@
   "author": "Athan Clark",
   "license": "ISC",
   "dependencies": {
+    "material-ui": "^1.0.0-beta.4",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
     "react-tap-event-plugin": "^2.0.1"
+  },
+  "devDependencies": {
+    "browserify": "^14.4.0"
   }
 }

@@ -10,6 +10,7 @@ import Thermite as T
 import React as R
 import React.DOM as R
 import React.DOM.Props as RP
+import DOM (DOM)
 
 
 type State = Unit
@@ -32,6 +33,7 @@ spec = T.simpleSpec performAction render
 
 main :: forall eff
       . Eff ( console :: CONSOLE
+            , dom     :: DOM
             | eff) Unit
 main = do
   log "Hello sailor!"

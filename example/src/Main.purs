@@ -6,6 +6,8 @@ import MaterialUI.AppBar (appBar')
 import MaterialUI.AppBar as AppBar
 import MaterialUI.Toolbar (toolbar')
 import MaterialUI.Typography (typography', title, inheritColor)
+import MaterialUI.IconButton (iconButton', contrast)
+import MaterialUI.Menu (menu')
 
 import Prelude
 import Control.Monad.Eff (Eff)
@@ -38,7 +40,13 @@ spec = T.simpleSpec performAction render
                   , classes: {}
                   }
           [ toolbar' {classes: {}}
-            [ typography'
+            [ iconButton'
+                { classes: {}
+                , color: contrast
+                }
+                [ menu' {classes: {}} []
+                ]
+            , typography'
                 { "type": title
                 , color: inheritColor
                 , classes: {}

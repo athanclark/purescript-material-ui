@@ -1,0 +1,9 @@
+{
+    "name": "purescript-material-ui",
+    "set": "psc-0.11.6",
+    "source": "https://github.com/purescript/package-sets.git",
+    "depends": [
+        "react",
+        "prelude"
+    ]
+}

@@ -5,8 +5,12 @@ import MaterialUI.MuiThemeProvider (muiThemeProvider', createMuiTheme)
 import MaterialUI.AppBar (appBar')
 import MaterialUI.AppBar as AppBar
 import MaterialUI.Toolbar (toolbar')
-import MaterialUI.Typography (typography', title, inheritColor)
-import MaterialUI.IconButton (iconButton', contrast)
+import MaterialUI.Typography (typography')
+import MaterialUI.Typography as Typography
+import MaterialUI.IconButton (iconButton')
+import MaterialUI.IconButton as IconButton
+import MaterialUI.Drawer (drawer')
+import MaterialUI.Drawer as Drawer
 import MaterialUI.Icons.Menu (menuIcon)
 
 import Prelude
@@ -42,17 +46,23 @@ spec = T.simpleSpec performAction render
           [ toolbar' {classes: {}}
             [ iconButton'
                 { classes: {}
-                , color: contrast
+                , color: IconButton.contrast
                 }
                 [ menuIcon
                 ]
             , typography'
-                { "type": title
-                , color: inheritColor
+                { "type": Typography.title
+                , color: Typography.inheritColor
                 , classes: {}
                 } [R.text "bar"]
             ]
           ]
+        , drawer
+            { classes: {}
+            , anchor: Drawer.left
+            }
+            [ R.text "Left!"
+            ]
         , R.text "Yo!"
         ]
       ]

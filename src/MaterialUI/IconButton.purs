@@ -19,13 +19,14 @@ type IconButtonProps o =
   | o }
 
 
-type IconButtonPropsO classes =
+type IconButtonPropsO eff classes =
   ( children :: Array ReactElement
   , classes :: classes
   , color :: Color
   , disableRipple :: Boolean
   , disabled :: Boolean
   -- , rootRef FIXME
+  , onTouchTap :: EffFn1 (props :: ReactProps, refs :: ReactRefs ReadOnly, state :: ReactState ReadWrite | eff) Event Unit
   )
 
 newtype Color = Color String
@@ -59,8 +60,8 @@ type IconButtonClasses =
   )
 
 
-iconButton' :: forall o classes
-         . Subrow o (IconButtonPropsO { | classes })
+iconButton' :: forall o eff classes
+         . Subrow o (IconButtonPropsO eff { | classes })
         => Subrow classes IconButtonClasses
         => IconButtonProps o -> Array ReactElement -> ReactElement
 iconButton' = createElement iconButtonImpl

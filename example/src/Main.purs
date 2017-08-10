@@ -24,11 +24,18 @@ import React.DOM.Props as RP
 import DOM (DOM)
 
 
-type State = Unit
+type State =
+  { drawerOpen :: Boolean
+  }
 
-initialState = unit
+initialState :: State
+initialState =
+  { drawerOpen: false
+  }
 
-type Action = Unit
+data Action
+  = OpenDrawer
+  | CloseDrawer
 
 spec :: T.Spec _ State _ Action
 spec = T.simpleSpec performAction render
@@ -47,6 +54,7 @@ spec = T.simpleSpec performAction render
             [ iconButton'
                 { classes: {}
                 , color: IconButton.contrast
+                , onTouchTap: \_ -> dispatch OpenDrawer
                 }
                 [ menuIcon
                 ]
@@ -57,9 +65,10 @@ spec = T.simpleSpec performAction render
                 } [R.text "bar"]
             ]
           ]
-        , drawer
+        , drawer'
             { classes: {}
             , anchor: Drawer.left
+            , open: true
             }
             [ R.text "Left!"
             ]

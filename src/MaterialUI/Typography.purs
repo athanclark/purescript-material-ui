@@ -93,6 +93,7 @@ type TypographyPropsO componentProps classes =
   ( align :: Alignment
   , children :: Array ReactElement
   , classes :: classes
+  , style :: Styles
   , color :: Color
   , component :: ReactClass componentProps
   , gutterBottom :: Boolean

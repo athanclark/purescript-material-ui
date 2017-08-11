@@ -19,7 +19,7 @@ type ButtonProps o =
   | o }
 
 
-type ButtonPropsO componentProps classes =
+type ButtonPropsO eff componentProps classes =
   ( children :: Array ReactElement
   , classes :: classes
   , color :: Color
@@ -31,6 +31,8 @@ type ButtonPropsO componentProps classes =
   , fab :: Boolean
   , href :: String
   , raised :: Boolean
+  , onClick    :: EffFn1 (props :: ReactProps, refs :: ReactRefs ReadOnly, state :: ReactState ReadWrite | eff) Event Unit
+  , onTouchTap :: EffFn1 (props :: ReactProps, refs :: ReactRefs ReadOnly, state :: ReactState ReadWrite | eff) Event Unit
   )
 
 newtype Color = Color String
@@ -69,8 +71,8 @@ type ButtonClasses =
   )
 
 
-button' :: forall o classes componentProps
-         . Subrow o (ButtonPropsO componentProps { | classes })
+button' :: forall o eff classes componentProps
+         . Subrow o (ButtonPropsO eff componentProps { | classes })
         => Subrow classes ButtonClasses
         => ButtonProps o -> Array ReactElement -> ReactElement
 button' = createElement buttonImpl

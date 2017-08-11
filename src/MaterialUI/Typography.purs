@@ -89,10 +89,10 @@ display4 :: Type'
 display4 = Type' "display4"
 
 
-type TypographyPropsO componentProps classes =
+type TypographyPropsO componentProps =
   ( align :: Alignment
   , children :: Array ReactElement
-  , classes :: classes
+  , classes :: Classes
   , style :: Styles
   , color :: Color
   , component :: ReactClass componentProps
@@ -102,6 +102,10 @@ type TypographyPropsO componentProps classes =
   , paragraph :: Boolean
   , "type" :: Type'
   )
+
+createClasses :: forall o. Subrow o TypeographyClasses -> Classes
+createClasses = unsafeCoerce
+
 
 type TypographyClasses =
   ( root :: Styles

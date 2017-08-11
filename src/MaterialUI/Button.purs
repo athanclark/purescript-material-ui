@@ -22,6 +22,7 @@ type ButtonProps o =
 type ButtonPropsO eff componentProps classes =
   ( children :: Array ReactElement
   , classes :: classes
+  , style :: Styles
   , color :: Color
   , component :: ReactClass componentProps
   , dense :: Boolean

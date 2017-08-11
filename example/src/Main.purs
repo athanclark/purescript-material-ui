@@ -15,6 +15,11 @@ import MaterialUI.List (list')
 import MaterialUI.ListItem (listItem')
 import MaterialUI.ListItemIcon (listItemIcon')
 import MaterialUI.ListItemText (listItemText')
+import MaterialUI.Card (card')
+import MaterialUI.CardContent (cardContent')
+import MaterialUI.CardActions (cardActions')
+import MaterialUI.Button (button')
+import MaterialUI.Button as Button
 import MaterialUI.Icons.Menu (menuIcon)
 import MaterialUI.Icons.ChevronLeft (chevronLeftIcon)
 
@@ -60,32 +65,41 @@ spec = T.simpleSpec performAction render
                   }
           [ toolbar' {classes: {}}
             [ iconButton'
-                { classes: {}
-                , color: IconButton.contrast
-                , onTouchTap: mkEffFn1 \_ -> dispatch OpenDrawer
-                }
-                [ menuIcon
-                ]
+              { classes: {}
+              , color: IconButton.contrast
+              , onTouchTap: mkEffFn1 \_ -> dispatch OpenDrawer
+              }
+              menuIcon
             , typography'
-                { "type": Typography.title
-                , color: Typography.inheritColor
-                , classes: {}
-                } [R.text "bar"]
+              { "type": Typography.title
+              , color: Typography.inheritColor
+              , classes: {}
+              } [R.text "bar"]
             ]
           ]
         , drawer'
-            { classes: {}
-            , open: state.drawerOpen
-            , onRequestClose: mkEffFn1 \_ -> dispatch CloseDrawer
-            }
-            [ list' {classes: {}, disablePadding: true}
-              [ listItem' {classes: {}, button: true}
-                [ listItemIcon' {classes: {}} chevronLeftIcon
-                , listItemText' {classes: {}, primary: "Test", secondary: "nother test"}
-                ]
+          { classes: {}
+          , open: state.drawerOpen
+          , onRequestClose: mkEffFn1 \_ -> dispatch CloseDrawer
+          }
+          [ list' {classes: {}, disablePadding: true}
+            [ listItem' {classes: {}, button: true}
+              [ listItemIcon' {classes: {}} chevronLeftIcon
+              , listItemText' {classes: {}, primary: "Test", secondary: "nother test"}
               ]
             ]
-        , R.text "Yo!"
+          ]
+        , card' {classes: {}}
+          [ cardContent' {classes: {}}
+            [ R.text "Card Content"
+            ]
+          , cardActions' {classes: {}}
+            [ button'
+              { classes: {}
+              , color: Button.accent
+              } [R.text "Button!"]
+            ]
+          ]
         ]
       ]
 

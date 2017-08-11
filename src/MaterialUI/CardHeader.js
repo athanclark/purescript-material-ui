@@ -1,5 +1,5 @@
 "use strict";
 
-var CardHeader = require('material-ui/CardHeader').default;
+var CardHeader = require('material-ui/Card').CardHeader;
 
 exports.cardHeaderImpl = CardHeader;

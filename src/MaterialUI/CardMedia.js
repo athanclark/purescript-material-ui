@@ -1,5 +1,5 @@
 "use strict";
 
-var CardMedia = require('material-ui/CardMedia').default;
+var CardMedia = require('material-ui/Card').CardMedia;
 
 exports.cardMediaImpl = CardMedia;

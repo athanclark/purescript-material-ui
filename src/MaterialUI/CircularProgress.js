@@ -1,5 +1,5 @@
 "use strict";
 
-var CircularProgress = require('material-ui/CircularProgress').default;
+var CircularProgress = require('material-ui/Progress').CircularProgress;
 
 exports.circularProgressImpl = CircularProgress;

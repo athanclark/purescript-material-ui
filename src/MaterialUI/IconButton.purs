@@ -9,6 +9,7 @@ import Prelude
 import React (Event, ReactClass, createElement, ReactElement, ReactProps, ReactState, ReactRefs, ReadOnly, ReadWrite)
 import Data.Record.Class (class Subrow)
 import Control.Monad.Eff.Uncurried (EffFn1)
+import Unsafe.Coerce (unsafeCoerce)
 
 
 foreign import iconButtonImpl :: forall props. ReactClass props
@@ -63,5 +64,5 @@ type IconButtonClasses =
 iconButton' :: forall o eff classes
          . Subrow o (IconButtonPropsO eff { | classes })
         => Subrow classes IconButtonClasses
-        => IconButtonProps o -> Array ReactElement -> ReactElement
-iconButton' = createElement iconButtonImpl
+        => IconButtonProps o -> ReactElement -> ReactElement
+iconButton' p = createElement iconButtonImpl p <<< unsafeCoerce

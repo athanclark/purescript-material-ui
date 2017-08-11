@@ -38,5 +38,5 @@ type ListItemTextClasses =
 listItemText' :: forall o classes
          . Subrow o (ListItemTextPropsO { | classes })
         => Subrow classes ListItemTextClasses
-        => ListItemTextProps o -> Array ReactElement -> ReactElement
-listItemText' = createElement listItemTextImpl
+        => ListItemTextProps o -> ReactElement
+listItemText' p = createElement listItemTextImpl p []

@@ -80,8 +80,8 @@ spec = T.simpleSpec performAction render
             }
             [ list' {classes: {}, disablePadding: true}
               [ listItem' {classes: {}, button: true}
-                [ listItemIcon' {classes: {}} [chevronLeftIcon]
-                , listItemText' {classes: {}, primary: "Test"} []
+                [ listItemIcon' {classes: {}} chevronLeftIcon
+                , listItemText' {classes: {}, primary: "Test", secondary: "nother test"}
                 ]
               ]
             ]

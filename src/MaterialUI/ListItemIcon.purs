@@ -8,6 +8,7 @@ import Prelude
 import React (Event, ReactClass, createElement, ReactElement, ReactProps, ReactState, ReactRefs, ReadOnly, ReadWrite)
 import Data.Record.Class (class Subrow)
 import Control.Monad.Eff.Uncurried (EffFn1)
+import Unsafe.Coerce (unsafeCoerce)
 
 
 foreign import listItemIconImpl :: forall props. ReactClass props
@@ -31,5 +32,5 @@ type ListItemIconClasses =
 listItemIcon' :: forall o classes
          . Subrow o (ListItemIconPropsO { | classes })
         => Subrow classes ListItemIconClasses
-        => ListItemIconProps o -> Array ReactElement -> ReactElement
-listItemIcon' = createElement listItemIconImpl
+        => ListItemIconProps o -> ReactElement -> ReactElement
+listItemIcon' p = createElement listItemIconImpl p <<< unsafeCoerce

@@ -11,7 +11,12 @@ import MaterialUI.IconButton (iconButton')
 import MaterialUI.IconButton as IconButton
 import MaterialUI.Drawer (drawer')
 import MaterialUI.Drawer as Drawer
+import MaterialUI.List (list')
+import MaterialUI.ListItem (listItem')
+import MaterialUI.ListItemIcon (listItemIcon')
+import MaterialUI.ListItemText (listItemText')
 import MaterialUI.Icons.Menu (menuIcon)
+import MaterialUI.Icons.ChevronLeft (chevronLeftIcon)
 
 import Prelude
 import Control.Monad.Eff (Eff)
@@ -73,7 +78,12 @@ spec = T.simpleSpec performAction render
             , open: state.drawerOpen
             , onRequestClose: mkEffFn1 \_ -> dispatch CloseDrawer
             }
-            [ R.text "Left!"
+            [ list' {classes: {}, disablePadding: true}
+              [ listItem' {classes: {}, button: true}
+                [ listItemIcon' {classes: {}} [chevronLeftIcon]
+                , listItemText' {classes: {}, primary: "Test"}
+                ]
+              ]
             ]
         , R.text "Yo!"
         ]

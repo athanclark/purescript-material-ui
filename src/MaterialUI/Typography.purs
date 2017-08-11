@@ -5,12 +5,13 @@ module MaterialUI.Typography
   , Type', button, caption, body1, body2, subheading, title, headline, display1, display2, display3, display4
   ) where
 
-import MaterialUI.Types (Styles)
+import MaterialUI.Types (Styles, Classes)
 
 import Prelude
 import React (Event, ReactClass, createElement, ReactElement, ReactProps, ReactState, ReactRefs, ReadOnly, ReadWrite)
 import Data.Record.Class (class Subrow)
 import Control.Monad.Eff.Uncurried (EffFn1)
+import Unsafe.Coerce (unsafeCoerce)
 
 
 foreign import typographyImpl :: forall props. ReactClass props
@@ -103,7 +104,7 @@ type TypographyPropsO componentProps =
   , "type" :: Type'
   )
 
-createClasses :: forall o. Subrow o TypeographyClasses -> Classes
+createClasses :: forall o. Subrow o TypographyClasses => { | o } -> Classes
 createClasses = unsafeCoerce
 
 
@@ -134,7 +135,6 @@ type TypographyClasses =
 
 
 typography' :: forall o componentProps classes
-         . Subrow o (TypographyPropsO componentProps { | classes })
-        => Subrow classes TypographyClasses
+         . Subrow o (TypographyPropsO componentProps)
         => TypographyProps o -> Array ReactElement -> ReactElement
 typography' = createElement typographyImpl

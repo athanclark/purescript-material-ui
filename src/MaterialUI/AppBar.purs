@@ -5,6 +5,7 @@ module MaterialUI.AppBar
   ) where
 
 import MaterialUI.Types (Styles)
+import MaterialUI.Unsafe (unsafeApplyProps)
 
 import Prelude
 import React (Event, ReactClass, createElement, ReactElement, ReactProps, ReactState, ReactRefs, ReadOnly, ReadWrite)
@@ -51,6 +52,7 @@ type AppBarPropsO classes =
   , color :: Color
   , position :: Position
   , classes :: classes
+  , web :: Styles
   )
 
 
@@ -69,4 +71,4 @@ appBar' :: forall o classes
                    . Subrow o (AppBarPropsO { | classes })
                   => Subrow classes AppBarClasses
                   => AppBarProps o -> Array ReactElement -> ReactElement
-appBar' = createElement appBarImpl
+appBar' p = createElement appBarImpl (unsafeApplyProps p)

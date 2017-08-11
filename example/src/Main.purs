@@ -62,6 +62,7 @@ spec = T.simpleSpec performAction render
         [ appBar' { position: AppBar.static
                   , color: AppBar.primary
                   , classes: {}
+                  , web: unsafeCoerce {marginLeft: "150px"}
                   }
           [ toolbar' {classes: {}}
             [ iconButton'
@@ -79,8 +80,9 @@ spec = T.simpleSpec performAction render
           ]
         , drawer'
           { classes: {}
-          , open: state.drawerOpen
-          , onRequestClose: mkEffFn1 \_ -> dispatch CloseDrawer
+          , open: true -- state.drawerOpen
+          , docked: true
+          -- , onRequestClose: mkEffFn1 \_ -> dispatch CloseDrawer
           }
           [ list' {classes: {}, disablePadding: true}
             [ listItem' {classes: {}, button: true}
@@ -89,15 +91,36 @@ spec = T.simpleSpec performAction render
               ]
             ]
           ]
-        , card' {classes: {}}
-          [ cardContent' {classes: {}}
-            [ R.text "Card Content"
-            ]
-          , cardActions' {classes: {}}
-            [ button'
-              { classes: {}
-              , color: Button.accent
-              } [R.text "Button!"]
+        , R.div [ RP.marginLeft "150px"]
+          [ card' {classes: {}}
+            [ cardContent' {classes: {}}
+              [ typography' {classes: {}, "type": Typography.headline}
+                [R.text "Headline"]
+              , typography' {classes: {}, "type": Typography.subheading}
+                [R.text "Subheading"]
+              , typography' {classes: {}, "type": Typography.title}
+                [R.text "Title"]
+              , typography' {classes: {}, "type": Typography.display1}
+                [R.text "Display1"]
+              , typography' {classes: {}, "type": Typography.display2}
+                [R.text "Display2"]
+              , typography' {classes: {}, "type": Typography.display3}
+                [R.text "Display3"]
+              , typography' {classes: {}, "type": Typography.display4}
+                [R.text "Display4"]
+              , typography' {classes: {}, "type": Typography.body1}
+                [R.text "Body1"]
+              , typography' {classes: {}, "type": Typography.body2}
+                [R.text "Body2"]
+              , typography' {classes: {}, "type": Typography.caption}
+                [R.text "Caption"]
+              ]
+            , cardActions' {classes: {}}
+              [ button'
+                { classes: {}
+                , color: Button.accent
+                } [R.text "Button!"]
+              ]
             ]
           ]
         ]

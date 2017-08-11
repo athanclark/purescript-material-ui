@@ -62,27 +62,7 @@ spec = T.simpleSpec performAction render
     render :: T.Render State _ Action
     render dispatch props state children =
       [ muiThemeProvider' {theme: createMuiTheme unit} $ R.div []
-        [ appBar' { position: AppBar.static
-                  , color: AppBar.primary
-                  , classes:
-                    {root: unsafeCoerce {marginLeft: "150px"}
-                    }
-                  }
-          [ toolbar' {classes: {}}
-            [ iconButton'
-              { classes: {}
-              , color: IconButton.contrast
-              , onTouchTap: mkEffFn1 \_ -> dispatch OpenDrawer
-              }
-              menuIcon
-            , typography'
-              { "type": Typography.title
-              , color: Typography.inheritColor
-              , classes: {}
-              } [R.text "bar"]
-            ]
-          ]
-        , drawer'
+        [ drawer'
           { classes: {}
           , open: true -- state.drawerOpen
           , docked: true
@@ -96,7 +76,27 @@ spec = T.simpleSpec performAction render
             ]
           ]
         , R.div [ RP.style {marginLeft: "150px"}]
-          [ card' {classes: {}}
+          [ appBar' { position: AppBar.static
+                    , color: AppBar.primary
+                    , classes: {}
+                      -- {positionStatic: unsafeCoerce {marginLeft: "150px"}
+                      -- }
+                    }
+            [ toolbar' {classes: {}}
+              [ iconButton'
+                { classes: {}
+                , color: IconButton.contrast
+                , onTouchTap: mkEffFn1 \_ -> dispatch OpenDrawer
+                }
+                menuIcon
+              , typography'
+                { "type": Typography.title
+                , color: Typography.inheritColor
+                , classes: {}
+                } [R.text "bar"]
+              ]
+            ]
+          , card' {classes: {}}
             [ cardContent' {classes: {}}
               [ typography' {classes: {}, "type": Typography.headline}
                 [R.text "Headline"]

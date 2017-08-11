@@ -34,6 +34,9 @@ import React.DOM as R
 import React.DOM.Props as RP
 import DOM (DOM)
 
+import Unsafe.Coerce (unsafeCoerce)
+
+
 
 type State =
   { drawerOpen :: Boolean
@@ -61,8 +64,9 @@ spec = T.simpleSpec performAction render
       [ muiThemeProvider' {theme: createMuiTheme unit} $ R.div []
         [ appBar' { position: AppBar.static
                   , color: AppBar.primary
-                  , classes: {}
-                  , web: unsafeCoerce {marginLeft: "150px"}
+                  , classes:
+                    {root: unsafeCoerce {marginLeft: "150px"}
+                    }
                   }
           [ toolbar' {classes: {}}
             [ iconButton'
@@ -91,7 +95,7 @@ spec = T.simpleSpec performAction render
               ]
             ]
           ]
-        , R.div [ RP.marginLeft "150px"]
+        , R.div [ RP.style {marginLeft: "150px"}]
           [ card' {classes: {}}
             [ cardContent' {classes: {}}
               [ typography' {classes: {}, "type": Typography.headline}

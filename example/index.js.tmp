@@ -1714,7 +1714,7 @@ var PS = {};
 (function(exports) {
     "use strict";
 
-  var ListItem = require('material-ui/ListItem').default;
+  var ListItem = require('material-ui/ListItem').ListItem;
 
   exports.listItemImpl = ListItem;
 })(PS["MaterialUI.ListItem"] = PS["MaterialUI.ListItem"] || {});
@@ -1737,7 +1737,7 @@ var PS = {};
 (function(exports) {
     "use strict";
 
-  var ListItemIcon = require('material-ui/ListItemIcon').default;
+  var ListItemIcon = require('material-ui/ListItemIcon').ListItemIcon;
 
   exports.listItemIconImpl = ListItemIcon;
 })(PS["MaterialUI.ListItemIcon"] = PS["MaterialUI.ListItemIcon"] || {});
@@ -1760,7 +1760,7 @@ var PS = {};
 (function(exports) {
     "use strict";
 
-  var ListItemText = require('material-ui/ListItemText').default;
+  var ListItemText = require('material-ui/ListItemText').ListItemText;
 
   exports.listItemTextImpl = ListItemText;
 })(PS["MaterialUI.ListItemText"] = PS["MaterialUI.ListItemText"] || {});

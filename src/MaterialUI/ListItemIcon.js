@@ -1,5 +1,5 @@
 "use strict";
 
-var ListItemIcon = require('material-ui/ListItemIcon').ListItemIcon;
+var ListItemIcon = require('material-ui/List').ListItemIcon;
 
 exports.listItemIconImpl = ListItemIcon;

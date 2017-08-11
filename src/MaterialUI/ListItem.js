@@ -1,5 +1,5 @@
 "use strict";
 
-var ListItem = require('material-ui/ListItem').ListItem;
+var ListItem = require('material-ui/List').ListItem;
 
 exports.listItemImpl = ListItem;

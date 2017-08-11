@@ -15,6 +15,7 @@ import MaterialUI.Icons.Menu (menuIcon)
 
 import Prelude
 import Control.Monad.Eff (Eff)
+import Control.Monad.Eff.Uncurried (mkEffFn1)
 import Control.Monad.Eff.Console (CONSOLE, log)
 
 import Thermite as T
@@ -41,7 +42,9 @@ spec :: T.Spec _ State _ Action
 spec = T.simpleSpec performAction render
   where
     performAction :: T.PerformAction _ State _ Action
-    performAction action props state = pure unit
+    performAction action props state = case action of
+      OpenDrawer  -> void $ T.cotransform $ _ { drawerOpen = true }
+      CloseDrawer -> void $ T.cotransform $ _ { drawerOpen = false }
 
     render :: T.Render State _ Action
     render dispatch props state children =
@@ -54,7 +57,7 @@ spec = T.simpleSpec performAction render
             [ iconButton'
                 { classes: {}
                 , color: IconButton.contrast
-                , onTouchTap: \_ -> dispatch OpenDrawer
+                , onTouchTap: mkEffFn1 \_ -> dispatch OpenDrawer
                 }
                 [ menuIcon
                 ]
@@ -67,8 +70,8 @@ spec = T.simpleSpec performAction render
           ]
         , drawer'
             { classes: {}
-            , anchor: Drawer.left
-            , open: true
+            , open: state.drawerOpen
+            , onRequestClose: mkEffFn1 \_ -> dispatch CloseDrawer
             }
             [ R.text "Left!"
             ]

@@ -35,7 +35,7 @@ createClasses :: forall classes
 createClasses = unsafeCoerce
 
 
-card :: forall o classes
+card :: forall o
          . Subrow o CardPropsO
         => CardProps o -> Array ReactElement -> ReactElement
 card = createElement cardImpl

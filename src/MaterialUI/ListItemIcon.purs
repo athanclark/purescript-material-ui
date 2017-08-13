@@ -1,8 +1,9 @@
 module MaterialUI.ListItemIcon
-  ( listItemIcon', ListItemIconProps, ListItemIconPropsO, ListItemIconClasses
+  ( listItemIcon, ListItemIconProps, ListItemIconPropsO, ListItemIconClasses
+  , createClasses
   ) where
 
-import MaterialUI.Types (Styles)
+import MaterialUI.Types (Styles, Classes)
 
 import Prelude
 import React (Event, ReactClass, createElement, ReactElement, ReactProps, ReactState, ReactRefs, ReadOnly, ReadWrite)
@@ -19,18 +20,22 @@ type ListItemIconProps o =
   | o }
 
 
-type ListItemIconPropsO classes =
+type ListItemIconPropsO =
   ( children :: Array ReactElement
-  , classes :: classes
+  , classes :: Classes
   )
 
 type ListItemIconClasses =
   ( root :: Styles
   )
 
+createClasses :: forall classes
+               . Subrow classes ListItemIconClasses
+              => { | classes } -> Classes
+createClasses = unsafeCoerce
 
-listItemIcon' :: forall o classes
-         . Subrow o (ListItemIconPropsO { | classes })
-        => Subrow classes ListItemIconClasses
+
+listItemIcon :: forall o
+         . Subrow o ListItemIconPropsO
         => ListItemIconProps o -> ReactElement -> ReactElement
-listItemIcon' p = createElement listItemIconImpl p <<< unsafeCoerce
+listItemIcon p = createElement listItemIconImpl p <<< unsafeCoerce

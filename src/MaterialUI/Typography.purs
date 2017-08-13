@@ -1,8 +1,9 @@
 module MaterialUI.Typography
-  ( typography', TypographyProps, TypographyPropsO, TypographyClasses
+  ( typography, TypographyProps, TypographyPropsO, TypographyClasses
   , Alignment, left, right, center, justify, inheritAlign
-  , Color, secondary, accent, default', inheritColor
-  , Type', button, caption, body1, body2, subheading, title, headline, display1, display2, display3, display4
+  , Color, secondary, accent, default, inheritColor
+  , Type, button, caption, body1, body2, subheading, title, headline, display1, display2, display3, display4
+                                                                                            , createClasses
   ) where
 
 import MaterialUI.Types (Styles, Classes)
@@ -51,43 +52,43 @@ secondary = Color "secondary"
 accent :: Color
 accent = Color "accent"
 
-default' :: Color
-default' = Color "default"
+default :: Color
+default = Color "default"
 
-newtype Type' = Type' String
+newtype Type = Type String
 
-button :: Type'
-button = Type' "button"
+button :: Type
+button = Type "button"
 
-caption :: Type'
-caption = Type' "caption"
+caption :: Type
+caption = Type "caption"
 
-body1 :: Type'
-body1 = Type' "body1"
+body1 :: Type
+body1 = Type "body1"
 
-body2 :: Type'
-body2 = Type' "body2"
+body2 :: Type
+body2 = Type "body2"
 
-subheading :: Type'
-subheading = Type' "subheading"
+subheading :: Type
+subheading = Type "subheading"
 
-title :: Type'
-title = Type' "title"
+title :: Type
+title = Type "title"
 
-headline :: Type'
-headline = Type' "headline"
+headline :: Type
+headline = Type "headline"
 
-display1 :: Type'
-display1 = Type' "display1"
+display1 :: Type
+display1 = Type "display1"
 
-display2 :: Type'
-display2 = Type' "display2"
+display2 :: Type
+display2 = Type "display2"
 
-display3 :: Type'
-display3 = Type' "display3"
+display3 :: Type
+display3 = Type "display3"
 
-display4 :: Type'
-display4 = Type' "display4"
+display4 :: Type
+display4 = Type "display4"
 
 
 type TypographyPropsO componentProps =
@@ -101,7 +102,7 @@ type TypographyPropsO componentProps =
   -- , headlineMapping :: FIXME
   , noWrap :: Boolean
   , paragraph :: Boolean
-  , "type" :: Type'
+  , "type" :: Type
   )
 
 createClasses :: forall o. Subrow o TypographyClasses => { | o } -> Classes
@@ -134,7 +135,7 @@ type TypographyClasses =
   )
 
 
-typography' :: forall o componentProps classes
+typography :: forall o componentProps
          . Subrow o (TypographyPropsO componentProps)
         => TypographyProps o -> Array ReactElement -> ReactElement
-typography' = createElement typographyImpl
+typography = createElement typographyImpl

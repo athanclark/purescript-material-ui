@@ -1,13 +1,15 @@
 module MaterialUI.ListItemText
-  ( listItemText', ListItemTextProps, ListItemTextPropsO, ListItemTextClasses
+  ( listItemText, ListItemTextProps, ListItemTextPropsO, ListItemTextClasses
+  , createClasses
   ) where
 
-import MaterialUI.Types (Styles)
+import MaterialUI.Types (Styles, Classes)
 
 import Prelude
 import React (Event, ReactClass, createElement, ReactElement, ReactProps, ReactState, ReactRefs, ReadOnly, ReadWrite)
 import Data.Record.Class (class Subrow)
 import Control.Monad.Eff.Uncurried (EffFn1)
+import Unsafe.Coerce (unsafeCoerce)
 
 
 foreign import listItemTextImpl :: forall props. ReactClass props
@@ -18,9 +20,9 @@ type ListItemTextProps o =
   | o }
 
 
-type ListItemTextPropsO classes =
+type ListItemTextPropsO =
   ( disableTypography :: Boolean
-  , classes :: classes
+  , classes :: Classes
   , inset :: Boolean
   , primary :: String
   , secondary :: String
@@ -34,9 +36,13 @@ type ListItemTextClasses =
   , textDense :: Styles
   )
 
+createClasses :: forall classes
+               . Subrow classes ListItemTextClasses
+              => { | classes } -> Classes
+createClasses = unsafeCoerce
 
-listItemText' :: forall o classes
-         . Subrow o (ListItemTextPropsO { | classes })
-        => Subrow classes ListItemTextClasses
+
+listItemText :: forall o classes
+         . Subrow o ListItemTextPropsO
         => ListItemTextProps o -> ReactElement
-listItemText' p = createElement listItemTextImpl p []
+listItemText p = createElement listItemTextImpl p []

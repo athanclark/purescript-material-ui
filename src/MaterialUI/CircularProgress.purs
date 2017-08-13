@@ -1,14 +1,16 @@
 module MaterialUI.CircularProgress
-  ( circularProgress', CircularProgressProps, CircularProgressPropsO, CircularProgressClasses
+  ( circularProgress, CircularProgressProps, CircularProgressPropsO, CircularProgressClasses
   , Mode, determinate, indeterminate, Color, primary, accent
+  , createClasses
   ) where
 
-import MaterialUI.Types (Styles)
+import MaterialUI.Types (Styles, Classes)
 
 import Prelude
 import React (Event, ReactClass, createElement, ReactElement, ReactProps, ReactState, ReactRefs, ReadOnly, ReadWrite)
 import Data.Record.Class (class Subrow)
 import Control.Monad.Eff.Uncurried (EffFn1)
+import Unsafe.Coerce (unsafeCoerce)
 
 
 foreign import circularProgressImpl :: forall props. ReactClass props
@@ -36,14 +38,14 @@ accent :: Color
 accent = Color "accent"
 
 
-type CircularProgressPropsO classes =
+type CircularProgressPropsO =
   ( color :: Color
   , size :: Int
   , max :: Int
   , min :: Int
   , mode :: Mode
   , value :: Int
-  , classes :: classes
+  , classes :: Classes
   )
 
 
@@ -58,9 +60,13 @@ type CircularProgressClasses =
   , determinateCircle :: Styles
   )
 
+createClasses :: forall classes
+               . Subrow classes CircularProgressClasses
+              => { | classes } -> Classes
+createClasses = unsafeCoerce
 
-circularProgress' :: forall o classes
-                   . Subrow o (CircularProgressPropsO { | classes})
-                  => Subrow classes CircularProgressClasses
+
+circularProgress :: forall o classes
+                   . Subrow o CircularProgressPropsO
                   => CircularProgressProps o -> Array ReactElement -> ReactElement
-circularProgress' = createElement circularProgressImpl
+circularProgress = createElement circularProgressImpl

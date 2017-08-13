@@ -1,14 +1,16 @@
 module MaterialUI.Button
-  ( button', ButtonProps, ButtonPropsO, ButtonClasses
-  , Color, primary, accent, default', inherit, contrast
+  ( button, ButtonProps, ButtonPropsO, ButtonClasses
+  , Color, primary, accent, default, inherit, contrast
+  , createClasses
   ) where
 
-import MaterialUI.Types (Styles)
+import MaterialUI.Types (Styles, Classes)
 
 import Prelude
 import React (Event, ReactClass, createElement, ReactElement, ReactProps, ReactState, ReactRefs, ReadOnly, ReadWrite)
 import Data.Record.Class (class Subrow)
 import Control.Monad.Eff.Uncurried (EffFn1)
+import Unsafe.Coerce (unsafeCoerce)
 
 
 foreign import buttonImpl :: forall props. ReactClass props
@@ -19,9 +21,9 @@ type ButtonProps o =
   | o }
 
 
-type ButtonPropsO eff componentProps classes =
+type ButtonPropsO eff componentProps =
   ( children :: Array ReactElement
-  , classes :: classes
+  , classes :: Classes
   , style :: Styles
   , color :: Color
   , component :: ReactClass componentProps
@@ -44,8 +46,8 @@ primary = Color "primary"
 accent :: Color
 accent = Color "accent"
 
-default' :: Color
-default' = Color "default"
+default :: Color
+default = Color "default"
 
 inherit :: Color
 inherit = Color "inherit"
@@ -71,9 +73,13 @@ type ButtonClasses =
   , fab :: Styles
   )
 
+createClasses :: forall classes
+               . Subrow classes ButtonClasses
+              => { | classes } -> Classes
+createClasses = unsafeCoerce
 
-button' :: forall o eff classes componentProps
-         . Subrow o (ButtonPropsO eff componentProps { | classes })
-        => Subrow classes ButtonClasses
+
+button :: forall o eff componentProps
+         . Subrow o (ButtonPropsO eff componentProps)
         => ButtonProps o -> Array ReactElement -> ReactElement
-button' = createElement buttonImpl
+button = createElement buttonImpl

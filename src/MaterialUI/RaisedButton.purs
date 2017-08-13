@@ -1,12 +1,12 @@
 module MaterialUI.RaisedButton
-  ( raisedButton', before, LabelPosition, RaisedButtonProps, RaisedButtonPropsO
+  ( raisedButton, before, LabelPosition, RaisedButtonProps, RaisedButtonPropsO
   ) where
 
+import MaterialUI.Types (Styles)
 
 import Prelude
 import React (Event, ReactClass, createElement, ReactElement, ReactProps, ReactState, ReactRefs, ReadOnly, ReadWrite)
 import Data.Record.Class (class Subrow)
-import Unsafe.Coerce (unsafeCoerce)
 import Control.Monad.Eff.Uncurried (EffFn1)
 
 
@@ -26,6 +26,7 @@ type RaisedButtonPropsO eff =
   , labelPosition :: LabelPosition
   , containerElement :: String
   , icon :: ReactElement
+  , style :: Styles
   , onTouchTap :: EffFn1 (props :: ReactProps, refs :: ReactRefs ReadOnly, state :: ReactState ReadWrite | eff) Event Unit
   )
 
@@ -36,7 +37,7 @@ before :: LabelPosition
 before = LabelPosition "before"
 
 
-raisedButton' :: forall eff o
+raisedButton :: forall eff o
                . Subrow o (RaisedButtonPropsO eff)
               => RaisedButtonProps o -> Array ReactElement -> ReactElement
-raisedButton' = createElement raisedButtonImpl
+raisedButton = createElement raisedButtonImpl

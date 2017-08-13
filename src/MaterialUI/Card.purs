@@ -1,13 +1,15 @@
 module MaterialUI.Card
-  ( card', CardProps, CardPropsO, CardClasses
+  ( card, CardProps, CardPropsO, CardClasses
+  , createClasses
   ) where
 
-import MaterialUI.Types (Styles)
+import MaterialUI.Types (Styles, Classes)
 
 import Prelude
 import React (Event, ReactClass, createElement, ReactElement, ReactProps, ReactState, ReactRefs, ReadOnly, ReadWrite)
 import Data.Record.Class (class Subrow)
 import Control.Monad.Eff.Uncurried (EffFn1)
+import Unsafe.Coerce (unsafeCoerce)
 
 
 foreign import cardImpl :: forall props. ReactClass props
@@ -18,18 +20,22 @@ type CardProps o =
   | o }
 
 
-type CardPropsO classes =
+type CardPropsO =
   ( raised :: Boolean
-  , classes :: classes
+  , classes :: Classes
   )
 
 type CardClasses =
   ( root :: Styles
   )
 
+createClasses :: forall classes
+               . Subrow classes CardClasses
+              => { | classes } -> Classes
+createClasses = unsafeCoerce
 
-card' :: forall o classes
-         . Subrow o (CardPropsO { | classes })
-        => Subrow classes CardClasses
+
+card :: forall o classes
+         . Subrow o CardPropsO
         => CardProps o -> Array ReactElement -> ReactElement
-card' = createElement cardImpl
+card = createElement cardImpl

@@ -1,14 +1,16 @@
 module MaterialUI.Dialog
-  ( dialog', DialogProps, DialogPropsO, DialogClasses
+  ( dialog, DialogProps, DialogPropsO, DialogClasses
   , MaxWidth, xs, sm, md
+  , createClasses
   ) where
 
-import MaterialUI.Types (Styles)
+import MaterialUI.Types (Styles, Classes)
 
 import Prelude
 import React (Event, ReactClass, createElement, ReactElement, ReactProps, ReactState, ReactRefs, ReadOnly, ReadWrite)
 import Data.Record.Class (class Subrow)
 import Control.Monad.Eff.Uncurried (EffFn1)
+import Unsafe.Coerce (unsafeCoerce)
 
 
 foreign import dialogImpl :: forall props. ReactClass props
@@ -31,9 +33,9 @@ md :: MaxWidth
 md = MaxWidth "md"
 
 
-type DialogPropsO eff transitionProps classes =
+type DialogPropsO eff transitionProps =
   ( children                :: Array ReactElement
-  , classes                 :: classes
+  , classes                 :: Classes
   , enterTransitionDuration :: Number
   , fullscreen              :: Boolean
   , ignoreBackdropClick     :: Boolean
@@ -63,9 +65,13 @@ type DialogClasses =
   )
 
 
+createClasses :: forall classes
+               . Subrow classes DialogClasses
+              => { | classes } -> Classes
+createClasses = unsafeCoerce
 
-dialog' :: forall eff o transitionProps classes
-         . Subrow o (DialogPropsO eff transitionProps { | classes })
-        => Subrow classes DialogClasses
+
+dialog :: forall eff o transitionProps
+         . Subrow o (DialogPropsO eff transitionProps)
         => DialogProps o -> Array ReactElement -> ReactElement
-dialog' = createElement dialogImpl
+dialog = createElement dialogImpl

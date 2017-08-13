@@ -1,14 +1,16 @@
 module MaterialUI.Menu
-  ( menu', MenuProps, MenuPropsO, MenuClasses
+  ( menu, MenuProps, MenuPropsO, MenuClasses
+  , createClasses
   ) where
 
-import MaterialUI.Types (Styles)
+import MaterialUI.Types (Styles, Classes)
 
 import Prelude
 import React (Event, ReactClass, createElement, ReactElement, ReactProps, ReactState, ReactRefs, ReadOnly, ReadWrite)
 import Data.Record.Class (class Subrow)
 import Control.Monad.Eff.Uncurried (EffFn1)
 import DOM.Node.Types (Element)
+import Unsafe.Coerce (unsafeCoerce)
 
 
 foreign import menuImpl :: forall props. ReactClass props
@@ -19,11 +21,11 @@ type MenuProps o =
   | o }
 
 
-type MenuPropsO eff menuListProps classes =
+type MenuPropsO eff menuListProps =
   ( "MenuListProps" :: menuListProps
   , anchorEl :: Element
   , children :: Array ReactElement
-  , classes :: classes
+  , classes :: Classes
   , onEnter :: EffFn1 (props :: ReactProps, refs :: ReactRefs ReadOnly, state :: ReactState ReadWrite | eff) Event Unit
   , onEntered :: EffFn1 (props :: ReactProps, refs :: ReactRefs ReadOnly, state :: ReactState ReadWrite | eff) Event Unit
   , onEntering :: EffFn1 (props :: ReactProps, refs :: ReactRefs ReadOnly, state :: ReactState ReadWrite | eff) Event Unit
@@ -39,9 +41,13 @@ type MenuClasses =
   ( root :: Styles
   )
 
+createClasses :: forall classes
+               . Subrow classes MenuClasses
+              => { | classes } -> Classes
+createClasses = unsafeCoerce
 
-menu' :: forall o eff menuListProps classes
-         . Subrow o (MenuPropsO eff menuListProps { | classes })
-        => Subrow classes MenuClasses
+
+menu :: forall o eff menuListProps
+         . Subrow o (MenuPropsO eff menuListProps)
         => MenuProps o -> Array ReactElement -> ReactElement
-menu' = createElement menuImpl
+menu = createElement menuImpl

@@ -1,5 +1,5 @@
 module MaterialUI.MuiThemeProvider
-  ( muiThemeProvider', MuiThemeProviderProps, Theme, createMuiTheme
+  ( muiThemeProvider, MuiThemeProviderProps, Theme, createMuiTheme
   ) where
 
 
@@ -26,5 +26,5 @@ type MuiThemeProviderProps =
 
 
 
-muiThemeProvider' :: MuiThemeProviderProps -> ReactElement -> ReactElement
-muiThemeProvider' props = createElement muiThemeProviderImpl props <<< unsafeCoerce
+muiThemeProvider :: MuiThemeProviderProps -> ReactElement -> ReactElement
+muiThemeProvider props = createElement muiThemeProviderImpl props <<< unsafeCoerce

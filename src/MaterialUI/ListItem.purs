@@ -1,13 +1,15 @@
 module MaterialUI.ListItem
-  ( listItem', ListItemProps, ListItemPropsO, ListItemClasses
+  ( listItem, ListItemProps, ListItemPropsO, ListItemClasses
+  , createClasses
   ) where
 
-import MaterialUI.Types (Styles)
+import MaterialUI.Types (Styles, Classes)
 
 import Prelude
 import React (Event, ReactClass, createElement, ReactElement, ReactProps, ReactState, ReactRefs, ReadOnly, ReadWrite)
 import Data.Record.Class (class Subrow)
 import Control.Monad.Eff.Uncurried (EffFn1)
+import Unsafe.Coerce (unsafeCoerce)
 
 
 foreign import listItemImpl :: forall props. ReactClass props
@@ -18,10 +20,10 @@ type ListItemProps o =
   | o }
 
 
-type ListItemPropsO componentProps classes =
+type ListItemPropsO componentProps =
   ( button :: Boolean
   , children :: Array ReactElement
-  , classes :: classes
+  , classes :: Classes
   , component :: ReactClass componentProps
   , dense :: Boolean
   , disableGutters :: Boolean
@@ -40,9 +42,13 @@ type ListItemClasses =
   , button :: Styles
   )
 
+createClasses :: forall classes
+               . Subrow classes ListItemClasses
+              => { | classes } -> Classes
+createClasses = unsafeCoerce
 
-listItem' :: forall o componentProps classes
-         . Subrow o (ListItemPropsO componentProps { | classes })
-        => Subrow classes ListItemClasses
+
+listItem :: forall o componentProps
+         . Subrow o (ListItemPropsO componentProps)
         => ListItemProps o -> Array ReactElement -> ReactElement
-listItem' = createElement listItemImpl
+listItem = createElement listItemImpl

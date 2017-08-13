@@ -1,14 +1,16 @@
 module MaterialUI.Drawer
-  ( drawer', DrawerProps, DrawerPropsO, DrawerClasses
+  ( drawer, DrawerProps, DrawerPropsO, DrawerClasses
   , Anchor, left, right, top, bottom
+  , createClasses
   ) where
 
-import MaterialUI.Types (Styles)
+import MaterialUI.Types (Styles, Classes)
 
 import Prelude
 import React (Event, ReactClass, createElement, ReactElement, ReactProps, ReactState, ReactRefs, ReadOnly, ReadWrite)
 import Data.Record.Class (class Subrow)
 import Control.Monad.Eff.Uncurried (EffFn1)
+import Unsafe.Coerce (unsafeCoerce)
 
 
 foreign import drawerImpl :: forall props. ReactClass props
@@ -33,11 +35,11 @@ bottom :: Anchor
 bottom = Anchor "bottom"
 
 
-type DrawerPropsO eff slideProps classes =
+type DrawerPropsO eff slideProps =
   ( "SlideProps" :: slideProps
   , anchor :: Anchor
   , children :: Array ReactElement
-  , classes :: classes
+  , classes :: Classes
   , docked :: Boolean
   , elevation :: Int
   , enterTransitionDuration :: Number
@@ -56,9 +58,13 @@ type DrawerClasses =
   , modal :: Styles
   )
 
+createClasses :: forall classes
+               . Subrow classes DrawerClasses
+              => { | classes } -> Classes
+createClasses = unsafeCoerce
 
-drawer' :: forall o eff slideProps classes
-         . Subrow o (DrawerPropsO eff slideProps { | classes })
-        => Subrow classes DrawerClasses
+
+drawer :: forall o eff slideProps
+         . Subrow o (DrawerPropsO eff slideProps)
         => DrawerProps o -> Array ReactElement -> ReactElement
-drawer' = createElement drawerImpl
+drawer = createElement drawerImpl

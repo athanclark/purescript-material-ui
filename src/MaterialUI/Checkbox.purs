@@ -1,13 +1,15 @@
 module MaterialUI.Checkbox
-  ( checkbox', CheckboxProps, CheckboxPropsO, CheckboxClasses
+  ( checkbox, CheckboxProps, CheckboxPropsO, CheckboxClasses
+  , createClasses
   ) where
 
-import MaterialUI.Types (Styles)
+import MaterialUI.Types (Styles, Classes)
 
 import Prelude
 import React (Event, ReactClass, createElement, ReactElement, ReactProps, ReactState, ReactRefs, ReadOnly, ReadWrite)
 import Data.Record.Class (class Subrow)
 import Control.Monad.Eff.Uncurried (EffFn2)
+import Unsafe.Coerce (unsafeCoerce)
 
 
 foreign import checkboxImpl :: forall props. ReactClass props
@@ -18,11 +20,11 @@ type CheckboxProps o =
   | o }
 
 
-type CheckboxPropsO eff inputProps classes =
+type CheckboxPropsO eff inputProps =
   ( checked :: Boolean
   , checkedClassName :: String
   , checkedIcon :: ReactElement
-  , classes :: classes
+  , classes :: Classes
   , disableRipple :: Boolean
   , disabled :: Boolean
   , disabledClassName :: String
@@ -41,9 +43,13 @@ type CheckboxClasses =
   , disabled :: Styles
   )
 
+createClasses :: forall classes
+               . Subrow classes CheckboxClasses
+              => { | classes } -> Classes
+createClasses = unsafeCoerce
 
-checkbox' :: forall o eff inputProps classes
-         . Subrow o (CheckboxPropsO eff inputProps { | classes })
-        => Subrow classes CheckboxClasses
+
+checkbox :: forall o eff inputProps classes
+         . Subrow o (CheckboxPropsO eff inputProps)
         => CheckboxProps o -> Array ReactElement -> ReactElement
-checkbox' = createElement checkboxImpl
+checkbox = createElement checkboxImpl

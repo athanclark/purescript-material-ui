@@ -1,15 +1,17 @@
 module MaterialUI.AppBar
-  ( appBar', AppBarProps, AppBarPropsO, AppBarClasses
-  , Color, inherit, primary, accent, default'
+  ( appBar, AppBarProps, AppBarPropsO, AppBarClasses
+  , Color, inherit, primary, accent, default
   , Position, static, fixed, absolute
+  , createClasses
   ) where
 
-import MaterialUI.Types (Styles)
+import MaterialUI.Types (Styles, Classes)
 
 import Prelude
 import React (Event, ReactClass, createElement, ReactElement, ReactProps, ReactState, ReactRefs, ReadOnly, ReadWrite)
 import Data.Record.Class (class Subrow)
 import Control.Monad.Eff.Uncurried (EffFn1)
+import Unsafe.Coerce (unsafeCoerce)
 
 
 foreign import appBarImpl :: forall props. ReactClass props
@@ -31,8 +33,8 @@ primary = Color "primary"
 accent :: Color
 accent = Color "accent"
 
-default' :: Color
-default' = Color "default"
+default :: Color
+default = Color "default"
 
 newtype Position = Position String
 
@@ -46,11 +48,11 @@ absolute :: Position
 absolute = Position "absolute"
 
 
-type AppBarPropsO classes =
+type AppBarPropsO =
   ( children :: Array ReactElement
   , color :: Color
   , position :: Position
-  , classes :: classes
+  , classes :: Classes
   )
 
 
@@ -64,9 +66,14 @@ type AppBarClasses =
   , colorAccent :: Styles
   )
 
+createClasses :: forall classes
+               . Subrow classes AppBarClasses
+              => { | classes } -> Classes
+createClasses = unsafeCoerce
 
-appBar' :: forall o classes
-                   . Subrow o (AppBarPropsO { | classes })
-                  => Subrow classes AppBarClasses
-                  => AppBarProps o -> Array ReactElement -> ReactElement
-appBar' = createElement appBarImpl
+
+
+appBar :: forall o
+         . Subrow o AppBarPropsO
+        => AppBarProps o -> Array ReactElement -> ReactElement
+appBar = createElement appBarImpl

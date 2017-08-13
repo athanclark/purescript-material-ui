@@ -1,13 +1,15 @@
 module MaterialUI.Chip
-  ( chip', ChipProps, ChipPropsO, ChipClasses
+  ( chip, ChipProps, ChipPropsO, ChipClasses
+  , createClasses
   ) where
 
-import MaterialUI.Types (Styles)
+import MaterialUI.Types (Styles, Classes)
 
 import Prelude
 import React (Event, ReactClass, createElement, ReactElement, ReactProps, ReactState, ReactRefs, ReadOnly, ReadWrite)
 import Data.Record.Class (class Subrow)
 import Control.Monad.Eff.Uncurried (EffFn1)
+import Unsafe.Coerce (unsafeCoerce)
 
 
 foreign import chipImpl :: forall props. ReactClass props
@@ -18,9 +20,9 @@ type ChipProps o =
   | o }
 
 
-type ChipPropsO eff classes =
+type ChipPropsO eff =
   ( avatar :: ReactElement
-  , classes :: classes
+  , classes :: Classes
   , label :: ReactElement
   , onRequestDelete :: EffFn1 (props :: ReactProps, refs :: ReactRefs ReadOnly, state :: ReactState ReadWrite | eff) Event Unit
   )
@@ -35,9 +37,13 @@ type ChipClasses =
   , deleteIcon :: Styles
   )
 
+createClasses :: forall classes
+               . Subrow classes ChipClasses
+              => { | classes } -> Classes
+createClasses = unsafeCoerce
 
-chip' :: forall o eff classes
-         . Subrow o (ChipPropsO eff { | classes })
-        => Subrow classes ChipClasses
+
+chip :: forall o eff classes
+         . Subrow o (ChipPropsO eff)
         => ChipProps o -> Array ReactElement -> ReactElement
-chip' = createElement chipImpl
+chip = createElement chipImpl

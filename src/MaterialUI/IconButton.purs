@@ -1,9 +1,10 @@
 module MaterialUI.IconButton
-  ( iconButton', IconButtonProps, IconButtonPropsO, IconButtonClasses
-  , Color, inherit, primary, accent, default', contrast
+  ( iconButton, IconButtonProps, IconButtonPropsO, IconButtonClasses
+  , Color, inherit, primary, accent, default, contrast
+  , createClasses
   ) where
 
-import MaterialUI.Types (Styles)
+import MaterialUI.Types (Styles, Classes)
 
 import Prelude
 import React (Event, ReactClass, createElement, ReactElement, ReactProps, ReactState, ReactRefs, ReadOnly, ReadWrite)
@@ -20,9 +21,9 @@ type IconButtonProps o =
   | o }
 
 
-type IconButtonPropsO eff classes =
+type IconButtonPropsO eff =
   ( children :: Array ReactElement
-  , classes :: classes
+  , classes :: Classes
   , color :: Color
   , disableRipple :: Boolean
   , disabled :: Boolean
@@ -32,8 +33,8 @@ type IconButtonPropsO eff classes =
 
 newtype Color = Color String
 
-default' :: Color
-default' = Color "default"
+default :: Color
+default = Color "default"
 
 inherit :: Color
 inherit = Color "inherit"
@@ -60,9 +61,13 @@ type IconButtonClasses =
   , keyboardFocused :: Styles
   )
 
+createClasses :: forall classes
+               . Subrow classes IconButtonClasses
+              => { | classes } -> Classes
+createClasses = unsafeCoerce
 
-iconButton' :: forall o eff classes
-         . Subrow o (IconButtonPropsO eff { | classes })
-        => Subrow classes IconButtonClasses
+
+iconButton :: forall o eff
+         . Subrow o (IconButtonPropsO eff)
         => IconButtonProps o -> ReactElement -> ReactElement
-iconButton' p = createElement iconButtonImpl p <<< unsafeCoerce
+iconButton p = createElement iconButtonImpl p <<< unsafeCoerce

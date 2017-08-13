@@ -1,13 +1,15 @@
 module MaterialUI.BottomNavigationButton
-  ( bottomNavigationButton', BottomNavigationButtonProps, BottomNavigationButtonPropsO, BottomNavigationButtonClasses
+  ( bottomNavigationButton, BottomNavigationButtonProps, BottomNavigationButtonPropsO, BottomNavigationButtonClasses
+  , createClasses
   ) where
 
-import MaterialUI.Types (Styles)
+import MaterialUI.Types (Styles, Classes)
 
 import Prelude
 import React (Event, ReactClass, createElement, ReactElement, ReactProps, ReactState, ReactRefs, ReadOnly, ReadWrite)
 import Data.Record.Class (class Subrow)
 import Control.Monad.Eff.Uncurried (EffFn1)
+import Unsafe.Coerce (unsafeCoerce)
 
 
 foreign import bottomNavigationButtonImpl :: forall props. ReactClass props
@@ -18,11 +20,11 @@ type BottomNavigationButtonProps o =
   | o }
 
 
-type BottomNavigationButtonPropsO classes =
+type BottomNavigationButtonPropsO =
   ( icon :: ReactElement
   , label :: ReactElement
   , showLabel :: Boolean
-  , classes :: classes
+  , classes :: Classes
   )
 
 
@@ -36,9 +38,13 @@ type BottomNavigationButtonClasses =
   , icon :: Styles
   )
 
+createClasses :: forall classes
+               . Subrow classes BottomNavigationButtonClasses
+              => { | classes } -> Classes
+createClasses = unsafeCoerce
 
-bottomNavigationButton' :: forall o classes
-         . Subrow o (BottomNavigationButtonPropsO { | classes })
-        => Subrow classes BottomNavigationButtonClasses
+
+bottomNavigationButton :: forall o classes
+         . Subrow o BottomNavigationButtonPropsO
         => BottomNavigationButtonProps o -> Array ReactElement -> ReactElement
-bottomNavigationButton' = createElement bottomNavigationButtonImpl
+bottomNavigationButton = createElement bottomNavigationButtonImpl

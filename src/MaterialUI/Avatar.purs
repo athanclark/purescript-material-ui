@@ -1,13 +1,14 @@
 module MaterialUI.Avatar
-  ( avatar', AvatarProps, AvatarPropsO, AvatarClasses
+  ( avatar, AvatarProps, AvatarPropsO, AvatarClasses, createClasses
   ) where
 
-import MaterialUI.Types (Styles)
+import MaterialUI.Types (Styles, Classes)
 
 import Prelude
 import React (Event, ReactClass, createElement, ReactElement, ReactProps, ReactState, ReactRefs, ReadOnly, ReadWrite)
 import Data.Record.Class (class Subrow)
 import Control.Monad.Eff.Uncurried (EffFn1)
+import Unsafe.Coerce (unsafeCoerce)
 
 
 foreign import avatarImpl :: forall props. ReactClass props
@@ -18,7 +19,7 @@ type AvatarProps o =
   | o }
 
 
-type AvatarPropsO componentProps classes =
+type AvatarPropsO componentProps =
   ( children :: ReactElement
   , alt :: String
   , component :: ReactClass componentProps
@@ -26,7 +27,7 @@ type AvatarPropsO componentProps classes =
   , sizes :: String
   , src :: String
   , srcSet :: String
-  , classes :: classes
+  , classes :: Classes
   )
 
 
@@ -37,8 +38,13 @@ type AvatarClasses =
   )
 
 
-avatar' :: forall o classes componentProps
-         . Subrow o (AvatarPropsO componentProps { | classes })
-        => Subrow classes AvatarClasses
+createClasses :: forall classes
+               . Subrow classes AvatarClasses
+              => { | classes } -> Classes
+createClasses = unsafeCoerce
+
+
+avatar :: forall o componentProps
+         . Subrow o (AvatarPropsO componentProps)
         => AvatarProps o -> Array ReactElement -> ReactElement
-avatar' = createElement avatarImpl
+avatar = createElement avatarImpl

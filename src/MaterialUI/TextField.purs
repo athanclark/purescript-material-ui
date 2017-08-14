@@ -41,7 +41,7 @@ numberValue = unsafeCoerce
 
 
 
-type TextFieldPropsO formHelperTextProps inputLabelProps inputProps =
+type TextFieldPropsO eff formHelperTextProps inputLabelProps inputProps =
   ( "FormHelperTextProps" :: formHelperTextProps
   , "InputClassName" :: String
   , "InputLabelProps" :: inputLabelProps
@@ -70,10 +70,12 @@ type TextFieldPropsO formHelperTextProps inputLabelProps inputProps =
   , rowsMax :: Int
   , "type" :: String
   , value :: Value
+  , onClick :: EffFn1 (props :: ReactProps, refs :: ReactRefs ReadOnly, state :: ReactState ReadWrite | eff) Event Unit
+  , onChange :: EffFn1 (props :: ReactProps, refs :: ReactRefs ReadOnly, state :: ReactState ReadWrite | eff) Event Unit
   )
 
 
-textField :: forall o inputProps inputLabelProps formHelperTextProps
-         . Subrow o (TextFieldPropsO formHelperTextProps inputLabelProps inputProps)
+textField :: forall o eff inputProps inputLabelProps formHelperTextProps
+         . Subrow o (TextFieldPropsO eff formHelperTextProps inputLabelProps inputProps)
         => TextFieldProps o -> ReactElement
 textField p = createElement textFieldImpl p []

@@ -25,6 +25,7 @@ type PaperPropsO componentProps =
   , classes :: Classes
   , elevation :: Int
   , square :: Boolean
+  , style :: Styles
   )
 
 type PaperClasses =

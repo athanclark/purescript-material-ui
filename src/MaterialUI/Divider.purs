@@ -43,5 +43,5 @@ createClasses = unsafeCoerce
 
 divider :: forall o
          . Subrow o DividerPropsO
-        => DividerProps o -> Array ReactElement -> ReactElement
-divider = createElement dividerImpl
+        => DividerProps o -> ReactElement
+divider props = createElement dividerImpl props []

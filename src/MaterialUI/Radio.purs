@@ -71,5 +71,5 @@ type RadioGroupClasses =
 
 radioGroup :: forall eff o
          . Subrow o (RadioGroupPropsO eff)
-        => RadioGroupProps o -> ReactElement
-radioGroup props = createElement radioGroupImpl props []
+        => RadioGroupProps o -> Array ReactElement -> ReactElement
+radioGroup = createElement radioGroupImpl

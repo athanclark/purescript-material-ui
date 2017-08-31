@@ -41,3 +41,76 @@ formControlLabel :: forall eff o
          . Subrow o (FormControlLabelPropsO eff)
         => FormControlLabelProps o -> ReactElement
 formControlLabel props = createElement formControlLabelImpl props []
+
+
+
+foreign import formControlImpl :: forall props. ReactClass props
+
+
+type FormControlProps o =
+  {
+  | o }
+
+newtype Margin = Margin String
+
+none = Margin "none"
+dense = Margin "dense"
+normal = Margin "normal"
+
+
+type FormControlPropsO eff componentProps =
+  ( children :: Array ReactElement
+  , classes :: Classes
+  , component :: ReactClass componentProps
+  , disabled :: Boolean
+  , error :: Boolean
+  , fullWidth :: Boolean
+  , margin :: Margin
+  , required :: Boolean
+  )
+
+type FormControlClasses =
+  ( root :: Styles
+  , marginNormal :: Styles
+  , marginDense :: Styles
+  , fullWidth :: Styles
+  )
+
+
+formControl :: forall eff componentProps o
+         . Subrow o (FormControlPropsO eff componentProps)
+        => FormControlProps o -> Array ReactElement -> ReactElement
+formControl = createElement formControlImpl
+
+
+
+foreign import formLabelImpl :: forall props. ReactClass props
+
+
+type FormLabelProps o =
+  {
+  | o }
+
+
+type FormLabelPropsO eff componentProps =
+  ( children :: Array ReactElement
+  , classes :: Classes
+  , component :: ReactClass componentProps
+  , disabled :: Boolean
+  , error :: Boolean
+  , focused :: Boolean
+  , required :: Boolean
+  )
+
+type FormLabelClasses =
+  ( root :: Styles
+  , focused :: Styles
+  , error :: Styles
+  , disabled :: Styles
+  )
+
+
+formLabel :: forall eff componentProps o
+         . Subrow o (FormLabelPropsO eff componentProps)
+        => FormLabelProps o -> Array ReactElement -> ReactElement
+formLabel = createElement formLabelImpl

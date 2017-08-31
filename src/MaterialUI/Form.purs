@@ -1,5 +1,7 @@
 module MaterialUI.Form
   ( formControlLabel, FormControlLabelProps, FormControlLabelPropsO, FormControlLabelClasses
+  , formControl, FormControlProps, FormControlPropsO, FormControlClasses
+  , formLabel, FormLabelProps, FormLabelPropsO, FormLabelClasses
   ) where
 
 import MaterialUI.Types (Styles, Classes)

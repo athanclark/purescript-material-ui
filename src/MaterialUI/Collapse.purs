@@ -31,6 +31,7 @@ type CollapsePropsO eff =
   , onExited :: EffFn1 (props :: ReactProps, refs :: ReactRefs ReadOnly, state :: ReactState ReadWrite | eff) Event Unit
   , onExiting :: EffFn1 (props :: ReactProps, refs :: ReactRefs ReadOnly, state :: ReactState ReadWrite | eff) Event Unit
   , transitionDuration :: Number
+  , unmountOnExit :: Boolean
   )
 
 type CollapseClasses =

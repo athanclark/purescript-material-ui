@@ -23,6 +23,7 @@ type CollapseProps o =
 type CollapsePropsO eff =
   ( children :: Array ReactElement
   , classes :: Classes
+  , style :: Styles
   , in :: Boolean
   , onEnter :: EffFn1 (props :: ReactProps, refs :: ReactRefs ReadOnly, state :: ReactState ReadWrite | eff) Event Unit
   , onEntered :: EffFn1 (props :: ReactProps, refs :: ReactRefs ReadOnly, state :: ReactState ReadWrite | eff) Event Unit

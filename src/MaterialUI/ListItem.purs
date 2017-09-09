@@ -24,6 +24,7 @@ type ListItemPropsO componentProps =
   ( button :: Boolean
   , children :: Array ReactElement
   , classes :: Classes
+  , style :: Styles
   , component :: ReactClass componentProps
   , dense :: Boolean
   , disableGutters :: Boolean

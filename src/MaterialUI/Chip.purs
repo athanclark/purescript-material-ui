@@ -45,5 +45,5 @@ createClasses = unsafeCoerce
 
 chip :: forall o eff classes
          . Subrow o (ChipPropsO eff)
-        => ChipProps o -> Array ReactElement -> ReactElement
-chip = createElement chipImpl
+        => ChipProps o -> ReactElement
+chip p = createElement chipImpl p []

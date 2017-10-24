@@ -12,7 +12,8 @@
     "purescript-console": "^3.0.0",
     "purescript-records": "athanclark/purescript-records#214a78e65feda4328ab7245ed8edb10b9b8dd0d8",
     "purescript-react": "^4.1.0",
-    "purescript-dom": "^4.8.0"
+    "purescript-dom": "^4.8.0",
+    "purescript-typelevel-prelude": "^2.5.0"
   },
   "devDependencies": {
     "purescript-psci-support": "^3.0.0"

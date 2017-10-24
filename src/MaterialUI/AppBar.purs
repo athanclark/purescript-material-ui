@@ -68,12 +68,21 @@ type AppBarClasses =
   , colorAccent :: Styles
   )
 
-createClasses :: forall classes classesList compiledClasses compiledClassesList
-               . Subrow classes AppBarClasses
-              => RowToList classes classesList
-              => CompileStyles classesList compiledClassesList
-              => ListToRow compiledClassesList compiledClasses
-              => { | compiledClasses } -> Classes
+
+type AppBarClassesCompiled =
+  ( root :: String
+  , positionFixed :: String
+  , positionAbsolute :: String
+  , positionStatic :: String
+  , colorDefault :: String
+  , colorPrimary :: String
+  , colorAccent :: String
+  )
+
+
+createClasses :: forall classes
+               . Subrow classes AppBarClassesCompiled
+              => { | classes } -> Classes
 createClasses = unsafeCoerce
 
 

@@ -1,17 +1,20 @@
 module MaterialUI.Drawer
-  ( drawer, DrawerProps, DrawerPropsO, DrawerClasses
+  ( drawer, DrawerProps, DrawerPropsO, DrawerClasses, DrawerClassesCompiled
   , Anchor, left, right, top, bottom
   , DrawerType, permanent, persistent, temporary
   , createClasses
+  , withStyles
   ) where
 
-import MaterialUI.Types (Styles, Classes)
+import MaterialUI.Types (Styles, Classes, class CompileStyles, Theme)
 
 import Prelude
-import React (Event, ReactClass, createElement, ReactElement, ReactProps, ReactState, ReactRefs, ReadOnly, ReadWrite)
+import React (Event, ReactClass, createElement, createClassStateless, ReactElement, ReactProps, ReactState, ReactRefs, ReadOnly, ReadWrite)
 import Data.Record.Class (class Subrow)
+import Data.Function.Uncurried (Fn2, runFn2)
 import Control.Monad.Eff.Uncurried (EffFn1)
 import Unsafe.Coerce (unsafeCoerce)
+import Type.Row (class RowToList, class ListToRow)
 
 
 foreign import drawerImpl :: forall props. ReactClass props
@@ -72,8 +75,20 @@ type DrawerClasses =
   , modal :: Styles
   )
 
+type DrawerClassesCompiled =
+  ( paper :: String
+  , paperAnchorLeft :: String
+  , paperAnchorRight :: String
+  , paperAnchorDockedLeft :: String
+  , paperAnchorDockedRight :: String
+  , paperAnchorTop :: String
+  , paperAnchorBottom :: String
+  , docked :: String
+  , modal :: String
+  )
+
 createClasses :: forall classes
-               . Subrow classes DrawerClasses
+               . Subrow classes DrawerClassesCompiled
               => { | classes } -> Classes
 createClasses = unsafeCoerce
 
@@ -82,3 +97,15 @@ drawer :: forall o eff slideProps
          . Subrow o (DrawerPropsO eff slideProps)
         => DrawerProps o -> Array ReactElement -> ReactElement
 drawer = createElement drawerImpl
+
+
+foreign import withStylesImpl :: forall styles compiledStyles a
+                               . Fn2 (Theme -> { | styles }) (ReactClass {classes :: { | compiledStyles }}) (ReactClass a)
+
+withStyles :: forall styles stylesList compiledStyles compiledStylesList a
+            . Subrow styles DrawerClasses
+            => RowToList styles stylesList
+            => CompileStyles stylesList compiledStylesList
+            => ListToRow compiledStylesList compiledStyles
+            => (Theme -> { | styles }) -> ({classes :: { | compiledStyles }} -> ReactElement) -> ReactElement
+withStyles stylesF createElem = createElement (runFn2 withStylesImpl stylesF (createClassStateless createElem)) unit []

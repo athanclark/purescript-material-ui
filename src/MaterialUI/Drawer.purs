@@ -53,6 +53,7 @@ type DrawerPropsO eff slideProps =
   , anchor :: Anchor
   , children :: Array ReactElement
   , classes :: Classes
+  , style :: Styles
   , elevation :: Int
   , onRequestClose :: EffFn1 (props :: ReactProps, refs :: ReactRefs ReadOnly, state :: ReactState ReadWrite | eff) Event Unit
   , open :: Boolean

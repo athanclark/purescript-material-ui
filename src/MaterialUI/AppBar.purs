@@ -98,12 +98,12 @@ foreign import withStylesImpl :: forall styles stylesList compiledStyles compile
                               => RowToList styles stylesList
                               => CompileStyles stylesList compiledStylesList
                               => ListToRow compiledStylesList compiledStyles
-                              => Fn2 (Theme -> { | styles }) (ReactClass { | compiledStyles }) (ReactClass a)
+                              => Fn2 (Theme -> { | styles }) (ReactClass {classes :: { | compiledStyles }}) (ReactClass a)
 
 withStyles :: forall styles stylesList compiledStyles compiledStylesList a
             . Subrow styles AppBarClasses
             => RowToList styles stylesList
             => CompileStyles stylesList compiledStylesList
             => ListToRow compiledStylesList compiledStyles
-            => (Theme -> { | styles }) -> ({ | compiledStyles } -> ReactElement) -> ReactElement
+            => (Theme -> { | styles }) -> ({classes :: { | compiledStyles }} -> ReactElement) -> ReactElement
 withStyles stylesF createElem = createElement (runFn2 withStylesImpl stylesF (createClassStateless createElem)) unit []

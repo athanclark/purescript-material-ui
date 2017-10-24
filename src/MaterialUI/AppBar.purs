@@ -105,4 +105,4 @@ withStyles :: forall styles stylesList compiledStyles compiledStylesList a
             => CompileStyles stylesList compiledStylesList
             => ListToRow compiledStylesList compiledStyles
             => (Theme -> { | styles }) -> ({ | compiledStyles } -> ReactElement) -> ReactElement
-withStyles stylesF createElem = createElement (withStylesImpl stylesF (createClassStateless createElem)) unit []
+withStyles stylesF createElem = createElement (withStylesImpl stylesF (unsafeCoerce createElem)) unit []

@@ -11,6 +11,7 @@ import MaterialUI.Types (Styles, Classes, class CompileStyles, Theme)
 import Prelude
 import React (Event, ReactClass, createElement, createClassStateless, ReactElement, ReactProps, ReactState, ReactRefs, ReadOnly, ReadWrite)
 import Data.Record.Class (class Subrow)
+import Data.Function.Uncurried (Fn2, runFn2)
 import Control.Monad.Eff.Uncurried (EffFn1)
 import Unsafe.Coerce (unsafeCoerce)
 import Type.Row (class RowToList, class ListToRow)
@@ -97,7 +98,7 @@ foreign import withStylesImpl :: forall styles stylesList compiledStyles compile
                               => RowToList styles stylesList
                               => CompileStyles stylesList compiledStylesList
                               => ListToRow compiledStylesList compiledStyles
-                              => (Theme -> { | styles }) -> ReactClass { | compiledStyles } -> ReactClass a
+                              => Fn2 (Theme -> { | styles }) (ReactClass { | compiledStyles }) (ReactClass a)
 
 withStyles :: forall styles stylesList compiledStyles compiledStylesList a
             . Subrow styles AppBarClasses
@@ -105,4 +106,4 @@ withStyles :: forall styles stylesList compiledStyles compiledStylesList a
             => CompileStyles stylesList compiledStylesList
             => ListToRow compiledStylesList compiledStyles
             => (Theme -> { | styles }) -> ({ | compiledStyles } -> ReactElement) -> ReactElement
-withStyles stylesF createElem = createElement (withStylesImpl stylesF (unsafeCoerce createElem)) unit []
+withStyles stylesF createElem = createElement (runFn2 withStylesImpl stylesF (createClassStateless createElem)) unit []

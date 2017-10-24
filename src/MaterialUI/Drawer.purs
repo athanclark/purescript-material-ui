@@ -1,6 +1,7 @@
 module MaterialUI.Drawer
   ( drawer, DrawerProps, DrawerPropsO, DrawerClasses
   , Anchor, left, right, top, bottom
+  , DrawerType, permanent, persistent, temporary
   , createClasses
   ) where
 
@@ -35,25 +36,38 @@ bottom :: Anchor
 bottom = Anchor "bottom"
 
 
+newtype DrawerType = DrawerType String
+
+permanent :: DrawerType
+permanent = DrawerType "permanent"
+
+persistent :: DrawerType
+persistent = DrawerType "persistent"
+
+temporary :: DrawerType
+temporary = DrawerType "temporary"
+
+
 type DrawerPropsO eff slideProps =
   ( "SlideProps" :: slideProps
   , anchor :: Anchor
   , children :: Array ReactElement
   , classes :: Classes
-  , docked :: Boolean
   , elevation :: Int
-  , enterTransitionDuration :: Number
-  , leaveTransitionDuration :: Number
   , onRequestClose :: EffFn1 (props :: ReactProps, refs :: ReactRefs ReadOnly, state :: ReactState ReadWrite | eff) Event Unit
   , open :: Boolean
+  , transitionDuration :: Number
+  , "type" :: DrawerType
   )
 
 type DrawerClasses =
   ( paper :: Styles
-  , anchorLeft :: Styles
-  , anchorRight :: Styles
-  , anchorTop :: Styles
-  , anchorBottom :: Styles
+  , paperAnchorLeft :: Styles
+  , paperAnchorRight :: Styles
+  , paperAnchorDockedLeft :: Styles
+  , paperAnchorDockedRight :: Styles
+  , paperAnchorTop :: Styles
+  , paperAnchorBottom :: Styles
   , docked :: Styles
   , modal :: Styles
   )

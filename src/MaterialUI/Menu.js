@@ -1,5 +1,6 @@
 "use strict";
 
-var Menu = require('material-ui/Menu').default;
+var m = require('material-ui/Menu');
 
-exports.menuImpl = Menu;
+exports.menuImpl = m.default;
+exports.menuItemImpl = m.MenuItem;

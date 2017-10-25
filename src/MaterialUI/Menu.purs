@@ -51,3 +51,36 @@ menu :: forall o eff menuListProps
          . Subrow o (MenuPropsO eff menuListProps)
         => MenuProps o -> Array ReactElement -> ReactElement
 menu = createElement menuImpl
+
+-----------------------------------------------------------------------------------------
+
+foreign import menuItemImpl :: forall props. ReactClass props
+
+
+type MenuItemProps o =
+  {
+  | o }
+
+
+type MenuItemPropsO componentProps =
+  ( children :: Array ReactElement
+  , classes :: Classes
+  , component :: ReactClass componentProps
+  , selected :: Boolean
+  )
+
+type MenuItemClasses =
+  ( root :: Styles
+  , selected :: Styles
+  )
+
+createClassesItem :: forall classes
+               . Subrow classes MenuItemClasses
+              => { | classes } -> Classes
+createClassesItem = unsafeCoerce
+
+
+menuItem :: forall o componentProps
+         . Subrow o (MenuItemPropsO componentProps)
+        => MenuItemProps o -> Array ReactElement -> ReactElement
+menuItem = createElement menuItemImpl

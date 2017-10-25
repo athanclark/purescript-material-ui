@@ -201,6 +201,7 @@ type InputLabelPropsO =
   , focused :: Boolean
   , required :: Boolean
   , shrink :: Boolean
+  , htmlFor :: String
   )
 
 type InputLabelClasses =

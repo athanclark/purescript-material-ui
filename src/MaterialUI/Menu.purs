@@ -6,6 +6,8 @@ module MaterialUI.Menu
   ) where
 
 import MaterialUI.Types (Styles, Classes)
+import MaterialUI.ListItem (ListItemPropsO)
+import MaterialUI.Input (Value)
 
 import Prelude
 import React (Event, ReactClass, createElement, ReactElement, ReactProps, ReactState, ReactRefs, ReadOnly, ReadWrite)
@@ -69,6 +71,8 @@ type MenuItemPropsO componentProps =
   , classes :: Classes
   , component :: ReactClass componentProps
   , selected :: Boolean
+  , key :: String
+  , value :: Value
   )
 
 type MenuItemClasses =
@@ -82,7 +86,8 @@ createClassesItem :: forall classes
 createClassesItem = unsafeCoerce
 
 
-menuItem :: forall o componentProps
-         . Subrow o (MenuItemPropsO componentProps)
+menuItem :: forall o both componentProps
+         . Subrow o both
+        => Union (MenuItemPropsO componentProps) (ListItemPropsO componentProps) both
         => MenuItemProps o -> Array ReactElement -> ReactElement
 menuItem = createElement menuItemImpl

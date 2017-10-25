@@ -5,6 +5,5 @@ var withStyles = require('material-ui/styles').withStyles;
 
 exports.drawerImpl = Drawer;
 exports.withStylesImpl = function withStylesImpl(stylesF,x) {
-  console.log('...',x);
   return withStyles(stylesF)(x);
 };

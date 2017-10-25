@@ -1,6 +1,6 @@
 module MaterialUI.Input
   ( input, InputProps, InputPropsO, InputClasses
-  , Value, valueInt, valueNumber, valueString, ReadValue (..), readValue
+  , Value, valueInt, valueNumber, valueString, valueNull, ReadValue (..), readValue
   , Margin, dense, none
   , InputType, textType, buttonType, checkboxType, colorType, dateType, datetimeLocalType, emailType, fileType, hiddenType, imageType, monthType, numberType, passwordType, radioType, rangeType, resetType, searchType, submitType, telType, timeType, urlType, weekType
   , createClasses

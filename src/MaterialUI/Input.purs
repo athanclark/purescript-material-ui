@@ -4,6 +4,8 @@ module MaterialUI.Input
   , Margin, dense, none
   , InputType, textType, buttonType, checkboxType, colorType, dateType, datetimeLocalType, emailType, fileType, hiddenType, imageType, monthType, numberType, passwordType, radioType, rangeType, resetType, searchType, submitType, telType, timeType, urlType, weekType
   , createClasses
+  , inputLabel, InputLabelProps, InputLabelPropsO, InputLabelClasses
+  , createClassesLabel
   ) where
 
 import MaterialUI.Types (Styles, Classes)
@@ -179,3 +181,45 @@ input :: forall o eff inputProps inputComponentProps
          . Subrow o (InputPropsO eff inputProps inputComponentProps)
         => InputProps o -> Array ReactElement -> ReactElement
 input = createElement inputImpl
+
+-------------------------------------------------------------------------------------
+
+
+foreign import inputLabelImpl :: forall props. ReactClass props
+
+
+type InputLabelProps o =
+  {
+  | o }
+
+type InputLabelPropsO =
+  ( children :: Array ReactElement
+  , classes :: Classes
+  , disableAnimation :: Boolean
+  , disabled :: Boolean
+  , error :: Boolean
+  , focused :: Boolean
+  , required :: Boolean
+  , shrink :: Boolean
+  )
+
+type InputLabelClasses =
+  ( root :: Styles
+  , formControl :: Styles
+  , labelDense :: Styles
+  , shrink :: Styles
+  , animated :: Styles
+  , disabled :: Styles
+  )
+
+
+createClassesLabel :: forall classes
+               . Subrow classes InputLabelClasses
+              => { | classes } -> Classes
+createClassesLabel = unsafeCoerce
+
+
+inputLabel :: forall o
+         . Subrow o InputLabelPropsO
+        => InputLabelProps o -> Array ReactElement -> ReactElement
+inputLabel = createElement inputImpl

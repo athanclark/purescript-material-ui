@@ -1,5 +1,7 @@
 "use strict";
 
-var Input = require('material-ui/Input').default;
+var i = require('material-ui/Input');
 
-exports.inputImpl = Input;
+
+exports.inputImpl = i.default;
+exports.inputLabelImpl = i.InputLabel;

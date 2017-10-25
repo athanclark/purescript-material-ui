@@ -1,6 +1,8 @@
 module MaterialUI.Menu
   ( menu, MenuProps, MenuPropsO, MenuClasses
   , createClasses
+  , menuItem, MenuItemProps, MenuItemPropsO, MenuItemClasses
+  , createClassesItem
   ) where
 
 import MaterialUI.Types (Styles, Classes)

@@ -1,0 +1,181 @@
+module MaterialUI.Input
+  ( input, InputProps, InputPropsO, InputClasses
+  , Value, valueInt, valueNumber, valueString, ReadValue (..), readValue
+  , Margin, dense, none
+  , InputType, textType, buttonType, checkboxType, colorType, dateType, datetimeLocalType, emailType, fileType, hiddenType, imageType, monthType, numberType, passwordType, radioType, rangeType, resetType, searchType, submitType, telType, timeType, urlType, weekType
+  , createClasses
+  ) where
+
+import MaterialUI.Types (Styles, Classes)
+
+import Prelude
+import React (Event, ReactClass, createElement, ReactElement, ReactProps, ReactState, ReactRefs, ReadOnly, ReadWrite)
+import Data.Record.Class (class Subrow)
+import Data.Either (Either)
+import Data.Foreign (readNumber, readString, readInt, toForeign, MultipleErrors)
+import Control.Alternative ((<|>))
+import Control.Monad.Except (runExcept)
+import Control.Monad.Eff.Uncurried (EffFn1)
+import Unsafe.Coerce (unsafeCoerce)
+import DOM.Node.Types (Node)
+
+
+foreign import inputImpl :: forall props. ReactClass props
+
+
+type InputProps o =
+  {
+  | o }
+
+
+foreign import data Value :: Type
+
+valueInt :: Int -> Value
+valueInt = unsafeCoerce
+
+valueNumber :: Number -> Value
+valueNumber = unsafeCoerce
+
+valueString :: String -> Value
+valueString = unsafeCoerce
+
+data ReadValue
+  = ValueInt Int | ValueNumber Number | ValueString String
+
+readValue :: Value -> Either MultipleErrors ReadValue
+readValue v = runExcept $ do
+  let v' = toForeign v
+  (ValueInt <$> readInt v') <|> (ValueNumber <$> readNumber v') <|> (ValueString <$> readString v')
+
+newtype Margin = Margin String
+
+dense :: Margin
+dense = Margin "dense"
+
+none :: Margin
+none = Margin "none"
+
+newtype InputType = InputType String
+
+textType :: InputType
+textType = InputType "text"
+
+buttonType :: InputType
+buttonType = InputType "button"
+
+checkboxType :: InputType
+checkboxType = InputType "checkbox"
+
+colorType :: InputType
+colorType = InputType "color"
+
+dateType :: InputType
+dateType = InputType "date"
+
+datetimeLocalType :: InputType
+datetimeLocalType = InputType "datetime-local"
+
+emailType :: InputType
+emailType = InputType "email"
+
+fileType :: InputType
+fileType = InputType "file"
+
+hiddenType :: InputType
+hiddenType = InputType "hidden"
+
+imageType :: InputType
+imageType = InputType "image"
+
+monthType :: InputType
+monthType = InputType "month"
+
+numberType :: InputType
+numberType = InputType "number"
+
+passwordType :: InputType
+passwordType = InputType "password"
+
+radioType :: InputType
+radioType = InputType "radio"
+
+rangeType :: InputType
+rangeType = InputType "range"
+
+resetType :: InputType
+resetType = InputType "reset"
+
+searchType :: InputType
+searchType = InputType "search"
+
+submitType :: InputType
+submitType = InputType "submit"
+
+telType :: InputType
+telType = InputType "tel"
+
+timeType :: InputType
+timeType = InputType "time"
+
+urlType :: InputType
+urlType = InputType "url"
+
+weekType :: InputType
+weekType = InputType "week"
+
+
+type InputPropsO eff inputComponentProps inputProps =
+  ( autoComplete :: String
+  , autoFocus :: Boolean
+  , className :: String
+  , classes :: Classes
+  , defaultValue :: Value
+  , disableUnderline :: Boolean
+  , disabled :: Boolean
+  , startAdornment :: Node
+  , endAdornment :: Node
+  , error :: Boolean
+  , fullWidth :: Boolean
+  , id :: String
+  , inputComponent :: ReactClass inputComponentProps
+  , inputProps :: inputProps
+  , margin :: Margin
+  , multiline :: Boolean
+  , name :: String
+  , onChange :: EffFn1 (props :: ReactProps, refs :: ReactRefs ReadOnly, state :: ReactState ReadWrite | eff) Event Unit
+  , placeholder :: String
+  , rows :: Int
+  , rowsMax :: Int
+  , "type" :: InputType
+  , value :: Value
+  )
+
+type InputClasses =
+  ( root :: Styles
+  , formControl :: Styles
+  , inkbar :: Styles
+  , error :: Styles
+  , input :: Styles
+  , inputAdorned :: Styles
+  , inputDense :: Styles
+  , inputDisabled :: Styles
+  , inputSingleline :: Styles
+  , inputSearch :: Styles
+  , inputMultiline :: Styles
+  , disabled :: Styles
+  , focused :: Styles
+  , underline :: Styles
+  , multiline :: Styles
+  , fullWidth :: Styles
+  )
+
+createClasses :: forall classes
+               . Subrow classes InputClasses
+              => { | classes } -> Classes
+createClasses = unsafeCoerce
+
+
+input :: forall o eff inputProps inputComponentProps
+         . Subrow o (InputPropsO eff inputProps inputComponentProps)
+        => InputProps o -> Array ReactElement -> ReactElement
+input = createElement inputImpl

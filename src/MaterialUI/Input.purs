@@ -223,4 +223,4 @@ createClassesLabel = unsafeCoerce
 inputLabel :: forall o
          . Subrow o InputLabelPropsO
         => InputLabelProps o -> Array ReactElement -> ReactElement
-inputLabel = createElement inputImpl
+inputLabel = createElement inputLabelImpl

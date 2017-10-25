@@ -14,7 +14,9 @@ import Prelude
 import React (Event, ReactClass, createElement, ReactElement, ReactProps, ReactState, ReactRefs, ReadOnly, ReadWrite)
 import Data.Record.Class (class Subrow)
 import Data.Either (Either)
+import Data.Maybe (Maybe (Nothing))
 import Data.Foreign (readNumber, readString, readInt, toForeign, MultipleErrors)
+import Data.Nullable (toNullable)
 import Control.Alternative ((<|>))
 import Control.Monad.Except (runExcept)
 import Control.Monad.Eff.Uncurried (EffFn1)
@@ -40,6 +42,9 @@ valueNumber = unsafeCoerce
 
 valueString :: String -> Value
 valueString = unsafeCoerce
+
+valueNull :: Value
+valueNull = unsafeCoerce (toNullable Nothing)
 
 data ReadValue
   = ValueInt Int | ValueNumber Number | ValueString String

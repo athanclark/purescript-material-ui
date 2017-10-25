@@ -4,6 +4,7 @@ module MaterialUI.Select
   ) where
 
 import MaterialUI.Types (Styles, Classes)
+import MaterialUI.Input (InputPropsO)
 
 import Prelude
 import React (Event, ReactClass, createElement, ReactElement, ReactProps, ReactState, ReactRefs, ReadOnly, ReadWrite)
@@ -48,7 +49,8 @@ createClasses :: forall classes
 createClasses = unsafeCoerce
 
 
-select :: forall o menuProps
-         . Subrow o (SelectPropsO menuProps)
+select :: forall o menuProps eff inputProps inputComponentProps both
+         . Union (SelectPropsO menuProps) (InputPropsO eff inputProps inputComponentProps) both
+        => Subrow o both
         => SelectProps o -> Array ReactElement -> ReactElement
 select = createElement selectImpl

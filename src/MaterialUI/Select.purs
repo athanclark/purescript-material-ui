@@ -4,7 +4,7 @@ module MaterialUI.Select
   ) where
 
 import MaterialUI.Types (Styles, Classes)
-import MaterialUI.Input (InputPropsO)
+import MaterialUI.Input (InputPropsO, Value)
 
 import Prelude
 import React (Event, ReactClass, createElement, ReactElement, ReactProps, ReactState, ReactRefs, ReadOnly, ReadWrite)
@@ -26,13 +26,11 @@ type SelectPropsO menuProps =
   ( "MenuProps" :: menuProps
   , autoWidth :: Boolean
   , children :: Array ReactElement
-  , classes :: Classes
   , displayEmpty :: Boolean
   , input :: ReactElement
   , multiple :: Boolean
   , native :: Boolean
-  , renderValue :: Json -> String
-  , value :: Json
+  , renderValue :: Value -> String
   )
 
 type SelectClasses =

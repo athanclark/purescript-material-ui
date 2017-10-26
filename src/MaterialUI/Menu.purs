@@ -86,8 +86,8 @@ createClassesItem :: forall classes
 createClassesItem = unsafeCoerce
 
 
-menuItem :: forall o both componentProps
+menuItem :: forall o eff both componentProps
          . Subrow o both
-        => Union (MenuItemPropsO componentProps) (ListItemPropsO componentProps) both
+        => Union (MenuItemPropsO componentProps) (ListItemPropsO eff componentProps) both
         => MenuItemProps o -> Array ReactElement -> ReactElement
 menuItem = createElement menuItemImpl

@@ -20,11 +20,12 @@ type ListItemProps o =
   | o }
 
 
-type ListItemPropsO componentProps =
+type ListItemPropsO eff componentProps =
   ( button :: Boolean
   , children :: Array ReactElement
   , classes :: Classes
   , style :: Styles
+  , onClick :: EffFn1 (props :: ReactProps, refs :: ReactRefs ReadOnly, state :: ReactState ReadWrite | eff) Event Unit
   , component :: ReactClass componentProps
   , dense :: Boolean
   , disableGutters :: Boolean
@@ -49,7 +50,7 @@ createClasses :: forall classes
 createClasses = unsafeCoerce
 
 
-listItem :: forall o componentProps
-         . Subrow o (ListItemPropsO componentProps)
+listItem :: forall o eff componentProps
+         . Subrow o (ListItemPropsO eff componentProps)
         => ListItemProps o -> Array ReactElement -> ReactElement
 listItem = createElement listItemImpl

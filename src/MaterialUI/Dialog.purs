@@ -36,11 +36,10 @@ md = MaxWidth "md"
 type DialogPropsO eff transitionProps =
   ( children                :: Array ReactElement
   , classes                 :: Classes
-  , enterTransitionDuration :: Number
-  , fullscreen              :: Boolean
+  , fullScreen              :: Boolean
+  , fullWidth               :: Boolean
   , ignoreBackdropClick     :: Boolean
   , ignoreEscapeKeyUp       :: Boolean
-  , leaveTransitionDuration :: Number
   , maxWidth                :: MaxWidth
   , onBackdropClick         :: EffFn1 (props :: ReactProps, refs :: ReactRefs ReadOnly, state :: ReactState ReadWrite | eff) Event Unit
   , onEnter                 :: EffFn1 (props :: ReactProps, refs :: ReactRefs ReadOnly, state :: ReactState ReadWrite | eff) Event Unit
@@ -51,6 +50,7 @@ type DialogPropsO eff transitionProps =
   , onExited                :: EffFn1 (props :: ReactProps, refs :: ReactRefs ReadOnly, state :: ReactState ReadWrite | eff) Event Unit
   , onExiting               :: EffFn1 (props :: ReactProps, refs :: ReactRefs ReadOnly, state :: ReactState ReadWrite | eff) Event Unit
   , onRequestClose          :: EffFn1 (props :: ReactProps, refs :: ReactRefs ReadOnly, state :: ReactState ReadWrite | eff) Event Unit
+  , transitionDuration      :: Number
   , transition              :: ReactClass transitionProps
   )
 
@@ -61,7 +61,8 @@ type DialogClasses =
   , paperWidthXs :: Styles
   , paperWidthSm :: Styles
   , paperWidthMd :: Styles
-  , fullscreen :: Styles
+  , fullScreen :: Styles
+  , fullWidth :: Styles
   )
 
 

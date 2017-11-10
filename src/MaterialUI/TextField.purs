@@ -5,6 +5,7 @@ module MaterialUI.TextField
   ) where
 
 import MaterialUI.Types (Styles, Classes)
+import MaterialUI.Input (InputPropsO)
 
 import Prelude
 import React (Event, ReactClass, createElement, ReactElement, ReactProps, ReactState, ReactRefs, ReadOnly, ReadWrite)
@@ -41,41 +42,24 @@ numberValue = unsafeCoerce
 
 
 
-type TextFieldPropsO eff formHelperTextProps inputLabelProps inputProps =
+type TextFieldPropsO eff formHelperTextProps inputLabelProps =
   ( "FormHelperTextProps" :: formHelperTextProps
   , "InputClassName" :: String
   , "InputLabelProps" :: inputLabelProps
-  , "InputProps" :: inputProps
-  , autoComplete :: String
-  , autoFocus :: Boolean
-  , defaultValue :: String
-  , disabled :: Boolean
-  , error :: Boolean
-  , fullWidth :: Boolean
   , helperText :: ReactElement
   , helperTextClassName :: String
-  , id :: String
   , inputClassName :: String
-  , inputProps :: inputProps
   -- , inputRef FIXME
   , label :: ReactElement
   , labelClassName :: String
-  , margin :: Margin
-  , multiline :: Boolean
-  , name :: String
-  , placeholder :: String
   , required :: Boolean
   -- rootRef FIXME
-  , rows :: Int
-  , rowsMax :: Int
-  , "type" :: String
-  , value :: Value
   , onClick :: EffFn1 (props :: ReactProps, refs :: ReactRefs ReadOnly, state :: ReactState ReadWrite | eff) Event Unit
-  , onChange :: EffFn1 (props :: ReactProps, refs :: ReactRefs ReadOnly, state :: ReactState ReadWrite | eff) Event Unit
   )
 
 
-textField :: forall o eff inputProps inputLabelProps formHelperTextProps
-         . Subrow o (TextFieldPropsO eff formHelperTextProps inputLabelProps inputProps)
+textField :: forall o eff inputProps inputComponentProps inputLabelProps formHelperTextProps
+         . Subrow o (TextFieldPropsO eff formHelperTextProps inputLabelProps)
+        => Subrow o (InputPropsO eff inputComponentProps inputProps)
         => TextFieldProps o -> ReactElement
 textField p = createElement textFieldImpl p []

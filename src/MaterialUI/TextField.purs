@@ -1,7 +1,5 @@
 module MaterialUI.TextField
   ( textField, TextFieldProps, TextFieldPropsO
-  , Margin, none, dense, normal
-  , Value, stringValue, intValue, numberValue
   ) where
 
 import MaterialUI.Types (Styles, Classes)
@@ -21,24 +19,6 @@ type TextFieldProps o =
   {
   | o }
 
-
-newtype Margin = Margin String
-
-none :: Margin
-none = Margin "none"
-dense = Margin "dense"
-normal = Margin "normal"
-
-foreign import data Value :: Type
-
-stringValue :: String -> Value
-stringValue = unsafeCoerce
-
-intValue :: Int -> Value
-intValue = unsafeCoerce
-
-numberValue :: Number -> Value
-numberValue = unsafeCoerce
 
 
 

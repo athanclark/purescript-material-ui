@@ -11,6 +11,7 @@ import Prelude
 import React (Event, ReactClass, createElement, ReactElement, ReactProps, ReactState, ReactRefs, ReadOnly, ReadWrite)
 import Data.Record.Class (class Subrow)
 import Data.Time.Duration (Milliseconds)
+import Data.Nullable (Nullable)
 import Control.Monad.Eff.Uncurried (EffFn1, EffFn2)
 import Unsafe.Coerce (unsafeCoerce)
 
@@ -58,8 +59,8 @@ clickaway = CloseReason "clickaway"
 type SnackbarPropsO eff =
   ( raised :: Boolean
   , anchorOrigin :: {vertical :: VerticalOrigin, horizontal :: HorizontalOrigin}
-  , autoHideDuration :: Milliseconds
-  , resumeHideDuration :: Milliseconds
+  , autoHideDuration :: Nullable Milliseconds
+  , resumeHideDuration :: Nullable Milliseconds
   , children :: Array ReactElement
   , classes :: Classes
   , key :: String

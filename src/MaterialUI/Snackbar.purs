@@ -24,22 +24,22 @@ type SnackbarProps o =
 
 newtype VerticalOrigin = VerticalOrigin String
 
-left :: VerticalOrigin
-left = VerticalOrigin "left"
+left :: HorizontalOrigin
+left = HorizontalOrigin "left"
 
-right :: VerticalOrigin
-right = VerticalOrigin "right"
+right :: HorizontalOrigin
+right = HorizontalOrigin "right"
 
 vCenter :: VerticalOrigin
 vCenter = VerticalOrigin "center"
 
 newtype HorizontalOrigin = HorizontalOrigin String
 
-bottom :: HorizontalOrigin
-bottom = HorizontalOrigin "bottom"
+bottom :: VerticalOrigin
+bottom = VerticalOrigin "bottom"
 
-top :: HorizontalOrigin
-top = HorizontalOrigin "top"
+top :: VerticalOrigin
+top = VerticalOrigin "top"
 
 hCenter :: HorizontalOrigin
 hCenter = HorizontalOrigin "center"

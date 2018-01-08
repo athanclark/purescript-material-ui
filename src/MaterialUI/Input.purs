@@ -155,6 +155,7 @@ type InputPropsO eff inputComponentProps inputProps =
   , rowsMax :: Int
   , "type" :: InputType
   , value :: Value
+  , max :: Int
   )
 
 type InputClasses =

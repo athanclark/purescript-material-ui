@@ -36,6 +36,7 @@ type ButtonPropsO eff componentProps =
   , raised :: Boolean
   , onClick    :: EffFn1 (props :: ReactProps, refs :: ReactRefs ReadOnly, state :: ReactState ReadWrite | eff) Event Unit
   , onTouchTap :: EffFn1 (props :: ReactProps, refs :: ReactRefs ReadOnly, state :: ReactState ReadWrite | eff) Event Unit
+  , mini :: Boolean
   )
 
 newtype Color = Color String

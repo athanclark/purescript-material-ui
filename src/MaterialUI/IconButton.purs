@@ -24,6 +24,7 @@ type IconButtonProps o =
 type IconButtonPropsO eff =
   ( children :: Array ReactElement
   , classes :: Classes
+  , style :: Styles
   , color :: Color
   , disableRipple :: Boolean
   , disabled :: Boolean

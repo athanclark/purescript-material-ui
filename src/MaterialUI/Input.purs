@@ -136,6 +136,7 @@ type InputPropsO eff inputComponentProps inputProps =
   , autoFocus :: Boolean
   , className :: String
   , classes :: Classes
+  , style :: Styles
   , defaultValue :: Value
   , disableUnderline :: Boolean
   , disabled :: Boolean

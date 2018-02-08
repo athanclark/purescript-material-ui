@@ -8,4 +8,6 @@ var createMuiTheme = modules.createMuiTheme;
 
 exports.muiThemeProviderImpl = MuiThemeProvider;
 
-exports.createMuiTheme = createMuiTheme;
+exports.defaultMuiTheme = createMuiTheme();
+
+exports.createMuiThemeImpl = createMuiTheme;

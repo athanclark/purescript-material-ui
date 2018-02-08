@@ -1,7 +1,7 @@
 module MaterialUI.Tabs
   ( tabs, TabsProps, TabsPropsO, TabsClasses
   , tab, TabProps, TabPropsO, TabClasses
-  , Color (..), accent, primary, inherit, ScrollButtons, auto, on, off
+  , Color (..), secondary, primary, inherit, ScrollButtons, auto, on, off
   ) where
 
 import MaterialUI.Types (Styles, Classes)
@@ -18,7 +18,7 @@ foreign import tabsImpl :: forall props. ReactClass props
 
 newtype Color = Color String
 
-accent = Color "accent"
+secondary = Color "secondary"
 primary = Color "primary"
 inherit = Color "inherit"
 

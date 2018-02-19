@@ -56,6 +56,7 @@ type AppBarPropsO =
   , color :: Color
   , position :: Position
   , classes :: Classes
+  , key :: String
   )
 
 

@@ -1,9 +1,10 @@
 module MaterialUI.MuiThemeProvider
-  ( muiThemeProvider, MuiThemeProviderProps, Theme, createMuiTheme
+  ( muiThemeProvider, MuiThemeProviderProps, Theme, defaultMuiTheme, createMuiTheme
   ) where
 
 
 import Prelude
+import Data.Record.Class (class Subrow)
 import React (ReactClass, createElement, ReactElement)
 import Unsafe.Coerce (unsafeCoerce)
 
@@ -17,7 +18,33 @@ foreign import data CreateThemeParams :: Type
 -- foreign import darkBaseTheme :: GetThemeParams
 -- foreign import lightBaseTheme :: GetThemeParams
 
-foreign import createMuiTheme :: Unit -> Theme
+foreign import defaultMuiTheme :: Theme
+
+foreign import createMuiThemeImpl :: forall x. x -> Theme
+
+
+type CreateThemeOpts palette =
+  ( palette :: { | palette }
+  )
+
+type ColorPalette =
+  { light :: String
+  , main :: String
+  , dark :: String
+  , contrastText :: String
+  }
+
+type PaletteOpts =
+  ( primary :: ColorPalette
+  , secondary :: ColorPalette
+  )
+
+
+createMuiTheme :: forall x palette
+                . Subrow x (CreateThemeOpts palette)
+               => Subrow palette PaletteOpts
+               => { | x } -> Theme
+createMuiTheme = createMuiThemeImpl
 
 
 type MuiThemeProviderProps =

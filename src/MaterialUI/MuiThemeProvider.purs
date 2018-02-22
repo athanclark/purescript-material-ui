@@ -1,5 +1,5 @@
 module MaterialUI.MuiThemeProvider
-  ( muiThemeProvider, MuiThemeProviderProps, Theme, defaultMuiTheme, createMuiTheme
+  ( muiThemeProvider, MuiThemeProviderProps, Theme, defaultMuiTheme, createMuiTheme, CreateThemeOpts, ColorPalette, PaletteOpts
   ) where
 
 
@@ -12,8 +12,6 @@ import Unsafe.Coerce (unsafeCoerce)
 foreign import muiThemeProviderImpl :: forall props. ReactClass props
 
 foreign import data Theme :: Type
-
-foreign import data CreateThemeParams :: Type
 
 -- foreign import darkBaseTheme :: GetThemeParams
 -- foreign import lightBaseTheme :: GetThemeParams

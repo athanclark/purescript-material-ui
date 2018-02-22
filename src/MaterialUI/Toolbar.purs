@@ -24,6 +24,7 @@ type ToolbarPropsO =
   ( disableGutters :: Boolean
   , classes :: Classes
   , children :: Array ReactElement
+  , style :: Styles
   )
 
 type ToolbarClasses =

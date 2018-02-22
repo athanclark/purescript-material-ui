@@ -1,6 +1,6 @@
 module MaterialUI.Button
   ( button, ButtonProps, ButtonPropsO, ButtonClasses
-  , Color, primary, accent, default, inherit, contrast
+  , Color, primary, secondary, default, inherit, contrast
   , createClasses
   ) where
 
@@ -44,8 +44,8 @@ newtype Color = Color String
 primary :: Color
 primary = Color "primary"
 
-accent :: Color
-accent = Color "accent"
+secondary :: Color
+secondary = Color "secondary"
 
 default :: Color
 default = Color "default"
@@ -62,13 +62,13 @@ type ButtonClasses =
   , dense :: Styles
   , label :: Styles
   , flatPrimary :: Styles
-  , flatAccent :: Styles
+  , flatSecondary :: Styles
   , flatContrast :: Styles
   , colorInherit :: Styles
   , raised :: Styles
   , keyboardFocused :: Styles
   , raisedPrimary :: Styles
-  , raisedAccent :: Styles
+  , raisedSecondary :: Styles
   , raisedContrast :: Styles
   , disabled :: Styles
   , fab :: Styles

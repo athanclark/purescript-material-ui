@@ -23,6 +23,7 @@ type DialogContentProps o =
 type DialogContentPropsO =
   ( children :: Array ReactElement
   , classes :: Classes
+  , style :: Styles
   )
 
 type DialogContentClasses =

@@ -36,20 +36,20 @@ md = MaxWidth "md"
 type DialogPropsO eff transitionProps =
   ( children                :: Array ReactElement
   , classes                 :: Classes
+  , disableBackdropClick    :: Boolean
+  , disableEscapeKeyDown    :: Boolean
   , fullScreen              :: Boolean
   , fullWidth               :: Boolean
-  , ignoreBackdropClick     :: Boolean
-  , ignoreEscapeKeyUp       :: Boolean
   , maxWidth                :: MaxWidth
   , onBackdropClick         :: EffFn1 (props :: ReactProps, refs :: ReactRefs ReadOnly, state :: ReactState ReadWrite | eff) Event Unit
+  , onClose                 :: EffFn1 (props :: ReactProps, refs :: ReactRefs ReadOnly, state :: ReactState ReadWrite | eff) Event Unit
   , onEnter                 :: EffFn1 (props :: ReactProps, refs :: ReactRefs ReadOnly, state :: ReactState ReadWrite | eff) Event Unit
   , onEntered               :: EffFn1 (props :: ReactProps, refs :: ReactRefs ReadOnly, state :: ReactState ReadWrite | eff) Event Unit
   , onEntering              :: EffFn1 (props :: ReactProps, refs :: ReactRefs ReadOnly, state :: ReactState ReadWrite | eff) Event Unit
-  , onEscapeKeyUp           :: EffFn1 (props :: ReactProps, refs :: ReactRefs ReadOnly, state :: ReactState ReadWrite | eff) Event Unit
+  , onEscapeKeyDown         :: EffFn1 (props :: ReactProps, refs :: ReactRefs ReadOnly, state :: ReactState ReadWrite | eff) Event Unit
   , onExit                  :: EffFn1 (props :: ReactProps, refs :: ReactRefs ReadOnly, state :: ReactState ReadWrite | eff) Event Unit
   , onExited                :: EffFn1 (props :: ReactProps, refs :: ReactRefs ReadOnly, state :: ReactState ReadWrite | eff) Event Unit
   , onExiting               :: EffFn1 (props :: ReactProps, refs :: ReactRefs ReadOnly, state :: ReactState ReadWrite | eff) Event Unit
-  , onRequestClose          :: EffFn1 (props :: ReactProps, refs :: ReactRefs ReadOnly, state :: ReactState ReadWrite | eff) Event Unit
   , transitionDuration      :: Number
   , transition              :: ReactClass transitionProps
   )

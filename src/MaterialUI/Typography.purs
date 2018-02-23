@@ -1,8 +1,8 @@
 module MaterialUI.Typography
   ( typography, TypographyProps, TypographyPropsO, TypographyClasses
   , Alignment, left, right, center, justify, inheritAlign
-  , Color, secondary, accent, default, inheritColor
-  , Type, button, caption, body1, body2, subheading, title, headline, display1, display2, display3, display4
+  , Color, primary, secondary, textSecondary, error, default, inheritColor
+  , Variant, button, caption, body1, body2, subheading, title, headline, display1, display2, display3, display4
                                                                                             , createClasses
   ) where
 
@@ -46,49 +46,55 @@ newtype Color = Color String
 inheritColor :: Color
 inheritColor = Color "inherit"
 
+primary :: Color
+primary = Color "primary"
+
 secondary :: Color
 secondary = Color "secondary"
 
-accent :: Color
-accent = Color "accent"
+textSecondary :: Color
+textSecondary = Color "textSecondary"
+
+error :: Color
+error = Color "error"
 
 default :: Color
 default = Color "default"
 
-newtype Type = Type String
+newtype Variant = Variant String
 
-button :: Type
-button = Type "button"
+button :: Variant
+button = Variant "button"
 
-caption :: Type
-caption = Type "caption"
+caption :: Variant
+caption = Variant "caption"
 
-body1 :: Type
-body1 = Type "body1"
+body1 :: Variant
+body1 = Variant "body1"
 
-body2 :: Type
-body2 = Type "body2"
+body2 :: Variant
+body2 = Variant "body2"
 
-subheading :: Type
-subheading = Type "subheading"
+subheading :: Variant
+subheading = Variant "subheading"
 
-title :: Type
-title = Type "title"
+title :: Variant
+title = Variant "title"
 
-headline :: Type
-headline = Type "headline"
+headline :: Variant
+headline = Variant "headline"
 
-display1 :: Type
-display1 = Type "display1"
+display1 :: Variant
+display1 = Variant "display1"
 
-display2 :: Type
-display2 = Type "display2"
+display2 :: Variant
+display2 = Variant "display2"
 
-display3 :: Type
-display3 = Type "display3"
+display3 :: Variant
+display3 = Variant "display3"
 
-display4 :: Type
-display4 = Type "display4"
+display4 :: Variant
+display4 = Variant "display4"
 
 
 type TypographyPropsO componentProps =
@@ -102,7 +108,7 @@ type TypographyPropsO componentProps =
   -- , headlineMapping :: FIXME
   , noWrap :: Boolean
   , paragraph :: Boolean
-  , "type" :: Type
+  , variant :: Variant
   )
 
 createClasses :: forall o. Subrow o TypographyClasses => { | o } -> Classes

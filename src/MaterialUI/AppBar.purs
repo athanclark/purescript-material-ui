@@ -97,7 +97,7 @@ appBar = createElement appBarImpl
 foreign import withStylesImpl :: forall styles compiledStyles a
                                . Fn2 (Theme -> { | styles }) (ReactClass {classes :: { | compiledStyles }}) (ReactClass a)
 
-withStyles :: forall styles stylesList compiledStyles compiledStylesList a
+withStyles :: forall styles stylesList compiledStyles compiledStylesList
             . Subrow styles AppBarClasses
             => RowToList styles stylesList
             => CompileStyles stylesList compiledStylesList

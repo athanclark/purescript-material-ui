@@ -102,8 +102,26 @@ type ButtonClasses =
   , fullWidth :: Styles
   )
 
+type ButtonClassesCompiled =
+  ( root :: String
+  , label :: String
+  , flatPrimary :: String
+  , flatSecondary :: String
+  , colorInherit :: String
+  , raised :: String
+  , keyboardFocused :: String
+  , raisedPrimary :: String
+  , raisedSecondary :: String
+  , disabled :: String
+  , fab :: String
+  , mini :: String
+  , sizeSmall :: String
+  , sizeLarge :: String
+  , fullWidth :: String
+  )
+
 createClasses :: forall classes
-               . Subrow classes ButtonClasses
+               . Subrow classes ButtonClassesCompiled
               => { | classes } -> Classes
 createClasses = unsafeCoerce
 

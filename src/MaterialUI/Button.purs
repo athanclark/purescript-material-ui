@@ -1,6 +1,7 @@
 module MaterialUI.Button
   ( button, ButtonProps, ButtonPropsO, ButtonClasses
   , Color, primary, secondary, default, inherit, contrast
+  , Size, small, medium, large, Variant, flat, raised, fab
   , createClasses
   ) where
 
@@ -27,16 +28,16 @@ type ButtonPropsO eff componentProps =
   , style :: Styles
   , color :: Color
   , component :: ReactClass componentProps
-  , dense :: Boolean
   , disableFocusRipple :: Boolean
   , disableRipple :: Boolean
   , disabled :: Boolean
-  , fab :: Boolean
   , href :: String
-  , raised :: Boolean
+  , variant :: Variant
   , onClick    :: EffFn1 (props :: ReactProps, refs :: ReactRefs ReadOnly, state :: ReactState ReadWrite | eff) Event Unit
   , onTouchTap :: EffFn1 (props :: ReactProps, refs :: ReactRefs ReadOnly, state :: ReactState ReadWrite | eff) Event Unit
   , mini :: Boolean
+  , fullWidth :: Boolean
+  , size :: Size
   )
 
 newtype Color = Color String
@@ -57,6 +58,30 @@ contrast :: Color
 contrast = Color "contrast"
 
 
+newtype Variant = Variant String
+
+flat :: Variant
+flat = Variant "flat"
+
+raised :: Variant
+raised = Variant "raised"
+
+fab :: Variant
+fab = Variant "fab"
+
+
+newtype Size = Size String
+
+small :: Size
+small = Size "small"
+
+medium :: Size
+medium = Size "medium"
+
+large :: Size
+large = Size "large"
+
+
 type ButtonClasses =
   ( root :: Styles
   , dense :: Styles
@@ -72,6 +97,7 @@ type ButtonClasses =
   , raisedContrast :: Styles
   , disabled :: Styles
   , fab :: Styles
+  , mini :: Styles
   )
 
 createClasses :: forall classes

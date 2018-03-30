@@ -151,6 +151,8 @@ type InputPropsO eff inputComponentProps inputProps =
   , multiline :: Boolean
   , name :: String
   , onChange :: EffFn1 (props :: ReactProps, refs :: ReactRefs ReadOnly, state :: ReactState ReadWrite | eff) Event Unit
+  , onFocus :: EffFn1 (props :: ReactProps, refs :: ReactRefs ReadOnly, state :: ReactState ReadWrite | eff) Event Unit
+  , onBlur :: EffFn1 (props :: ReactProps, refs :: ReactRefs ReadOnly, state :: ReactState ReadWrite | eff) Event Unit
   , placeholder :: String
   , rows :: Int
   , rowsMax :: Int

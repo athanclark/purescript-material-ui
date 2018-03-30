@@ -1,5 +1,5 @@
-module MaterialUI.Reboot
-  ( reboot
+module MaterialUI.CssBaseline
+  ( cssBaseline
   ) where
 
 import MaterialUI.Types (Styles, Classes)
@@ -11,9 +11,9 @@ import Control.Monad.Eff.Uncurried (EffFn1)
 import Unsafe.Coerce (unsafeCoerce)
 
 
-foreign import rebootImpl :: forall props. ReactClass props
+foreign import cssBaselineImpl :: forall props. ReactClass props
 
 
 
-reboot :: ReactElement
-reboot = createElement rebootImpl {} []
+cssBaseline :: ReactElement
+cssBaseline = createElement cssBaselineImpl {} []

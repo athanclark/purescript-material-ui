@@ -61,6 +61,7 @@ type SnackbarPropsO eff =
   , anchorOrigin :: {vertical :: VerticalOrigin, horizontal :: HorizontalOrigin}
   , autoHideDuration :: Nullable Milliseconds
   , resumeHideDuration :: Nullable Milliseconds
+  , disableWindowBlurListener :: Boolean
   , children :: Array ReactElement
   , classes :: Classes
   , key :: String

@@ -33,7 +33,7 @@ md :: MaxWidth
 md = MaxWidth "md"
 
 
-type DialogPropsO eff transitionProps =
+type DialogPropsO eff containerProps transitionProps =
   ( children                :: Array ReactElement
   , classes                 :: Classes
   , disableBackdropClick    :: Boolean
@@ -41,6 +41,7 @@ type DialogPropsO eff transitionProps =
   , fullScreen              :: Boolean
   , fullWidth               :: Boolean
   , maxWidth                :: MaxWidth
+  , container               :: ReactClass containerProps
   , onBackdropClick         :: EffFn1 (props :: ReactProps, refs :: ReactRefs ReadOnly, state :: ReactState ReadWrite | eff) Event Unit
   , onClose                 :: EffFn1 (props :: ReactProps, refs :: ReactRefs ReadOnly, state :: ReactState ReadWrite | eff) Event Unit
   , onEnter                 :: EffFn1 (props :: ReactProps, refs :: ReactRefs ReadOnly, state :: ReactState ReadWrite | eff) Event Unit
@@ -72,7 +73,7 @@ createClasses :: forall classes
 createClasses = unsafeCoerce
 
 
-dialog :: forall eff o transitionProps
-         . Subrow o (DialogPropsO eff transitionProps)
+dialog :: forall eff o containerProps transitionProps
+         . Subrow o (DialogPropsO eff containerProps transitionProps)
         => DialogProps o -> Array ReactElement -> ReactElement
 dialog = createElement dialogImpl

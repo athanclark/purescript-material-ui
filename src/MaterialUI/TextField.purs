@@ -33,6 +33,7 @@ type TextFieldPropsO eff formHelperTextProps inputLabelProps =
   , label :: ReactElement
   , labelClassName :: String
   , required :: Boolean
+  , select :: Boolean
   -- rootRef FIXME
   , onClick :: EffFn1 (props :: ReactProps, refs :: ReactRefs ReadOnly, state :: ReactState ReadWrite | eff) Event Unit
   )

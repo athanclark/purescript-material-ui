@@ -23,8 +23,10 @@ type ChipProps o =
 type ChipPropsO eff =
   ( avatar :: ReactElement
   , classes :: Classes
+  , deleteIcon :: ReactElement
   , label :: ReactElement
-  , onRequestDelete :: EffFn1 (props :: ReactProps, refs :: ReactRefs ReadOnly, state :: ReactState ReadWrite | eff) Event Unit
+  , onDelete :: EffFn1 (props :: ReactProps, refs :: ReactRefs ReadOnly, state :: ReactState ReadWrite | eff) Event Unit
+  , onClick :: EffFn1 (props :: ReactProps, refs :: ReactRefs ReadOnly, state :: ReactState ReadWrite | eff) Event Unit
   )
 
 type ChipClasses =

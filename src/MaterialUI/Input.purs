@@ -6,6 +6,9 @@ module MaterialUI.Input
   , createClasses
   , inputLabel, InputLabelProps, InputLabelPropsO, InputLabelClasses
   , createClassesLabel
+  , inputAdornment, InputAdornmentProps, InputAdornmentPropsO, InputAdornmentClasses
+  , Position, start, end
+  , createClassesAdornment
   ) where
 
 import MaterialUI.Types (Styles, Classes)
@@ -233,3 +236,51 @@ inputLabel :: forall o
          . Subrow o InputLabelPropsO
         => InputLabelProps o -> Array ReactElement -> ReactElement
 inputLabel = createElement inputLabelImpl
+
+
+----------------------------------------------------------------
+
+
+
+
+foreign import inputAdornmentImpl :: forall props. ReactClass props
+
+
+type InputAdornmentProps o =
+  {
+  | o }
+
+
+newtype Position = Position String
+
+start :: Position
+start = Position "start"
+
+end :: Position
+end = Position "end"
+
+
+type InputAdornmentPropsO eff componentProps =
+  ( children :: Array ReactElement
+  , classes :: Classes
+  , component :: ReactClass componentProps
+  , disableTypography :: Boolean
+  , position :: Position
+  )
+
+type InputAdornmentClasses =
+  ( root :: Styles
+  , positionStart :: Styles
+  , positionEnd :: Styles
+  )
+
+createClassesAdornment :: forall classes
+               . Subrow classes InputAdornmentClasses
+              => { | classes } -> Classes
+createClassesAdornment = unsafeCoerce
+
+
+inputAdornment :: forall o eff inputAdornmentListProps
+         . Subrow o (InputAdornmentPropsO eff inputAdornmentListProps)
+        => InputAdornmentProps o -> ReactElement -> ReactElement
+inputAdornment p x = createElement inputAdornmentImpl p [x]

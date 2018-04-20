@@ -199,4 +199,7 @@ type Theme =
       , tooltip :: Int
       }
     }
+  , spacing ::
+    { unit :: Int
+    }
   }

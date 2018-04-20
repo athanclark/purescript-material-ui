@@ -47,8 +47,8 @@ createClasses :: forall classes
 createClasses = unsafeCoerce
 
 
-select :: forall o menuProps eff inputProps inputComponentProps both
-         . Union (SelectPropsO menuProps) (InputPropsO eff inputProps inputComponentProps) both
+select :: forall o menuProps eff inputProps inputProps' inputComponentProps both
+         . Union (SelectPropsO menuProps) (InputPropsO eff inputComponentProps inputProps inputProps') both
         => Subrow o both
         => SelectProps o -> Array ReactElement -> ReactElement
 select = createElement selectImpl

@@ -40,8 +40,8 @@ type TextFieldPropsO eff formHelperTextProps inputLabelProps selectProps =
   )
 
 
-textField :: forall o eff both inputProps inputComponentProps inputLabelProps formHelperTextProps selectProps
+textField :: forall o eff both inputProps inputProps' inputComponentProps inputLabelProps formHelperTextProps selectProps
          . Subrow o both
-        => Union (TextFieldPropsO eff formHelperTextProps inputLabelProps selectProps) (InputPropsO eff inputComponentProps inputProps) both
+        => Union (TextFieldPropsO eff formHelperTextProps inputLabelProps selectProps) (InputPropsO eff inputComponentProps inputProps inputProps') both
         => TextFieldProps o -> Array ReactElement -> ReactElement
 textField p = createElement textFieldImpl p

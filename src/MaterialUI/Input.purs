@@ -131,7 +131,7 @@ weekType :: InputType
 weekType = InputType "week"
 
 
-type InputPropsO eff inputComponentProps inputProps =
+type InputPropsO eff inputComponentProps inputProps inputProps' =
   ( autoComplete :: String
   , autoFocus :: Boolean
   , className :: String
@@ -147,6 +147,7 @@ type InputPropsO eff inputComponentProps inputProps =
   , id :: String
   , inputComponent :: ReactClass inputComponentProps
   , inputProps :: inputProps
+  , "InputProps" :: inputProps'
   , margin :: Margin
   , multiline :: Boolean
   , name :: String
@@ -185,8 +186,8 @@ createClasses :: forall classes
 createClasses = unsafeCoerce
 
 
-input :: forall o eff inputProps inputComponentProps
-         . Subrow o (InputPropsO eff inputProps inputComponentProps)
+input :: forall o eff inputProps inputProps' inputComponentProps
+         . Subrow o (InputPropsO eff inputComponentProps inputProps inputProps')
         => InputProps o -> Array ReactElement -> ReactElement
 input = createElement inputImpl
 

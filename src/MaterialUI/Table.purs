@@ -208,12 +208,13 @@ type TableRowProps o =
   | o }
 
 
-type TableRowPropsO componentProps =
-  ( children :: Array ReactElement
-  , classes :: Classes
+type TableRowPropsO eff componentProps =
+  ( children  :: Array ReactElement
+  , classes   :: Classes
   , component :: ReactClass componentProps
-  , hover :: Boolean
-  , selected :: Boolean
+  , hover     :: Boolean
+  , selected  :: Boolean
+  , onClick   :: EffFn1 (props :: ReactProps, refs :: ReactRefs ReadOnly, state :: ReactState ReadWrite | eff) Event Unit
   )
 
 type TableRowClasses =
@@ -230,8 +231,8 @@ createClassesRow :: forall classes
 createClassesRow = unsafeCoerce
 
 
-tableRow :: forall o componentProps
-         . Subrow o (TableRowPropsO componentProps)
+tableRow :: forall o componentProps eff
+         . Subrow o (TableRowPropsO eff componentProps)
         => TableRowProps o -> Array ReactElement -> ReactElement
 tableRow = createElement tableRowImpl
 

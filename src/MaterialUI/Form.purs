@@ -2,6 +2,7 @@ module MaterialUI.Form
   ( formControlLabel, FormControlLabelProps, FormControlLabelPropsO, FormControlLabelClasses
   , formControl, FormControlProps, FormControlPropsO, FormControlClasses
   , formLabel, FormLabelProps, FormLabelPropsO, FormLabelClasses
+  , formGroup, FormGroupProps, FormGroupPropsO, FormGroupClasses
   , Margin, none, dense, normal
   ) where
 
@@ -44,6 +45,34 @@ formControlLabel :: forall eff o
          . Subrow o (FormControlLabelPropsO eff)
         => FormControlLabelProps o -> ReactElement
 formControlLabel props = createElement formControlLabelImpl props []
+
+
+foreign import formGroupImpl :: forall props. ReactClass props
+
+
+type FormGroupProps o =
+  {
+  | o }
+
+
+type FormGroupPropsO =
+  ( row :: Boolean
+  , classes :: Classes
+  , children :: Array ReactElement
+  )
+
+type FormGroupClasses =
+  ( root :: Styles
+  , row :: Styles
+  )
+
+
+formGroup :: forall o
+         . Subrow o FormGroupPropsO
+        => FormGroupProps o -> Array ReactElement -> ReactElement
+formGroup = createElement formGroupImpl
+
+
 
 
 

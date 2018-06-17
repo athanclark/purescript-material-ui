@@ -1,7 +1,7 @@
 module MaterialUI.Table
   ( table, TableProps, TablePropsO, TableClasses, createClasses
   , tableBody, TableBodyProps, TableBodyPropsO, TableBodyClasses, createClassesBody
-  , tableCell, TableCellProps, TableCellPropsO, TableCellClasses, createClassesCell
+  , tableCell, TableCellProps, TableCellPropsO, TableCellClasses, createClassesCell, withStylesCell
   , tableHead, TableHeadProps, TableHeadPropsO, TableHeadClasses, createClassesHead
   , tableRow, TableRowProps, TableRowPropsO, TableRowClasses, createClassesRow
   , tableFooter, TableFooterProps, TableFooterPropsO, TableFooterClasses, createClassesFooter
@@ -11,13 +11,15 @@ module MaterialUI.Table
   , Direction, asc, desc
   ) where
 
-import MaterialUI.Types (Styles, Classes)
+import MaterialUI.Types (Styles, Classes, class CompileStyles, Theme)
 
 import Prelude
-import React (Event, ReactClass, createElement, ReactElement, ReactProps, ReactState, ReactRefs, ReadOnly, ReadWrite)
+import React (Event, ReactClass, createElement, createClassStateless, ReactElement, ReactProps, ReactState, ReactRefs, ReadOnly, ReadWrite)
 import Data.Record.Class (class Subrow)
+import Data.Function.Uncurried (Fn2, runFn2)
 import Control.Monad.Eff.Uncurried (EffFn1, EffFn2)
 import Unsafe.Coerce (unsafeCoerce)
+import Type.Row (class RowToList, class ListToRow)
 
 
 foreign import tableImpl :: forall props. ReactClass props
@@ -108,34 +110,60 @@ none :: Padding
 none = Padding "none"
 
 
-type TableCellPropsO componentProps =
+type TableCellPropsO eff componentProps =
   ( children :: ReactElement
   , classes :: Classes
   , component :: ReactClass componentProps
   , numeric :: Boolean
   , padding :: Padding
+  , onClick    :: EffFn1 (props :: ReactProps, refs :: ReactRefs ReadOnly, state :: ReactState ReadWrite | eff) Event Unit
   )
 
 type TableCellClasses =
   ( root :: Styles
   , numeric :: Styles
   , head :: Styles
-  , paddingDefault :: Styles
+  , body :: Styles
+  , paddingNone :: Styles
   , paddingDense :: Styles
   , paddingCheckbox :: Styles
   , footer :: Styles
   )
 
+type TableCellClassesCompiled =
+  ( root :: String
+  , numeric :: String
+  , head :: String
+  , body :: String
+  , paddingNone :: String
+  , paddingDense :: String
+  , paddingCheckbox :: String
+  , footer :: String
+  )
+
 createClassesCell :: forall classes
-               . Subrow classes TableCellClasses
+               . Subrow classes TableCellClassesCompiled
               => { | classes } -> Classes
 createClassesCell = unsafeCoerce
 
 
-tableCell :: forall o componentProps
-         . Subrow o (TableCellPropsO componentProps)
+tableCell :: forall eff o componentProps
+         . Subrow o (TableCellPropsO eff componentProps)
         => TableCellProps o -> ReactElement -> ReactElement
 tableCell p = createElement tableCellImpl p <<< unsafeCoerce
+
+
+foreign import withStylesImpl :: forall styles compiledStyles a
+                               . Fn2 (Theme -> { | styles }) (ReactClass {classes :: { | compiledStyles }}) (ReactClass a)
+
+
+withStylesCell :: forall styles stylesList compiledStyles compiledStylesList
+            . Subrow styles TableCellClasses
+            => RowToList styles stylesList
+            => CompileStyles stylesList compiledStylesList
+            => ListToRow compiledStylesList compiledStyles
+            => (Theme -> { | styles }) -> ({classes :: { | compiledStyles }} -> ReactElement) -> ReactElement
+withStylesCell stylesF createElem = createElement (runFn2 withStylesImpl stylesF (createClassStateless createElem)) unit []
 
 ----------------------------------------
 
@@ -180,12 +208,13 @@ type TableRowProps o =
   | o }
 
 
-type TableRowPropsO componentProps =
-  ( children :: Array ReactElement
-  , classes :: Classes
+type TableRowPropsO eff componentProps =
+  ( children  :: Array ReactElement
+  , classes   :: Classes
   , component :: ReactClass componentProps
-  , hover :: Boolean
-  , selected :: Boolean
+  , hover     :: Boolean
+  , selected  :: Boolean
+  , onClick   :: EffFn1 (props :: ReactProps, refs :: ReactRefs ReadOnly, state :: ReactState ReadWrite | eff) Event Unit
   )
 
 type TableRowClasses =
@@ -202,8 +231,8 @@ createClassesRow :: forall classes
 createClassesRow = unsafeCoerce
 
 
-tableRow :: forall o componentProps
-         . Subrow o (TableRowPropsO componentProps)
+tableRow :: forall o componentProps eff
+         . Subrow o (TableRowPropsO eff componentProps)
         => TableRowProps o -> Array ReactElement -> ReactElement
 tableRow = createElement tableRowImpl
 

@@ -49,6 +49,9 @@ valueString = unsafeCoerce
 valueNull :: Value
 valueNull = unsafeCoerce (toNullable Nothing)
 
+valueArray :: Array Value -> Value
+valueArray = unsafeCoerce
+
 data ReadValue
   = ValueInt Int | ValueNumber Number | ValueString String
 

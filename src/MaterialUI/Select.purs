@@ -22,15 +22,24 @@ type SelectProps o =
   | o }
 
 
-type SelectPropsO menuProps =
-  ( "MenuProps" :: menuProps
-  , autoWidth :: Boolean
+type SelectPropsO eff menuProps iconComponentProps selectDisplayProps =
+  ( autoWidth :: Boolean
   , children :: Array ReactElement
+  -- , classes :: Classes
   , displayEmpty :: Boolean
+  , "IconComponent" :: ReactClass iconComponentProps
   , input :: ReactElement
+  -- , inputProps :: inputProps
+  , "MenuProps" :: menuProps
   , multiple :: Boolean
   , native :: Boolean
-  , renderValue :: Value -> String
+  -- , onChange :: EffFn2 (props :: ReactProps, refs :: ReactRefs ReadOnly, state :: ReactState ReadWrite | eff) Event (Nullable ReactElement) Unit
+  , onClose :: EffFn1 (props :: ReactProps, refs :: ReactRefs ReadOnly, state :: ReactState ReadWrite | eff) Event Unit
+  , onOpen :: EffFn1 (props :: ReactProps, refs :: ReactRefs ReadOnly, state :: ReactState ReadWrite | eff) Event Unit
+  , open :: Boolean
+  , renderValue :: Value -> ReactElement
+  , "SelectDisplayProps" :: selectDisplayProps
+  -- , value :: Value
   )
 
 type SelectClasses =
@@ -47,8 +56,8 @@ createClasses :: forall classes
 createClasses = unsafeCoerce
 
 
-select :: forall o menuProps eff inputProps inputProps' inputComponentProps both
-         . Union (SelectPropsO menuProps) (InputPropsO eff inputComponentProps inputProps inputProps') both
+select :: forall o menuProps iconComponentProps selectDisplayProps eff inputProps inputProps' inputComponentProps both
+         . Union (SelectPropsO eff menuProps iconComponentProps selectDisplayProps) (InputPropsO eff inputComponentProps inputProps inputProps') both
         => Subrow o both
         => SelectProps o -> Array ReactElement -> ReactElement
 select = createElement selectImpl

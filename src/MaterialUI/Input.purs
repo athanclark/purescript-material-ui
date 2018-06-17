@@ -18,7 +18,7 @@ import React (Event, ReactClass, createElement, ReactElement, ReactProps, ReactS
 import Data.Record.Class (class Subrow)
 import Data.Either (Either)
 import Data.Maybe (Maybe (Nothing))
-import Data.Foreign (readNumber, readString, readInt, toForeign, MultipleErrors)
+import Data.Foreign (readNumber, readString, readInt, readNull, toForeign, MultipleErrors)
 import Data.Nullable (toNullable)
 import Control.Alternative ((<|>))
 import Control.Monad.Except (runExcept)
@@ -49,16 +49,19 @@ valueString = unsafeCoerce
 valueNull :: Value
 valueNull = unsafeCoerce (toNullable Nothing)
 
-valueArray :: Array Value -> Value
-valueArray = unsafeCoerce
-
 data ReadValue
-  = ValueInt Int | ValueNumber Number | ValueString String
+  = ValueInt Int
+  | ValueNumber Number
+  | ValueString String
+  | ValueNull
 
 readValue :: Value -> Either MultipleErrors ReadValue
 readValue v = runExcept $ do
   let v' = toForeign v
-  (ValueInt <$> readInt v') <|> (ValueNumber <$> readNumber v') <|> (ValueString <$> readString v')
+  (ValueInt <$> readInt v')
+    <|> (ValueNumber <$> readNumber v')
+    <|> (ValueString <$> readString v')
+    <|> (ValueNull <$ readNull v')
 
 newtype Margin = Margin String
 

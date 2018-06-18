@@ -1,6 +1,7 @@
 module MaterialUI.Select
   ( select, SelectProps, SelectPropsO, SelectClasses
   , createClasses
+  , withStyles
   ) where
 
 import MaterialUI.Types (Styles, Classes, class CompileStyles, Theme)

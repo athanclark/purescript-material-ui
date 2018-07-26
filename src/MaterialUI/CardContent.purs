@@ -5,10 +5,8 @@ module MaterialUI.CardContent
 
 import MaterialUI.Types (Styles, Classes)
 
-import Prelude
-import React (Event, ReactClass, createElement, ReactElement, ReactProps, ReactState, ReactRefs, ReadOnly, ReadWrite)
+import React (ReactClass, createElement, ReactElement)
 import Data.Record.Class (class Subrow)
-import Control.Monad.Eff.Uncurried (EffFn1)
 import Unsafe.Coerce (unsafeCoerce)
 
 
@@ -34,7 +32,7 @@ createClasses :: forall classes
 createClasses = unsafeCoerce
 
 
-cardContent :: forall o classes
+cardContent :: forall o
          . Subrow o CardContentPropsO
         => CardContentProps o -> Array ReactElement -> ReactElement
 cardContent = createElement cardContentImpl

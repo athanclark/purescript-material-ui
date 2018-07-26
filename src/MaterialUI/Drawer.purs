@@ -102,7 +102,7 @@ drawer = createElement drawerImpl
 foreign import withStylesImpl :: forall styles compiledStyles a
                                . Fn2 (Theme -> { | styles }) (ReactClass {classes :: { | compiledStyles }}) (ReactClass a)
 
-withStyles :: forall styles stylesList compiledStyles compiledStylesList a
+withStyles :: forall styles stylesList compiledStyles compiledStylesList
             . Subrow styles DrawerClasses
             => RowToList styles stylesList
             => CompileStyles stylesList compiledStylesList

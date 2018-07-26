@@ -2,14 +2,12 @@ module MaterialUI.TextField
   ( textField, TextFieldProps, TextFieldPropsO
   ) where
 
-import MaterialUI.Types (Styles, Classes)
 import MaterialUI.Input (InputPropsO)
 
 import Prelude
 import React (Event, ReactClass, createElement, ReactElement, ReactProps, ReactState, ReactRefs, ReadOnly, ReadWrite)
 import Data.Record.Class (class Subrow)
 import Control.Monad.Eff.Uncurried (EffFn1)
-import Unsafe.Coerce (unsafeCoerce)
 
 
 foreign import textFieldImpl :: forall props. ReactClass props

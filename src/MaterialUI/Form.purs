@@ -13,7 +13,6 @@ import React (Event, ReactClass, createElement, createClassStateless, ReactEleme
 import Data.Record.Class (class Subrow)
 import Data.Function.Uncurried (Fn2, runFn2)
 import Control.Monad.Eff.Uncurried (EffFn2)
-import Unsafe.Coerce (unsafeCoerce)
 import Type.Row (class RowToList, class ListToRow)
 
 
@@ -87,8 +86,11 @@ type FormControlProps o =
 
 newtype Margin = Margin String
 
+none :: Margin
 none = Margin "none"
+dense :: Margin
 dense = Margin "dense"
+normal :: Margin
 normal = Margin "normal"
 
 

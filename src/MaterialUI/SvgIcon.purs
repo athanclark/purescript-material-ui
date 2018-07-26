@@ -5,14 +5,9 @@ module MaterialUI.SvgIcon
   ) where
 
 import MaterialUI.Types (Styles, Classes)
-import MaterialUI.ListItem (ListItemPropsO)
-import MaterialUI.Input (Value)
 
-import Prelude
-import React (Event, ReactClass, createElement, ReactElement, ReactProps, ReactState, ReactRefs, ReadOnly, ReadWrite)
+import React (ReactClass, createElement, ReactElement)
 import Data.Record.Class (class Subrow)
-import Control.Monad.Eff.Uncurried (EffFn1)
-import DOM.Node.Types (Element)
 import Unsafe.Coerce (unsafeCoerce)
 
 

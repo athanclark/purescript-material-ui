@@ -5,10 +5,8 @@ module MaterialUI.BottomNavigationButton
 
 import MaterialUI.Types (Styles, Classes)
 
-import Prelude
-import React (Event, ReactClass, createElement, ReactElement, ReactProps, ReactState, ReactRefs, ReadOnly, ReadWrite)
+import React (ReactClass, createElement, ReactElement)
 import Data.Record.Class (class Subrow)
-import Control.Monad.Eff.Uncurried (EffFn1)
 import Unsafe.Coerce (unsafeCoerce)
 
 
@@ -44,7 +42,7 @@ createClasses :: forall classes
 createClasses = unsafeCoerce
 
 
-bottomNavigationButton :: forall o classes
+bottomNavigationButton :: forall o
          . Subrow o BottomNavigationButtonPropsO
         => BottomNavigationButtonProps o -> Array ReactElement -> ReactElement
 bottomNavigationButton = createElement bottomNavigationButtonImpl

@@ -6,10 +6,8 @@ module MaterialUI.CircularProgress
 
 import MaterialUI.Types (Styles, Classes)
 
-import Prelude
-import React (Event, ReactClass, createElement, ReactElement, ReactProps, ReactState, ReactRefs, ReadOnly, ReadWrite)
+import React (ReactClass, createElement, ReactElement)
 import Data.Record.Class (class Subrow)
-import Control.Monad.Eff.Uncurried (EffFn1)
 import Unsafe.Coerce (unsafeCoerce)
 
 
@@ -66,7 +64,7 @@ createClasses :: forall classes
 createClasses = unsafeCoerce
 
 
-circularProgress :: forall o classes
+circularProgress :: forall o
                    . Subrow o CircularProgressPropsO
                   => CircularProgressProps o -> ReactElement
 circularProgress props = createElement circularProgressImpl props []

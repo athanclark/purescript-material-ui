@@ -57,7 +57,7 @@ createClasses :: forall classes
 createClasses = unsafeCoerce
 
 
-chip :: forall o eff classes
+chip :: forall o eff
          . Subrow o (ChipPropsO eff)
         => ChipProps o -> ReactElement
 chip p = createElement chipImpl p []
@@ -67,7 +67,7 @@ chip p = createElement chipImpl p []
 foreign import withStylesImpl :: forall styles compiledStyles a
                                . Fn2 (Theme -> { | styles }) (ReactClass {classes :: { | compiledStyles }}) (ReactClass a)
 
-withStyles :: forall styles stylesList compiledStyles compiledStylesList a
+withStyles :: forall styles stylesList compiledStyles compiledStylesList
             . Subrow styles ChipClasses
             => RowToList styles stylesList
             => CompileStyles stylesList compiledStylesList

@@ -49,7 +49,7 @@ createClasses :: forall classes
 createClasses = unsafeCoerce
 
 
-checkbox :: forall o eff inputProps classes
+checkbox :: forall o eff inputProps
          . Subrow o (CheckboxPropsO eff inputProps)
         => CheckboxProps o -> Array ReactElement -> ReactElement
 checkbox = createElement checkboxImpl

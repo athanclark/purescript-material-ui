@@ -10,7 +10,6 @@ import Prelude
 import React (Event, ReactClass, createElement, ReactElement, ReactProps, ReactState, ReactRefs, ReadOnly, ReadWrite)
 import Data.Record.Class (class Subrow)
 import Control.Monad.Eff.Uncurried (EffFn2)
-import Unsafe.Coerce (unsafeCoerce)
 
 
 foreign import tabsImpl :: forall props. ReactClass props
@@ -18,14 +17,20 @@ foreign import tabsImpl :: forall props. ReactClass props
 
 newtype Color = Color String
 
+secondary :: Color
 secondary = Color "secondary"
+primary :: Color
 primary = Color "primary"
+inherit :: Color
 inherit = Color "inherit"
 
 newtype ScrollButtons = ScrollButtons String
 
+auto :: ScrollButtons
 auto = ScrollButtons "auto"
+on :: ScrollButtons
 on = ScrollButtons "on"
+off :: ScrollButtons
 off = ScrollButtons "off"
 
 

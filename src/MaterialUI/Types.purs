@@ -1,7 +1,7 @@
 module MaterialUI.Types where
 
 import Unsafe.Coerce (unsafeCoerce)
-import Type.Row (kind RowList, Nil, Cons, class RowToList, class ListToRow)
+import Type.Row (kind RowList, Nil, Cons)
 
 
 

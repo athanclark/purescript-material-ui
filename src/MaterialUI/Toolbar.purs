@@ -5,8 +5,8 @@ module MaterialUI.Toolbar
 
 import MaterialUI.Types (Styles, Classes)
 
-import React (ReactClass, createElement, ReactElement)
-import Data.Record.Class (class Subrow)
+import React (ReactClass, unsafeCreateElement, ReactElement)
+import Row.Class (class SubRow)
 import Unsafe.Coerce (unsafeCoerce)
 
 
@@ -21,7 +21,6 @@ type ToolbarProps o =
 type ToolbarPropsO =
   ( disableGutters :: Boolean
   , classes :: Classes
-  , children :: Array ReactElement
   , style :: Styles
   )
 
@@ -31,12 +30,12 @@ type ToolbarClasses =
   )
 
 createClasses :: forall classes
-               . Subrow classes ToolbarClasses
+               . SubRow classes ToolbarClasses
               => { | classes } -> Classes
 createClasses = unsafeCoerce
 
 
 toolbar :: forall o
-         . Subrow o ToolbarPropsO
+         . SubRow o ToolbarPropsO
         => ToolbarProps o -> Array ReactElement -> ReactElement
-toolbar = createElement toolbarImpl
+toolbar = unsafeCreateElement toolbarImpl

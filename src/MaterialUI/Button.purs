@@ -8,10 +8,11 @@ module MaterialUI.Button
 import MaterialUI.Types (Styles, Classes, class CompileStyles, Theme)
 
 import Prelude
-import React (Event, ReactClass, createElement, createClassStateless, ReactElement, ReactProps, ReactState, ReactRefs, ReadOnly, ReadWrite)
-import Data.Record.Class (class Subrow)
+import React (ReactClass, unsafeCreateElement, ReactElement, statelessComponent)
+import React.SyntheticEvent (SyntheticEvent)
+import Row.Class (class SubRow)
 import Data.Function.Uncurried (Fn2, runFn2)
-import Control.Monad.Eff.Uncurried (EffFn1)
+import Effect.Uncurried (EffectFn1)
 import Unsafe.Coerce (unsafeCoerce)
 import Type.Row (class RowToList, class ListToRow)
 
@@ -25,8 +26,7 @@ type ButtonProps o =
 
 
 type ButtonPropsO eff componentProps =
-  ( children :: Array ReactElement
-  , classes :: Classes
+  ( classes :: Classes
   , style :: Styles
   , color :: Color
   , component :: ReactClass componentProps
@@ -35,8 +35,8 @@ type ButtonPropsO eff componentProps =
   , disabled :: Boolean
   , href :: String
   , variant :: Variant
-  , onClick    :: EffFn1 (props :: ReactProps, refs :: ReactRefs ReadOnly, state :: ReactState ReadWrite | eff) Event Unit
-  , onTouchTap :: EffFn1 (props :: ReactProps, refs :: ReactRefs ReadOnly, state :: ReactState ReadWrite | eff) Event Unit
+  , onClick    :: EffectFn1 SyntheticEvent Unit
+  , onTouchTap :: EffectFn1 SyntheticEvent Unit
   , mini :: Boolean
   , fullWidth :: Boolean
   , size :: Size
@@ -121,24 +121,24 @@ type ButtonClassesCompiled =
   )
 
 createClasses :: forall classes
-               . Subrow classes ButtonClassesCompiled
+               . SubRow classes ButtonClassesCompiled
               => { | classes } -> Classes
 createClasses = unsafeCoerce
 
 
 button :: forall o eff componentProps
-         . Subrow o (ButtonPropsO eff componentProps)
+         . SubRow o (ButtonPropsO eff componentProps)
         => ButtonProps o -> Array ReactElement -> ReactElement
-button = createElement buttonImpl
+button = unsafeCreateElement buttonImpl
 
 
 foreign import withStylesImpl :: forall styles compiledStyles a
                                . Fn2 (Theme -> { | styles }) (ReactClass {classes :: { | compiledStyles }}) (ReactClass a)
 
 withStyles :: forall styles stylesList compiledStyles compiledStylesList
-            . Subrow styles ButtonClasses
+            . SubRow styles ButtonClasses
             => RowToList styles stylesList
             => CompileStyles stylesList compiledStylesList
             => ListToRow compiledStylesList compiledStyles
             => (Theme -> { | styles }) -> ({classes :: { | compiledStyles }} -> ReactElement) -> ReactElement
-withStyles stylesF createElem = createElement (runFn2 withStylesImpl stylesF (createClassStateless createElem)) unit []
+withStyles stylesF createElem = unsafeCreateElement (runFn2 withStylesImpl stylesF (statelessComponent createElem)) {} []

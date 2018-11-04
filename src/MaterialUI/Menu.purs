@@ -10,11 +10,13 @@ import MaterialUI.ListItem (ListItemPropsO)
 import MaterialUI.Input (Value)
 
 import Prelude
-import React (Event, ReactClass, createElement, ReactElement, ReactProps, ReactState, ReactRefs, ReadOnly, ReadWrite)
-import Data.Record.Class (class Subrow)
-import Control.Monad.Eff.Uncurried (EffFn1)
-import DOM.Node.Types (Element)
+import React (ReactClass, unsafeCreateElement, ReactElement)
+import React.SyntheticEvent (SyntheticEvent)
+import Row.Class (class SubRow)
+import Effect.Uncurried (EffectFn1)
+import Web.DOM.Internal.Types (Element)
 import Unsafe.Coerce (unsafeCoerce)
+import Prim.Row (class Union)
 
 
 foreign import menuImpl :: forall props. ReactClass props
@@ -28,15 +30,14 @@ type MenuProps o =
 type MenuPropsO eff menuListProps =
   ( "MenuListProps" :: menuListProps
   , anchorEl :: Element
-  , children :: Array ReactElement
   , classes :: Classes
-  , onEnter :: EffFn1 (props :: ReactProps, refs :: ReactRefs ReadOnly, state :: ReactState ReadWrite | eff) Event Unit
-  , onEntered :: EffFn1 (props :: ReactProps, refs :: ReactRefs ReadOnly, state :: ReactState ReadWrite | eff) Event Unit
-  , onEntering :: EffFn1 (props :: ReactProps, refs :: ReactRefs ReadOnly, state :: ReactState ReadWrite | eff) Event Unit
-  , onExit :: EffFn1 (props :: ReactProps, refs :: ReactRefs ReadOnly, state :: ReactState ReadWrite | eff) Event Unit
-  , onExited :: EffFn1 (props :: ReactProps, refs :: ReactRefs ReadOnly, state :: ReactState ReadWrite | eff) Event Unit
-  , onExiting :: EffFn1 (props :: ReactProps, refs :: ReactRefs ReadOnly, state :: ReactState ReadWrite | eff) Event Unit
-  , onRequestClose :: EffFn1 (props :: ReactProps, refs :: ReactRefs ReadOnly, state :: ReactState ReadWrite | eff) Event Unit
+  , onEnter :: EffectFn1 SyntheticEvent Unit
+  , onEntered :: EffectFn1 SyntheticEvent Unit
+  , onEntering :: EffectFn1 SyntheticEvent Unit
+  , onExit :: EffectFn1 SyntheticEvent Unit
+  , onExited :: EffectFn1 SyntheticEvent Unit
+  , onExiting :: EffectFn1 SyntheticEvent Unit
+  , onRequestClose :: EffectFn1 SyntheticEvent Unit
   , open :: Boolean
   , transitionDuration :: Number
   )
@@ -46,15 +47,15 @@ type MenuClasses =
   )
 
 createClasses :: forall classes
-               . Subrow classes MenuClasses
+               . SubRow classes MenuClasses
               => { | classes } -> Classes
 createClasses = unsafeCoerce
 
 
 menu :: forall o eff menuListProps
-         . Subrow o (MenuPropsO eff menuListProps)
+         . SubRow o (MenuPropsO eff menuListProps)
         => MenuProps o -> Array ReactElement -> ReactElement
-menu = createElement menuImpl
+menu = unsafeCreateElement menuImpl
 
 -----------------------------------------------------------------------------------------
 
@@ -67,8 +68,7 @@ type MenuItemProps o =
 
 
 type MenuItemPropsO componentProps =
-  ( children :: Array ReactElement
-  , classes :: Classes
+  ( classes :: Classes
   , component :: ReactClass componentProps
   , selected :: Boolean
   , key :: String
@@ -81,13 +81,13 @@ type MenuItemClasses =
   )
 
 createClassesItem :: forall classes
-               . Subrow classes MenuItemClasses
+               . SubRow classes MenuItemClasses
               => { | classes } -> Classes
 createClassesItem = unsafeCoerce
 
 
 menuItem :: forall o eff both componentProps
-         . Subrow o both
+         . SubRow o both
         => Union (MenuItemPropsO componentProps) (ListItemPropsO eff componentProps) both
         => MenuItemProps o -> Array ReactElement -> ReactElement
-menuItem = createElement menuItemImpl
+menuItem = unsafeCreateElement menuItemImpl

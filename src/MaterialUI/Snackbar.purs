@@ -8,11 +8,12 @@ module MaterialUI.Snackbar
 import MaterialUI.Types (Styles, Classes)
 
 import Prelude
-import React (Event, ReactClass, createElement, ReactElement, ReactProps, ReactState, ReactRefs, ReadOnly, ReadWrite)
-import Data.Record.Class (class Subrow)
+import React (ReactClass, unsafeCreateElement, ReactElement)
+import React.SyntheticEvent (SyntheticEvent)
+import Row.Class (class SubRow)
 import Data.Time.Duration (Milliseconds)
 import Data.Nullable (Nullable)
-import Control.Monad.Eff.Uncurried (EffFn1, EffFn2)
+import Effect.Uncurried (EffectFn1, EffectFn2)
 import Unsafe.Coerce (unsafeCoerce)
 
 
@@ -62,18 +63,17 @@ type SnackbarPropsO eff =
   , autoHideDuration :: Nullable Milliseconds
   , resumeHideDuration :: Nullable Milliseconds
   , disableWindowBlurListener :: Boolean
-  , children :: Array ReactElement
   , classes :: Classes
   , key :: String
   , action :: Array ReactElement
   , message :: ReactElement
-  , onEnter :: EffFn1 (props :: ReactProps, refs :: ReactRefs ReadOnly, state :: ReactState ReadWrite | eff) Event Unit
-  , onEntered :: EffFn1 (props :: ReactProps, refs :: ReactRefs ReadOnly, state :: ReactState ReadWrite | eff) Event Unit
-  , onEntering :: EffFn1 (props :: ReactProps, refs :: ReactRefs ReadOnly, state :: ReactState ReadWrite | eff) Event Unit
-  , onExit :: EffFn1 (props :: ReactProps, refs :: ReactRefs ReadOnly, state :: ReactState ReadWrite | eff) Event Unit
-  , onExited :: EffFn1 (props :: ReactProps, refs :: ReactRefs ReadOnly, state :: ReactState ReadWrite | eff) Event Unit
-  , onExiting :: EffFn1 (props :: ReactProps, refs :: ReactRefs ReadOnly, state :: ReactState ReadWrite | eff) Event Unit
-  , onClose :: EffFn2 (props :: ReactProps, refs :: ReactRefs ReadOnly, state :: ReactState ReadWrite | eff) Event CloseReason Unit
+  , onEnter :: EffectFn1 SyntheticEvent Unit
+  , onEntered :: EffectFn1 SyntheticEvent Unit
+  , onEntering :: EffectFn1 SyntheticEvent Unit
+  , onExit :: EffectFn1 SyntheticEvent Unit
+  , onExited :: EffectFn1 SyntheticEvent Unit
+  , onExiting :: EffectFn1 SyntheticEvent Unit
+  , onClose :: EffectFn2 SyntheticEvent CloseReason Unit
   )
 
 type SnackbarClasses =
@@ -81,12 +81,12 @@ type SnackbarClasses =
   )
 
 createClasses :: forall classes
-               . Subrow classes SnackbarClasses
+               . SubRow classes SnackbarClasses
               => { | classes } -> Classes
 createClasses = unsafeCoerce
 
 
 snackbar :: forall o eff
-         . Subrow o (SnackbarPropsO eff)
+         . SubRow o (SnackbarPropsO eff)
         => SnackbarProps o -> ReactElement
-snackbar p = createElement snackbarImpl p []
+snackbar p = unsafeCreateElement snackbarImpl p []

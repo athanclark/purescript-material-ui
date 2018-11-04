@@ -5,8 +5,8 @@ module MaterialUI.Card
 
 import MaterialUI.Types (Styles, Classes)
 
-import React (ReactClass, createElement, ReactElement)
-import Data.Record.Class (class Subrow)
+import React (ReactClass, unsafeCreateElement, ReactElement)
+import Row.Class (class SubRow)
 import Unsafe.Coerce (unsafeCoerce)
 
 
@@ -28,12 +28,12 @@ type CardClasses =
   )
 
 createClasses :: forall classes
-               . Subrow classes CardClasses
+               . SubRow classes CardClasses
               => { | classes } -> Classes
 createClasses = unsafeCoerce
 
 
 card :: forall o
-         . Subrow o CardPropsO
+         . SubRow o CardPropsO
         => CardProps o -> Array ReactElement -> ReactElement
-card = createElement cardImpl
+card = unsafeCreateElement cardImpl

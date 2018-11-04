@@ -8,12 +8,14 @@ import MaterialUI.Types (Styles, Classes, class CompileStyles, Theme)
 import MaterialUI.Input (InputPropsO, Value)
 
 import Prelude
-import React (Event, ReactClass, createElement, createClassStateless, ReactElement, ReactProps, ReactState, ReactRefs, ReadOnly, ReadWrite)
-import Data.Record.Class (class Subrow)
+import React (ReactClass, unsafeCreateElement, ReactElement, statelessComponent)
+import React.SyntheticEvent (SyntheticEvent)
+import Row.Class (class SubRow)
 import Data.Function.Uncurried (Fn2, runFn2)
-import Control.Monad.Eff.Uncurried (EffFn1)
+import Effect.Uncurried (EffectFn1)
 import Unsafe.Coerce (unsafeCoerce)
 import Type.Row (class RowToList, class ListToRow)
+import Prim.Row (class Union)
 
 
 foreign import selectImpl :: forall props. ReactClass props
@@ -26,7 +28,6 @@ type SelectProps o =
 
 type SelectPropsO eff menuProps iconComponentProps selectDisplayProps =
   ( autoWidth :: Boolean
-  , children :: Array ReactElement
   -- , classes :: Classes
   , displayEmpty :: Boolean
   , "IconComponent" :: ReactClass iconComponentProps
@@ -35,9 +36,9 @@ type SelectPropsO eff menuProps iconComponentProps selectDisplayProps =
   , "MenuProps" :: menuProps
   , multiple :: Boolean
   , native :: Boolean
-  -- , onChange :: EffFn2 (props :: ReactProps, refs :: ReactRefs ReadOnly, state :: ReactState ReadWrite | eff) Event (Nullable ReactElement) Unit
-  , onClose :: EffFn1 (props :: ReactProps, refs :: ReactRefs ReadOnly, state :: ReactState ReadWrite | eff) Event Unit
-  , onOpen :: EffFn1 (props :: ReactProps, refs :: ReactRefs ReadOnly, state :: ReactState ReadWrite | eff) Event Unit
+  -- , onChange :: EffectFn2 SyntheticEvent (Nullable ReactElement) Unit
+  , onClose :: EffectFn1 SyntheticEvent Unit
+  , onOpen :: EffectFn1 SyntheticEvent Unit
   , open :: Boolean
   , renderValue :: Value -> ReactElement
   , "SelectDisplayProps" :: selectDisplayProps
@@ -61,25 +62,25 @@ type SelectClassesCompiled =
   )
 
 createClasses :: forall classes
-               . Subrow classes SelectClassesCompiled
+               . SubRow classes SelectClassesCompiled
               => { | classes } -> Classes
 createClasses = unsafeCoerce
 
 
 select :: forall o menuProps iconComponentProps selectDisplayProps eff inputProps inputProps' inputComponentProps both
          . Union (SelectPropsO eff menuProps iconComponentProps selectDisplayProps) (InputPropsO eff inputComponentProps inputProps inputProps') both
-        => Subrow o both
+        => SubRow o both
         => SelectProps o -> Array ReactElement -> ReactElement
-select = createElement selectImpl
+select = unsafeCreateElement selectImpl
 
 
 foreign import withStylesImpl :: forall styles compiledStyles a
                                . Fn2 (Theme -> { | styles }) (ReactClass {classes :: { | compiledStyles }}) (ReactClass a)
 
 withStyles :: forall styles stylesList compiledStyles compiledStylesList
-            . Subrow styles SelectClasses
+            . SubRow styles SelectClasses
             => RowToList styles stylesList
             => CompileStyles stylesList compiledStylesList
             => ListToRow compiledStylesList compiledStyles
             => (Theme -> { | styles }) -> ({classes :: { | compiledStyles }} -> ReactElement) -> ReactElement
-withStyles stylesF createElem = createElement (runFn2 withStylesImpl stylesF (createClassStateless createElem)) unit []
+withStyles stylesF createElem = unsafeCreateElement (runFn2 withStylesImpl stylesF (statelessComponent createElem)) {} []

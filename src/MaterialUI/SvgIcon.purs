@@ -6,8 +6,8 @@ module MaterialUI.SvgIcon
 
 import MaterialUI.Types (Styles, Classes)
 
-import React (ReactClass, createElement, ReactElement)
-import Data.Record.Class (class Subrow)
+import React (ReactClass, unsafeCreateElement, ReactElement)
+import Row.Class (class SubRow)
 import Unsafe.Coerce (unsafeCoerce)
 
 
@@ -41,8 +41,7 @@ secondary = Color "secondary"
 
 
 type SvgIconPropsO eff svgIconListProps =
-  ( children :: Array ReactElement
-  , classes :: Classes
+  ( classes :: Classes
   , color :: Color
   , nativeColor :: String
   , titleAccess :: String
@@ -59,13 +58,13 @@ type SvgIconClasses =
   )
 
 createClasses :: forall classes
-               . Subrow classes SvgIconClasses
+               . SubRow classes SvgIconClasses
               => { | classes } -> Classes
 createClasses = unsafeCoerce
 
 
 svgIcon :: forall o eff svgIconListProps
-         . Subrow o (SvgIconPropsO eff svgIconListProps)
+         . SubRow o (SvgIconPropsO eff svgIconListProps)
         => SvgIconProps o -> Array ReactElement -> ReactElement
-svgIcon = createElement svgIconImpl
+svgIcon = unsafeCreateElement svgIconImpl
 

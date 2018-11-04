@@ -1,11 +1,10 @@
 module MaterialUI.Icons.Menu where
 
-import Prelude (unit)
-import React (ReactElement, ReactClass, createElement)
+import React (ReactElement, ReactClass, unsafeCreateElement)
 
 
 foreign import menuIconImpl :: forall props. ReactClass props
 
 
 menuIcon :: ReactElement
-menuIcon = createElement menuIconImpl unit []
+menuIcon = unsafeCreateElement menuIconImpl {} []

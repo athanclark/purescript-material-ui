@@ -1,11 +1,10 @@
 module MaterialUI.Icons.Directions where
 
-import Prelude (unit)
-import React (ReactElement, ReactClass, createElement)
+import React (ReactElement, ReactClass, unsafeCreateElement)
 
 
 foreign import directionsIconImpl :: forall props. ReactClass props
 
 
 directionsIcon :: ReactElement
-directionsIcon = createElement directionsIconImpl unit []
+directionsIcon = unsafeCreateElement directionsIconImpl {} []

@@ -9,10 +9,11 @@ module MaterialUI.Form
 import MaterialUI.Types (Styles, Classes, class CompileStyles, Theme)
 
 import Prelude
-import React (Event, ReactClass, createElement, createClassStateless, ReactElement, ReactProps, ReactState, ReactRefs, ReadOnly, ReadWrite)
-import Data.Record.Class (class Subrow)
+import React (ReactClass, unsafeCreateElement, ReactElement, statelessComponent)
+import React.SyntheticEvent (SyntheticEvent)
+import Row.Class (class SubRow)
 import Data.Function.Uncurried (Fn2, runFn2)
-import Control.Monad.Eff.Uncurried (EffFn2)
+import Effect.Uncurried (EffectFn2)
 import Type.Row (class RowToList, class ListToRow)
 
 
@@ -31,7 +32,7 @@ type FormControlLabelPropsO eff =
   , disabled :: Boolean
   , label :: ReactElement
   , name :: String
-  , onChange :: EffFn2 (props :: ReactProps, refs :: ReactRefs ReadOnly, state :: ReactState ReadWrite | eff) Event Boolean Unit
+  , onChange :: EffectFn2 SyntheticEvent Boolean Unit
   , value :: String
   )
 
@@ -43,9 +44,9 @@ type FormControlLabelClasses =
 
 
 formControlLabel :: forall eff o
-         . Subrow o (FormControlLabelPropsO eff)
+         . SubRow o (FormControlLabelPropsO eff)
         => FormControlLabelProps o -> ReactElement
-formControlLabel props = createElement formControlLabelImpl props []
+formControlLabel props = unsafeCreateElement formControlLabelImpl props []
 
 
 foreign import formGroupImpl :: forall props. ReactClass props
@@ -59,7 +60,6 @@ type FormGroupProps o =
 type FormGroupPropsO =
   ( row :: Boolean
   , classes :: Classes
-  , children :: Array ReactElement
   )
 
 type FormGroupClasses =
@@ -69,9 +69,9 @@ type FormGroupClasses =
 
 
 formGroup :: forall o
-         . Subrow o FormGroupPropsO
+         . SubRow o FormGroupPropsO
         => FormGroupProps o -> Array ReactElement -> ReactElement
-formGroup = createElement formGroupImpl
+formGroup = unsafeCreateElement formGroupImpl
 
 
 
@@ -95,8 +95,7 @@ normal = Margin "normal"
 
 
 type FormControlPropsO eff componentProps =
-  ( children :: Array ReactElement
-  , classes :: Classes
+  ( classes :: Classes
   , component :: ReactClass componentProps
   , disabled :: Boolean
   , error :: Boolean
@@ -121,9 +120,9 @@ type FormControlClassesCompiled =
 
 
 formControl :: forall eff componentProps o
-         . Subrow o (FormControlPropsO eff componentProps)
+         . SubRow o (FormControlPropsO eff componentProps)
         => FormControlProps o -> Array ReactElement -> ReactElement
-formControl = createElement formControlImpl
+formControl = unsafeCreateElement formControlImpl
 
 
 
@@ -136,8 +135,7 @@ type FormLabelProps o =
 
 
 type FormLabelPropsO eff componentProps =
-  ( children :: Array ReactElement
-  , classes :: Classes
+  ( classes :: Classes
   , component :: ReactClass componentProps
   , disabled :: Boolean
   , error :: Boolean
@@ -161,9 +159,9 @@ type FormLabelClassesCompiled =
 
 
 formLabel :: forall eff componentProps o
-         . Subrow o (FormLabelPropsO eff componentProps)
+         . SubRow o (FormLabelPropsO eff componentProps)
         => FormLabelProps o -> Array ReactElement -> ReactElement
-formLabel = createElement formLabelImpl
+formLabel = unsafeCreateElement formLabelImpl
 
 
 foreign import withStylesImpl :: forall styles compiledStyles a
@@ -171,9 +169,9 @@ foreign import withStylesImpl :: forall styles compiledStyles a
 
 
 withStylesFormControl :: forall styles stylesList compiledStyles compiledStylesList
-            . Subrow styles FormControlClasses
+            . SubRow styles FormControlClasses
             => RowToList styles stylesList
             => CompileStyles stylesList compiledStylesList
             => ListToRow compiledStylesList compiledStyles
             => (Theme -> { | styles }) -> ({classes :: { | compiledStyles }} -> ReactElement) -> ReactElement
-withStylesFormControl stylesF createElem = createElement (runFn2 withStylesImpl stylesF (createClassStateless createElem)) unit []
+withStylesFormControl stylesF createElem = unsafeCreateElement (runFn2 withStylesImpl stylesF (statelessComponent createElem)) {} []

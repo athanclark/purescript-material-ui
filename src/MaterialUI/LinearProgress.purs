@@ -5,8 +5,8 @@ module MaterialUI.LinearProgress
 
 import MaterialUI.Types (Styles, Classes)
 
-import React (ReactClass, createElement, ReactElement)
-import Data.Record.Class (class Subrow)
+import React (ReactClass, unsafeCreateElement, ReactElement)
+import Row.Class (class SubRow)
 import Unsafe.Coerce (unsafeCoerce)
 
 
@@ -71,12 +71,12 @@ type LinearProgressClasses =
   )
 
 createClasses :: forall classes
-               . Subrow classes LinearProgressClasses
+               . SubRow classes LinearProgressClasses
               => { | classes } -> Classes
 createClasses = unsafeCoerce
 
 
 linearProgress :: forall o
-         . Subrow o LinearProgressPropsO
+         . SubRow o LinearProgressPropsO
         => LinearProgressProps o -> ReactElement
-linearProgress p = createElement linearProgressImpl p []
+linearProgress p = unsafeCreateElement linearProgressImpl p []

@@ -5,8 +5,8 @@ module MaterialUI.DialogContentText
 
 import MaterialUI.Types (Styles, Classes)
 
-import React (ReactClass, createElement, ReactElement)
-import Data.Record.Class (class Subrow)
+import React (ReactClass, unsafeCreateElement, ReactElement)
+import Row.Class (class SubRow)
 import Unsafe.Coerce (unsafeCoerce)
 
 
@@ -19,8 +19,7 @@ type DialogContentTextProps o =
 
 
 type DialogContentTextPropsO =
-  ( children :: Array ReactElement
-  , classes :: Classes
+  ( classes :: Classes
   )
 
 type DialogContentTextClasses =
@@ -28,12 +27,12 @@ type DialogContentTextClasses =
   )
 
 createClasses :: forall classes
-               . Subrow classes DialogContentTextClasses
+               . SubRow classes DialogContentTextClasses
               => { | classes } -> Classes
 createClasses = unsafeCoerce
 
 
 dialogContentText :: forall o
-         . Subrow o DialogContentTextPropsO
+         . SubRow o DialogContentTextPropsO
         => DialogContentTextProps o -> Array ReactElement -> ReactElement
-dialogContentText = createElement dialogContentTextImpl
+dialogContentText = unsafeCreateElement dialogContentTextImpl

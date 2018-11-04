@@ -5,9 +5,10 @@ module MaterialUI.RaisedButton
 import MaterialUI.Types (Styles)
 
 import Prelude
-import React (Event, ReactClass, createElement, ReactElement, ReactProps, ReactState, ReactRefs, ReadOnly, ReadWrite)
-import Data.Record.Class (class Subrow)
-import Control.Monad.Eff.Uncurried (EffFn1)
+import React (ReactClass, unsafeCreateElement, ReactElement)
+import React.SyntheticEvent (SyntheticEvent)
+import Row.Class (class SubRow)
+import Effect.Uncurried (EffectFn1)
 
 
 foreign import raisedButtonImpl :: forall props. ReactClass props
@@ -27,7 +28,7 @@ type RaisedButtonPropsO eff =
   , containerElement :: String
   , icon :: ReactElement
   , style :: Styles
-  , onTouchTap :: EffFn1 (props :: ReactProps, refs :: ReactRefs ReadOnly, state :: ReactState ReadWrite | eff) Event Unit
+  , onTouchTap :: EffectFn1 SyntheticEvent Unit
   )
 
 
@@ -38,6 +39,6 @@ before = LabelPosition "before"
 
 
 raisedButton :: forall eff o
-               . Subrow o (RaisedButtonPropsO eff)
+               . SubRow o (RaisedButtonPropsO eff)
               => RaisedButtonProps o -> Array ReactElement -> ReactElement
-raisedButton = createElement raisedButtonImpl
+raisedButton = unsafeCreateElement raisedButtonImpl

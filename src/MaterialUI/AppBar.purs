@@ -8,9 +8,8 @@ module MaterialUI.AppBar
 
 import MaterialUI.Types (Styles, Classes, class CompileStyles, Theme)
 
-import Prelude
-import React (ReactClass, createClassStateless, createElement, ReactElement)
-import Data.Record.Class (class Subrow)
+import React (ReactClass, unsafeCreateElement, ReactElement, statelessComponent)
+import Row.Class (class SubRow)
 import Data.Function.Uncurried (Fn2, runFn2)
 import Unsafe.Coerce (unsafeCoerce)
 import Type.Row (class RowToList, class ListToRow)
@@ -51,8 +50,7 @@ absolute = Position "absolute"
 
 
 type AppBarPropsO =
-  ( children :: Array ReactElement
-  , color :: Color
+  ( color :: Color
   , position :: Position
   , classes :: Classes
   , key :: String
@@ -82,24 +80,24 @@ type AppBarClassesCompiled =
 
 
 createClasses :: forall classes
-               . Subrow classes AppBarClassesCompiled
+               . SubRow classes AppBarClassesCompiled
               => { | classes } -> Classes
 createClasses = unsafeCoerce
 
 
 appBar :: forall o
-         . Subrow o AppBarPropsO
+         . SubRow o AppBarPropsO
         => AppBarProps o -> Array ReactElement -> ReactElement
-appBar = createElement appBarImpl
+appBar = unsafeCreateElement appBarImpl
 
 
 foreign import withStylesImpl :: forall styles compiledStyles a
                                . Fn2 (Theme -> { | styles }) (ReactClass {classes :: { | compiledStyles }}) (ReactClass a)
 
 withStyles :: forall styles stylesList compiledStyles compiledStylesList
-            . Subrow styles AppBarClasses
+            . SubRow styles AppBarClasses
             => RowToList styles stylesList
             => CompileStyles stylesList compiledStylesList
             => ListToRow compiledStylesList compiledStyles
             => (Theme -> { | styles }) -> ({classes :: { | compiledStyles }} -> ReactElement) -> ReactElement
-withStyles stylesF createElem = createElement (runFn2 withStylesImpl stylesF (createClassStateless createElem)) unit []
+withStyles stylesF createElem = unsafeCreateElement (runFn2 withStylesImpl stylesF (statelessComponent createElem)) {} []

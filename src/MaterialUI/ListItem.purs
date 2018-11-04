@@ -6,9 +6,10 @@ module MaterialUI.ListItem
 import MaterialUI.Types (Styles, Classes)
 
 import Prelude
-import React (Event, ReactClass, createElement, ReactElement, ReactProps, ReactState, ReactRefs, ReadOnly, ReadWrite)
-import Data.Record.Class (class Subrow)
-import Control.Monad.Eff.Uncurried (EffFn1)
+import React (ReactClass, unsafeCreateElement, ReactElement)
+import React.SyntheticEvent (SyntheticEvent)
+import Row.Class (class SubRow)
+import Effect.Uncurried (EffectFn1)
 import Unsafe.Coerce (unsafeCoerce)
 
 
@@ -22,10 +23,9 @@ type ListItemProps o =
 
 type ListItemPropsO eff componentProps =
   ( button :: Boolean
-  , children :: Array ReactElement
   , classes :: Classes
   , style :: Styles
-  , onClick :: EffFn1 (props :: ReactProps, refs :: ReactRefs ReadOnly, state :: ReactState ReadWrite | eff) Event Unit
+  , onClick :: EffectFn1 SyntheticEvent Unit
   , component :: ReactClass componentProps
   , dense :: Boolean
   , disableGutters :: Boolean
@@ -45,12 +45,12 @@ type ListItemClasses =
   )
 
 createClasses :: forall classes
-               . Subrow classes ListItemClasses
+               . SubRow classes ListItemClasses
               => { | classes } -> Classes
 createClasses = unsafeCoerce
 
 
 listItem :: forall o eff componentProps
-         . Subrow o (ListItemPropsO eff componentProps)
+         . SubRow o (ListItemPropsO eff componentProps)
         => ListItemProps o -> Array ReactElement -> ReactElement
-listItem = createElement listItemImpl
+listItem = unsafeCreateElement listItemImpl

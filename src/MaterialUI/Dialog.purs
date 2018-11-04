@@ -7,9 +7,10 @@ module MaterialUI.Dialog
 import MaterialUI.Types (Styles, Classes)
 
 import Prelude
-import React (Event, ReactClass, createElement, ReactElement, ReactProps, ReactState, ReactRefs, ReadOnly, ReadWrite)
-import Data.Record.Class (class Subrow)
-import Control.Monad.Eff.Uncurried (EffFn1)
+import React (ReactClass, unsafeCreateElement, ReactElement)
+import React.SyntheticEvent (SyntheticEvent)
+import Row.Class (class SubRow)
+import Effect.Uncurried (EffectFn1)
 import Unsafe.Coerce (unsafeCoerce)
 
 
@@ -34,23 +35,22 @@ md = MaxWidth "md"
 
 
 type DialogPropsO eff containerProps transitionProps =
-  ( children                :: Array ReactElement
-  , classes                 :: Classes
+  ( classes                 :: Classes
   , disableBackdropClick    :: Boolean
   , disableEscapeKeyDown    :: Boolean
   , fullScreen              :: Boolean
   , fullWidth               :: Boolean
   , maxWidth                :: MaxWidth
   , container               :: ReactClass containerProps
-  , onBackdropClick         :: EffFn1 (props :: ReactProps, refs :: ReactRefs ReadOnly, state :: ReactState ReadWrite | eff) Event Unit
-  , onClose                 :: EffFn1 (props :: ReactProps, refs :: ReactRefs ReadOnly, state :: ReactState ReadWrite | eff) Event Unit
-  , onEnter                 :: EffFn1 (props :: ReactProps, refs :: ReactRefs ReadOnly, state :: ReactState ReadWrite | eff) Event Unit
-  , onEntered               :: EffFn1 (props :: ReactProps, refs :: ReactRefs ReadOnly, state :: ReactState ReadWrite | eff) Event Unit
-  , onEntering              :: EffFn1 (props :: ReactProps, refs :: ReactRefs ReadOnly, state :: ReactState ReadWrite | eff) Event Unit
-  , onEscapeKeyDown         :: EffFn1 (props :: ReactProps, refs :: ReactRefs ReadOnly, state :: ReactState ReadWrite | eff) Event Unit
-  , onExit                  :: EffFn1 (props :: ReactProps, refs :: ReactRefs ReadOnly, state :: ReactState ReadWrite | eff) Event Unit
-  , onExited                :: EffFn1 (props :: ReactProps, refs :: ReactRefs ReadOnly, state :: ReactState ReadWrite | eff) Event Unit
-  , onExiting               :: EffFn1 (props :: ReactProps, refs :: ReactRefs ReadOnly, state :: ReactState ReadWrite | eff) Event Unit
+  , onBackdropClick         :: EffectFn1 SyntheticEvent Unit
+  , onClose                 :: EffectFn1 SyntheticEvent Unit
+  , onEnter                 :: EffectFn1 SyntheticEvent Unit
+  , onEntered               :: EffectFn1 SyntheticEvent Unit
+  , onEntering              :: EffectFn1 SyntheticEvent Unit
+  , onEscapeKeyDown         :: EffectFn1 SyntheticEvent Unit
+  , onExit                  :: EffectFn1 SyntheticEvent Unit
+  , onExited                :: EffectFn1 SyntheticEvent Unit
+  , onExiting               :: EffectFn1 SyntheticEvent Unit
   , transitionDuration      :: Number
   , transition              :: ReactClass transitionProps
   )
@@ -68,12 +68,12 @@ type DialogClasses =
 
 
 createClasses :: forall classes
-               . Subrow classes DialogClasses
+               . SubRow classes DialogClasses
               => { | classes } -> Classes
 createClasses = unsafeCoerce
 
 
 dialog :: forall eff o containerProps transitionProps
-         . Subrow o (DialogPropsO eff containerProps transitionProps)
+         . SubRow o (DialogPropsO eff containerProps transitionProps)
         => DialogProps o -> Array ReactElement -> ReactElement
-dialog = createElement dialogImpl
+dialog = unsafeCreateElement dialogImpl

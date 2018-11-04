@@ -1,11 +1,10 @@
 module MaterialUI.Icons.LocalShipping where
 
-import Prelude (unit)
-import React (ReactElement, ReactClass, createElement)
+import React (ReactElement, ReactClass, unsafeCreateElement)
 
 
 foreign import localShippingIconImpl :: forall props. ReactClass props
 
 
 localShippingIcon :: ReactElement
-localShippingIcon = createElement localShippingIconImpl unit []
+localShippingIcon = unsafeCreateElement localShippingIconImpl {} []

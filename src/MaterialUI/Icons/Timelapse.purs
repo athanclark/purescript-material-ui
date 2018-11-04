@@ -1,11 +1,10 @@
 module MaterialUI.Icons.Timelapse where
 
-import Prelude (unit)
-import React (ReactElement, ReactClass, createElement)
+import React (ReactElement, ReactClass, unsafeCreateElement)
 
 
 foreign import timelapseIconImpl :: forall props. ReactClass props
 
 
 timelapseIcon :: ReactElement
-timelapseIcon = createElement timelapseIconImpl unit []
+timelapseIcon = unsafeCreateElement timelapseIconImpl {} []

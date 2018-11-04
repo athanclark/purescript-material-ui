@@ -6,9 +6,10 @@ module MaterialUI.Collapse
 import MaterialUI.Types (Styles, Classes)
 
 import Prelude
-import React (Event, ReactClass, createElement, ReactElement, ReactProps, ReactState, ReactRefs, ReadOnly, ReadWrite)
-import Data.Record.Class (class Subrow)
-import Control.Monad.Eff.Uncurried (EffFn1)
+import React (ReactClass, unsafeCreateElement, ReactElement)
+import React.SyntheticEvent (SyntheticEvent)
+import Row.Class (class SubRow)
+import Effect.Uncurried (EffectFn1)
 import Unsafe.Coerce (unsafeCoerce)
 
 
@@ -21,16 +22,15 @@ type CollapseProps o =
 
 
 type CollapsePropsO eff =
-  ( children :: Array ReactElement
-  , classes :: Classes
+  ( classes :: Classes
   , style :: Styles
   , in :: Boolean
-  , onEnter :: EffFn1 (props :: ReactProps, refs :: ReactRefs ReadOnly, state :: ReactState ReadWrite | eff) Event Unit
-  , onEntered :: EffFn1 (props :: ReactProps, refs :: ReactRefs ReadOnly, state :: ReactState ReadWrite | eff) Event Unit
-  , onEntering :: EffFn1 (props :: ReactProps, refs :: ReactRefs ReadOnly, state :: ReactState ReadWrite | eff) Event Unit
-  , onExit :: EffFn1 (props :: ReactProps, refs :: ReactRefs ReadOnly, state :: ReactState ReadWrite | eff) Event Unit
-  , onExited :: EffFn1 (props :: ReactProps, refs :: ReactRefs ReadOnly, state :: ReactState ReadWrite | eff) Event Unit
-  , onExiting :: EffFn1 (props :: ReactProps, refs :: ReactRefs ReadOnly, state :: ReactState ReadWrite | eff) Event Unit
+  , onEnter :: EffectFn1 SyntheticEvent Unit
+  , onEntered :: EffectFn1 SyntheticEvent Unit
+  , onEntering :: EffectFn1 SyntheticEvent Unit
+  , onExit :: EffectFn1 SyntheticEvent Unit
+  , onExited :: EffectFn1 SyntheticEvent Unit
+  , onExiting :: EffectFn1 SyntheticEvent Unit
   , transitionDuration :: Number
   , unmountOnExit :: Boolean
   )
@@ -41,12 +41,12 @@ type CollapseClasses =
   )
 
 createClasses :: forall classes
-               . Subrow classes CollapseClasses
+               . SubRow classes CollapseClasses
               => { | classes } -> Classes
 createClasses = unsafeCoerce
 
 
 collapse :: forall o eff
-         . Subrow o (CollapsePropsO eff)
+         . SubRow o (CollapsePropsO eff)
         => CollapseProps o -> Array ReactElement -> ReactElement
-collapse = createElement collapseImpl
+collapse = unsafeCreateElement collapseImpl

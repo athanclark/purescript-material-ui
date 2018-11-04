@@ -1,11 +1,10 @@
 module MaterialUI.Icons.CheckCircle where
 
-import Prelude (unit)
-import React (ReactElement, ReactClass, createElement)
+import React (ReactElement, ReactClass, unsafeCreateElement)
 
 
 foreign import checkCircleIconImpl :: forall props. ReactClass props
 
 
 checkCircleIcon :: ReactElement
-checkCircleIcon = createElement checkCircleIconImpl unit []
+checkCircleIcon = unsafeCreateElement checkCircleIconImpl {} []

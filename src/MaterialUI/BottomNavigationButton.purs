@@ -5,8 +5,8 @@ module MaterialUI.BottomNavigationButton
 
 import MaterialUI.Types (Styles, Classes)
 
-import React (ReactClass, createElement, ReactElement)
-import Data.Record.Class (class Subrow)
+import React (ReactClass, unsafeCreateElement, ReactElement)
+import Row.Class (class SubRow)
 import Unsafe.Coerce (unsafeCoerce)
 
 
@@ -37,12 +37,12 @@ type BottomNavigationButtonClasses =
   )
 
 createClasses :: forall classes
-               . Subrow classes BottomNavigationButtonClasses
+               . SubRow classes BottomNavigationButtonClasses
               => { | classes } -> Classes
 createClasses = unsafeCoerce
 
 
 bottomNavigationButton :: forall o
-         . Subrow o BottomNavigationButtonPropsO
+         . SubRow o BottomNavigationButtonPropsO
         => BottomNavigationButtonProps o -> Array ReactElement -> ReactElement
-bottomNavigationButton = createElement bottomNavigationButtonImpl
+bottomNavigationButton = unsafeCreateElement bottomNavigationButtonImpl

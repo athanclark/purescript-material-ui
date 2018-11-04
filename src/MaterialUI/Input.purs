@@ -14,17 +14,18 @@ module MaterialUI.Input
 import MaterialUI.Types (Styles, Classes)
 
 import Prelude
-import React (Event, ReactClass, createElement, ReactElement, ReactProps, ReactState, ReactRefs, ReadOnly, ReadWrite)
-import Data.Record.Class (class Subrow)
+import React (ReactClass, unsafeCreateElement, ReactElement)
+import React.SyntheticEvent (SyntheticEvent)
+import Row.Class (class SubRow)
 import Data.Either (Either)
 import Data.Maybe (Maybe (Nothing))
-import Data.Foreign (readNumber, readString, readInt, readNull, toForeign, MultipleErrors)
+import Foreign (readNumber, readString, readInt, readNull, unsafeToForeign, MultipleErrors)
 import Data.Nullable (toNullable)
 import Control.Alternative ((<|>))
 import Control.Monad.Except (runExcept)
-import Control.Monad.Eff.Uncurried (EffFn1)
+import Effect.Uncurried (EffectFn1)
 import Unsafe.Coerce (unsafeCoerce)
-import DOM.Node.Types (Node)
+import Web.DOM.Internal.Types (Node)
 
 
 foreign import inputImpl :: forall props. ReactClass props
@@ -57,7 +58,7 @@ data ReadValue
 
 readValue :: Value -> Either MultipleErrors ReadValue
 readValue v = runExcept $ do
-  let v' = toForeign v
+  let v' = unsafeToForeign v
   (ValueInt <$> readInt v')
     <|> (ValueNumber <$> readNumber v')
     <|> (ValueString <$> readString v')
@@ -160,9 +161,9 @@ type InputPropsO eff inputComponentProps inputProps inputProps' =
   , margin :: Margin
   , multiline :: Boolean
   , name :: String
-  , onChange :: EffFn1 (props :: ReactProps, refs :: ReactRefs ReadOnly, state :: ReactState ReadWrite | eff) Event Unit
-  , onFocus :: EffFn1 (props :: ReactProps, refs :: ReactRefs ReadOnly, state :: ReactState ReadWrite | eff) Event Unit
-  , onBlur :: EffFn1 (props :: ReactProps, refs :: ReactRefs ReadOnly, state :: ReactState ReadWrite | eff) Event Unit
+  , onChange :: EffectFn1 SyntheticEvent Unit
+  , onFocus :: EffectFn1 SyntheticEvent Unit
+  , onBlur :: EffectFn1 SyntheticEvent Unit
   , placeholder :: String
   , rows :: Int
   , rowsMax :: Int
@@ -190,15 +191,15 @@ type InputClasses =
   )
 
 createClasses :: forall classes
-               . Subrow classes InputClasses
+               . SubRow classes InputClasses
               => { | classes } -> Classes
 createClasses = unsafeCoerce
 
 
 input :: forall o eff inputProps inputProps' inputComponentProps
-         . Subrow o (InputPropsO eff inputComponentProps inputProps inputProps')
+         . SubRow o (InputPropsO eff inputComponentProps inputProps inputProps')
         => InputProps o -> Array ReactElement -> ReactElement
-input = createElement inputImpl
+input = unsafeCreateElement inputImpl
 
 -------------------------------------------------------------------------------------
 
@@ -211,8 +212,7 @@ type InputLabelProps o =
   | o }
 
 type InputLabelPropsO =
-  ( children :: Array ReactElement
-  , classes :: Classes
+  ( classes :: Classes
   , disableAnimation :: Boolean
   , disabled :: Boolean
   , error :: Boolean
@@ -233,15 +233,15 @@ type InputLabelClasses =
 
 
 createClassesLabel :: forall classes
-               . Subrow classes InputLabelClasses
+               . SubRow classes InputLabelClasses
               => { | classes } -> Classes
 createClassesLabel = unsafeCoerce
 
 
 inputLabel :: forall o
-         . Subrow o InputLabelPropsO
+         . SubRow o InputLabelPropsO
         => InputLabelProps o -> Array ReactElement -> ReactElement
-inputLabel = createElement inputLabelImpl
+inputLabel = unsafeCreateElement inputLabelImpl
 
 
 ----------------------------------------------------------------
@@ -267,8 +267,7 @@ end = Position "end"
 
 
 type InputAdornmentPropsO eff componentProps =
-  ( children :: Array ReactElement
-  , classes :: Classes
+  ( classes :: Classes
   , component :: ReactClass componentProps
   , disableTypography :: Boolean
   , position :: Position
@@ -281,12 +280,12 @@ type InputAdornmentClasses =
   )
 
 createClassesAdornment :: forall classes
-               . Subrow classes InputAdornmentClasses
+               . SubRow classes InputAdornmentClasses
               => { | classes } -> Classes
 createClassesAdornment = unsafeCoerce
 
 
 inputAdornment :: forall o eff inputAdornmentListProps
-         . Subrow o (InputAdornmentPropsO eff inputAdornmentListProps)
+         . SubRow o (InputAdornmentPropsO eff inputAdornmentListProps)
         => InputAdornmentProps o -> ReactElement -> ReactElement
-inputAdornment p x = createElement inputAdornmentImpl p [x]
+inputAdornment p x = unsafeCreateElement inputAdornmentImpl p [x]

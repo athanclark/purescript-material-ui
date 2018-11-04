@@ -5,8 +5,8 @@ module MaterialUI.CardHeader
 
 import MaterialUI.Types (Styles, Classes)
 
-import React (ReactClass, createElement, ReactElement)
-import Data.Record.Class (class Subrow)
+import React (ReactClass, unsafeCreateElement, ReactElement)
+import Row.Class (class SubRow)
 import Unsafe.Coerce (unsafeCoerce)
 
 
@@ -32,12 +32,12 @@ type CardHeaderClasses =
   )
 
 createClasses :: forall classes
-               . Subrow classes CardHeaderClasses
+               . SubRow classes CardHeaderClasses
               => { | classes } -> Classes
 createClasses = unsafeCoerce
 
 
 cardHeader :: forall o
-         . Subrow o CardHeaderPropsO
+         . SubRow o CardHeaderPropsO
         => CardHeaderProps o -> Array ReactElement -> ReactElement
-cardHeader = createElement cardHeaderImpl
+cardHeader = unsafeCreateElement cardHeaderImpl

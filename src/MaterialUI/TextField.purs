@@ -5,9 +5,11 @@ module MaterialUI.TextField
 import MaterialUI.Input (InputPropsO)
 
 import Prelude
-import React (Event, ReactClass, createElement, ReactElement, ReactProps, ReactState, ReactRefs, ReadOnly, ReadWrite)
-import Data.Record.Class (class Subrow)
-import Control.Monad.Eff.Uncurried (EffFn1)
+import React (ReactClass, unsafeCreateElement, ReactElement)
+import React.SyntheticEvent (SyntheticEvent)
+import Row.Class (class SubRow)
+import Effect.Uncurried (EffectFn1)
+import Prim.Row (class Union)
 
 
 foreign import textFieldImpl :: forall props. ReactClass props
@@ -34,12 +36,12 @@ type TextFieldPropsO eff formHelperTextProps inputLabelProps selectProps =
   , required :: Boolean
   , select :: Boolean
   -- rootRef FIXME
-  , onClick :: EffFn1 (props :: ReactProps, refs :: ReactRefs ReadOnly, state :: ReactState ReadWrite | eff) Event Unit
+  , onClick :: EffectFn1 SyntheticEvent Unit
   )
 
 
 textField :: forall o eff both inputProps inputProps' inputComponentProps inputLabelProps formHelperTextProps selectProps
-         . Subrow o both
+         . SubRow o both
         => Union (TextFieldPropsO eff formHelperTextProps inputLabelProps selectProps) (InputPropsO eff inputComponentProps inputProps inputProps') both
         => TextFieldProps o -> Array ReactElement -> ReactElement
-textField p = createElement textFieldImpl p
+textField p = unsafeCreateElement textFieldImpl p

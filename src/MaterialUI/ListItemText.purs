@@ -5,8 +5,8 @@ module MaterialUI.ListItemText
 
 import MaterialUI.Types (Styles, Classes)
 
-import React (ReactClass, createElement, ReactElement)
-import Data.Record.Class (class Subrow)
+import React (ReactClass, unsafeCreateElement, ReactElement)
+import Row.Class (class SubRow)
 import Unsafe.Coerce (unsafeCoerce)
 
 
@@ -35,12 +35,12 @@ type ListItemTextClasses =
   )
 
 createClasses :: forall classes
-               . Subrow classes ListItemTextClasses
+               . SubRow classes ListItemTextClasses
               => { | classes } -> Classes
 createClasses = unsafeCoerce
 
 
 listItemText :: forall o
-         . Subrow o ListItemTextPropsO
+         . SubRow o ListItemTextPropsO
         => ListItemTextProps o -> ReactElement
-listItemText p = createElement listItemTextImpl p []
+listItemText p = unsafeCreateElement listItemTextImpl p []

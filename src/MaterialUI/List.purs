@@ -5,8 +5,8 @@ module MaterialUI.List
 
 import MaterialUI.Types (Styles, Classes)
 
-import React (ReactClass, createElement, ReactElement)
-import Data.Record.Class (class Subrow)
+import React (ReactClass, unsafeCreateElement, ReactElement)
+import Row.Class (class SubRow)
 import Unsafe.Coerce (unsafeCoerce)
 
 
@@ -19,8 +19,7 @@ type ListProps o =
 
 
 type ListPropsO componentProps =
-  ( children :: Array ReactElement
-  , classes :: Classes
+  ( classes :: Classes
   , component :: ReactClass componentProps
   , dense :: Boolean
   , disablePadding :: Boolean
@@ -36,12 +35,12 @@ type ListClasses =
   )
 
 createClasses :: forall classes
-               . Subrow classes ListClasses
+               . SubRow classes ListClasses
               => { | classes } -> Classes
 createClasses = unsafeCoerce
 
 
 list :: forall o componentProps
-         . Subrow o (ListPropsO componentProps)
+         . SubRow o (ListPropsO componentProps)
         => ListProps o -> Array ReactElement -> ReactElement
-list = createElement listImpl
+list = unsafeCreateElement listImpl

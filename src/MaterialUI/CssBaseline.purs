@@ -2,7 +2,7 @@ module MaterialUI.CssBaseline
   ( cssBaseline
   ) where
 
-import React (ReactClass, createElement, ReactElement)
+import React (ReactClass, unsafeCreateElement, ReactElement)
 
 
 foreign import cssBaselineImpl :: forall props. ReactClass props
@@ -10,4 +10,4 @@ foreign import cssBaselineImpl :: forall props. ReactClass props
 
 
 cssBaseline :: ReactElement
-cssBaseline = createElement cssBaselineImpl {} []
+cssBaseline = unsafeCreateElement cssBaselineImpl {} []

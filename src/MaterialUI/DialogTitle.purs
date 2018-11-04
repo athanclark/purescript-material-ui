@@ -5,8 +5,8 @@ module MaterialUI.DialogTitle
 
 import MaterialUI.Types (Styles, Classes)
 
-import React (ReactClass, createElement, ReactElement)
-import Data.Record.Class (class Subrow)
+import React (ReactClass, unsafeCreateElement, ReactElement)
+import Row.Class (class SubRow)
 import Unsafe.Coerce (unsafeCoerce)
 
 
@@ -19,8 +19,7 @@ type DialogTitleProps o =
 
 
 type DialogTitlePropsO =
-  ( children :: Array ReactElement
-  , classes :: Classes
+  ( classes :: Classes
   , disableTypography :: Boolean
   )
 
@@ -29,12 +28,12 @@ type DialogTitleClasses =
   )
 
 createClasses :: forall classes
-               . Subrow classes DialogTitleClasses
+               . SubRow classes DialogTitleClasses
               => { | classes } -> Classes
 createClasses = unsafeCoerce
 
 
 dialogTitle :: forall o
-         . Subrow o DialogTitlePropsO
+         . SubRow o DialogTitlePropsO
         => DialogTitleProps o -> Array ReactElement -> ReactElement
-dialogTitle = createElement dialogTitleImpl
+dialogTitle = unsafeCreateElement dialogTitleImpl

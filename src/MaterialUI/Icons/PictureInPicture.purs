@@ -1,11 +1,10 @@
 module MaterialUI.Icons.PictureInPicture where
 
-import Prelude (unit)
-import React (ReactElement, ReactClass, createElement)
+import React (ReactElement, ReactClass, unsafeCreateElement)
 
 
 foreign import pictureInPictureIconImpl :: forall props. ReactClass props
 
 
 pictureInPictureIcon :: ReactElement
-pictureInPictureIcon = createElement pictureInPictureIconImpl unit []
+pictureInPictureIcon = unsafeCreateElement pictureInPictureIconImpl {} []

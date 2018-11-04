@@ -5,8 +5,8 @@ module MaterialUI.CardActions
 
 import MaterialUI.Types (Styles, Classes)
 
-import React (ReactClass, createElement, ReactElement)
-import Data.Record.Class (class Subrow)
+import React (ReactClass, unsafeCreateElement, ReactElement)
+import Row.Class (class SubRow)
 import Unsafe.Coerce (unsafeCoerce)
 
 
@@ -19,8 +19,7 @@ type CardActionsProps o =
 
 
 type CardActionsPropsO =
-  ( children :: Array ReactElement
-  , classes :: Classes
+  ( classes :: Classes
   , disableActionSpacing :: Boolean
   )
 
@@ -30,12 +29,12 @@ type CardActionsClasses =
   )
 
 createClasses :: forall classes
-               . Subrow classes CardActionsClasses
+               . SubRow classes CardActionsClasses
               => { | classes } -> Classes
 createClasses = unsafeCoerce
 
 
 cardActions :: forall o
-         . Subrow o CardActionsPropsO
+         . SubRow o CardActionsPropsO
         => CardActionsProps o -> Array ReactElement -> ReactElement
-cardActions = createElement cardActionsImpl
+cardActions = unsafeCreateElement cardActionsImpl

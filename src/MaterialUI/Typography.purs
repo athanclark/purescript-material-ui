@@ -8,8 +8,8 @@ module MaterialUI.Typography
 
 import MaterialUI.Types (Styles, Classes)
 
-import React (ReactClass, createElement, ReactElement)
-import Data.Record.Class (class Subrow)
+import React (ReactClass, unsafeCreateElement, ReactElement)
+import Row.Class (class SubRow)
 import Unsafe.Coerce (unsafeCoerce)
 
 
@@ -97,7 +97,6 @@ display4 = Variant "display4"
 
 type TypographyPropsO componentProps =
   ( align :: Alignment
-  , children :: Array ReactElement
   , classes :: Classes
   , style :: Styles
   , color :: Color
@@ -109,7 +108,7 @@ type TypographyPropsO componentProps =
   , variant :: Variant
   )
 
-createClasses :: forall o. Subrow o TypographyClasses => { | o } -> Classes
+createClasses :: forall o. SubRow o TypographyClasses => { | o } -> Classes
 createClasses = unsafeCoerce
 
 
@@ -140,6 +139,6 @@ type TypographyClasses =
 
 
 typography :: forall o componentProps
-         . Subrow o (TypographyPropsO componentProps)
+         . SubRow o (TypographyPropsO componentProps)
         => TypographyProps o -> Array ReactElement -> ReactElement
-typography = createElement typographyImpl
+typography = unsafeCreateElement typographyImpl

@@ -6,9 +6,10 @@ module MaterialUI.BottomNavigation
 import MaterialUI.Types (Styles, Classes)
 
 import Prelude
-import React (Event, ReactClass, createElement, ReactElement, ReactProps, ReactState, ReactRefs, ReadOnly, ReadWrite)
-import Data.Record.Class (class Subrow)
-import Control.Monad.Eff.Uncurried (EffFn1)
+import React (ReactClass, unsafeCreateElement, ReactElement)
+import React.SyntheticEvent (SyntheticEvent)
+import Row.Class (class SubRow)
+import Effect.Uncurried (EffectFn1)
 import Unsafe.Coerce (unsafeCoerce)
 
 
@@ -21,10 +22,8 @@ type BottomNavigationProps o =
 
 
 type BottomNavigationPropsO eff =
-  ( children :: Array ReactElement
-  , classes :: Classes
-  , onChange :: EffFn1 (props :: ReactProps, refs :: ReactRefs ReadOnly, state :: ReactState ReadWrite | eff)
-                  Event Unit
+  ( classes :: Classes
+  , onChange :: EffectFn1 SyntheticEvent Unit
   , showLabels :: Boolean
   , value :: String
   )
@@ -35,12 +34,12 @@ type BottomNavigationClasses =
   )
 
 createClasses :: forall classes
-               . Subrow classes BottomNavigationClasses
+               . SubRow classes BottomNavigationClasses
               => { | classes } -> Classes
 createClasses = unsafeCoerce
 
 
 bottomNavigation :: forall o componentProps
-         . Subrow o (BottomNavigationPropsO componentProps)
+         . SubRow o (BottomNavigationPropsO componentProps)
         => BottomNavigationProps o -> Array ReactElement -> ReactElement
-bottomNavigation = createElement bottomNavigationImpl
+bottomNavigation = unsafeCreateElement bottomNavigationImpl

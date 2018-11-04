@@ -1,11 +1,10 @@
 module MaterialUI.Icons.ExpandLess where
 
-import Prelude (unit)
-import React (ReactElement, ReactClass, createElement)
+import React (ReactElement, ReactClass, unsafeCreateElement)
 
 
 foreign import expandLessIconImpl :: forall props. ReactClass props
 
 
 expandLessIcon :: ReactElement
-expandLessIcon = createElement expandLessIconImpl unit []
+expandLessIcon = unsafeCreateElement expandLessIconImpl {} []

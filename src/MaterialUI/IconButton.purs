@@ -7,9 +7,10 @@ module MaterialUI.IconButton
 import MaterialUI.Types (Styles, Classes)
 
 import Prelude
-import React (Event, ReactClass, createElement, ReactElement, ReactProps, ReactState, ReactRefs, ReadOnly, ReadWrite)
-import Data.Record.Class (class Subrow)
-import Control.Monad.Eff.Uncurried (EffFn1)
+import React (ReactClass, unsafeCreateElement, ReactElement)
+import React.SyntheticEvent (SyntheticEvent)
+import Row.Class (class SubRow)
+import Effect.Uncurried (EffectFn1)
 import Unsafe.Coerce (unsafeCoerce)
 
 
@@ -22,14 +23,13 @@ type IconButtonProps o =
 
 
 type IconButtonPropsO eff =
-  ( children :: Array ReactElement
-  , classes :: Classes
+  ( classes :: Classes
   , style :: Styles
   , color :: Color
   , disableRipple :: Boolean
   , disabled :: Boolean
   -- , rootRef FIXME
-  , onTouchTap :: EffFn1 (props :: ReactProps, refs :: ReactRefs ReadOnly, state :: ReactState ReadWrite | eff) Event Unit
+  , onTouchTap :: EffectFn1 SyntheticEvent Unit
   )
 
 newtype Color = Color String
@@ -63,12 +63,12 @@ type IconButtonClasses =
   )
 
 createClasses :: forall classes
-               . Subrow classes IconButtonClasses
+               . SubRow classes IconButtonClasses
               => { | classes } -> Classes
 createClasses = unsafeCoerce
 
 
 iconButton :: forall o eff
-         . Subrow o (IconButtonPropsO eff)
+         . SubRow o (IconButtonPropsO eff)
         => IconButtonProps o -> ReactElement -> ReactElement
-iconButton p = createElement iconButtonImpl p <<< unsafeCoerce
+iconButton p = unsafeCreateElement iconButtonImpl p <<< unsafeCoerce

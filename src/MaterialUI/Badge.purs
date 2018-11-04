@@ -6,8 +6,8 @@ module MaterialUI.Badge
 
 import MaterialUI.Types (Styles, Classes)
 
-import React (ReactClass, createElement, ReactElement)
-import Data.Record.Class (class Subrow)
+import React (ReactClass, unsafeCreateElement, ReactElement)
+import Row.Class (class SubRow)
 import Unsafe.Coerce (unsafeCoerce)
 
 
@@ -20,8 +20,7 @@ type BadgeProps o =
 
 
 type BadgePropsO =
-  ( children :: ReactElement
-  , badgeContent :: ReactElement
+  ( badgeContent :: ReactElement
   , color :: Color
   , classes :: Classes
   )
@@ -46,12 +45,12 @@ type BadgeClasses =
   )
 
 createClasses :: forall classes
-               . Subrow classes BadgeClasses
+               . SubRow classes BadgeClasses
               => { | classes } -> Classes
 createClasses = unsafeCoerce
 
 
 badge :: forall o
-         . Subrow o BadgePropsO
+         . SubRow o BadgePropsO
         => BadgeProps o -> Array ReactElement -> ReactElement
-badge = createElement badgeImpl
+badge = unsafeCreateElement badgeImpl

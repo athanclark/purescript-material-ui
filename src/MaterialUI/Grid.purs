@@ -11,8 +11,8 @@ module MaterialUI.Grid
 
 import MaterialUI.Types (Styles, Classes)
 
-import React (ReactClass, createElement, ReactElement)
-import Data.Record.Class (class Subrow)
+import React (ReactClass, unsafeCreateElement, ReactElement)
+import Row.Class (class SubRow)
 import Unsafe.Coerce (unsafeCoerce)
 
 
@@ -123,7 +123,6 @@ wrapReverse = Wrap "wrap-reverse"
 type GridPropsO componentProps =
   ( alignContent :: AlignContent
   , raised :: Boolean
-  , children :: Array ReactElement
   , classes :: Classes
   , component :: ReactClass componentProps
   , container :: Boolean
@@ -179,12 +178,12 @@ type GridClasses =
   )
 
 createClasses :: forall classes
-               . Subrow classes GridClasses
+               . SubRow classes GridClasses
               => { | classes } -> Classes
 createClasses = unsafeCoerce
 
 
 grid :: forall o componentProps
-         . Subrow o (GridPropsO componentProps)
+         . SubRow o (GridPropsO componentProps)
         => GridProps o -> Array ReactElement -> ReactElement
-grid = createElement gridImpl
+grid = unsafeCreateElement gridImpl

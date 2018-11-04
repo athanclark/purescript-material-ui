@@ -6,9 +6,10 @@ module MaterialUI.Radio
 import MaterialUI.Types (Styles, Classes)
 
 import Prelude
-import React (Event, ReactClass, createElement, ReactElement, ReactProps, ReactState, ReactRefs, ReadOnly, ReadWrite)
-import Data.Record.Class (class Subrow)
-import Control.Monad.Eff.Uncurried (EffFn2)
+import React (ReactClass, unsafeCreateElement, ReactElement)
+import React.SyntheticEvent (SyntheticEvent)
+import Row.Class (class SubRow)
+import Effect.Uncurried (EffectFn2)
 
 
 foreign import radioImpl :: forall props. ReactClass props
@@ -30,7 +31,7 @@ type RadioPropsO eff inputProps =
   , icon :: ReactElement
   , inputProps :: inputProps
   , name :: String
-  , onChange :: EffFn2 (props :: ReactProps, refs :: ReactRefs ReadOnly, state :: ReactState ReadWrite | eff) Event Boolean Unit
+  , onChange :: EffectFn2 SyntheticEvent Boolean Unit
   , value :: String
   )
 
@@ -42,9 +43,9 @@ type RadioClasses =
 
 
 radio :: forall eff inputProps o
-         . Subrow o (RadioPropsO eff inputProps)
+         . SubRow o (RadioPropsO eff inputProps)
         => RadioProps o -> ReactElement
-radio props = createElement radioImpl props []
+radio props = unsafeCreateElement radioImpl props []
 
 
 foreign import radioGroupImpl :: forall props. ReactClass props
@@ -56,10 +57,9 @@ type RadioGroupProps o =
 
 
 type RadioGroupPropsO eff =
-  ( children :: Array ReactElement
-  , classes :: Classes
+  ( classes :: Classes
   , name :: String
-  , onChange :: EffFn2 (props :: ReactProps, refs :: ReactRefs ReadOnly, state :: ReactState ReadWrite | eff) Event String Unit
+  , onChange :: EffectFn2 SyntheticEvent String Unit
   , value :: String
   )
 
@@ -69,6 +69,6 @@ type RadioGroupClasses =
 
 
 radioGroup :: forall eff o
-         . Subrow o (RadioGroupPropsO eff)
+         . SubRow o (RadioGroupPropsO eff)
         => RadioGroupProps o -> Array ReactElement -> ReactElement
-radioGroup = createElement radioGroupImpl
+radioGroup = unsafeCreateElement radioGroupImpl

@@ -4,8 +4,8 @@ module MaterialUI.Avatar
 
 import MaterialUI.Types (Styles, Classes)
 
-import React (ReactClass, createElement, ReactElement)
-import Data.Record.Class (class Subrow)
+import React (ReactClass, unsafeCreateElement, ReactElement)
+import Row.Class (class SubRow)
 import Unsafe.Coerce (unsafeCoerce)
 
 
@@ -18,8 +18,7 @@ type AvatarProps o =
 
 
 type AvatarPropsO componentProps =
-  ( children :: ReactElement
-  , alt :: String
+  ( alt :: String
   , component :: ReactClass componentProps
   , imgProps :: Styles
   , sizes :: String
@@ -37,12 +36,12 @@ type AvatarClasses =
 
 
 createClasses :: forall classes
-               . Subrow classes AvatarClasses
+               . SubRow classes AvatarClasses
               => { | classes } -> Classes
 createClasses = unsafeCoerce
 
 
 avatar :: forall o componentProps
-         . Subrow o (AvatarPropsO componentProps)
+         . SubRow o (AvatarPropsO componentProps)
         => AvatarProps o -> Array ReactElement -> ReactElement
-avatar = createElement avatarImpl
+avatar = unsafeCreateElement avatarImpl

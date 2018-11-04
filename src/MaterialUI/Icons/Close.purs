@@ -1,11 +1,10 @@
 module MaterialUI.Icons.Close where
 
-import Prelude (unit)
-import React (ReactElement, ReactClass, createElement)
+import React (ReactElement, ReactClass, unsafeCreateElement)
 
 
 foreign import closeIconImpl :: forall props. ReactClass props
 
 
 closeIcon :: ReactElement
-closeIcon = createElement closeIconImpl unit []
+closeIcon = unsafeCreateElement closeIconImpl {} []

@@ -1,11 +1,10 @@
 module MaterialUI.Icons.Folder where
 
-import Prelude (unit)
-import React (ReactElement, ReactClass, createElement)
+import React (ReactElement, ReactClass, unsafeCreateElement)
 
 
 foreign import folderIconImpl :: forall props. ReactClass props
 
 
 folderIcon :: ReactElement
-folderIcon = createElement folderIconImpl unit []
+folderIcon = unsafeCreateElement folderIconImpl {} []

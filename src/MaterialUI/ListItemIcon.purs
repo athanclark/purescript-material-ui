@@ -6,8 +6,8 @@ module MaterialUI.ListItemIcon
 import MaterialUI.Types (Styles, Classes)
 
 import Prelude
-import React (ReactClass, createElement, ReactElement)
-import Data.Record.Class (class Subrow)
+import React (ReactClass, unsafeCreateElement, ReactElement)
+import Row.Class (class SubRow)
 import Unsafe.Coerce (unsafeCoerce)
 
 
@@ -20,8 +20,7 @@ type ListItemIconProps o =
 
 
 type ListItemIconPropsO =
-  ( children :: Array ReactElement
-  , classes :: Classes
+  ( classes :: Classes
   )
 
 type ListItemIconClasses =
@@ -29,12 +28,12 @@ type ListItemIconClasses =
   )
 
 createClasses :: forall classes
-               . Subrow classes ListItemIconClasses
+               . SubRow classes ListItemIconClasses
               => { | classes } -> Classes
 createClasses = unsafeCoerce
 
 
 listItemIcon :: forall o
-         . Subrow o ListItemIconPropsO
+         . SubRow o ListItemIconPropsO
         => ListItemIconProps o -> ReactElement -> ReactElement
-listItemIcon p = createElement listItemIconImpl p <<< unsafeCoerce
+listItemIcon p = unsafeCreateElement listItemIconImpl p <<< unsafeCoerce

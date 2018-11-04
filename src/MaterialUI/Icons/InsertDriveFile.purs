@@ -1,11 +1,10 @@
 module MaterialUI.Icons.InsertDriveFile where
 
-import Prelude (unit)
-import React (ReactElement, ReactClass, createElement)
+import React (ReactElement, ReactClass, unsafeCreateElement)
 
 
 foreign import insertDriveFileIconImpl :: forall props. ReactClass props
 
 
 insertDriveFileIcon :: ReactElement
-insertDriveFileIcon = createElement insertDriveFileIconImpl unit []
+insertDriveFileIcon = unsafeCreateElement insertDriveFileIconImpl {} []

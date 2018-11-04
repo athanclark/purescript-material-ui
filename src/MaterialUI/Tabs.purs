@@ -7,9 +7,10 @@ module MaterialUI.Tabs
 import MaterialUI.Types (Styles, Classes)
 
 import Prelude
-import React (Event, ReactClass, createElement, ReactElement, ReactProps, ReactState, ReactRefs, ReadOnly, ReadWrite)
-import Data.Record.Class (class Subrow)
-import Control.Monad.Eff.Uncurried (EffFn2)
+import React (ReactClass, unsafeCreateElement, ReactElement)
+import React.SyntheticEvent (SyntheticEvent)
+import Row.Class (class SubRow)
+import Effect.Uncurried (EffectFn2)
 
 
 foreign import tabsImpl :: forall props. ReactClass props
@@ -42,12 +43,11 @@ type TabsProps o =
 type TabsPropsO eff =
   ( buttonClassName :: String
   , centered :: Boolean
-  , children :: Array ReactElement
   , classes :: Classes
   , fullWidth :: Boolean
   , indicatorClassName :: String
   , indicatorColor :: Color
-  , onChange :: EffFn2 (props :: ReactProps, refs :: ReactRefs ReadOnly, state :: ReactState ReadWrite | eff) Event Int Unit
+  , onChange :: EffectFn2 SyntheticEvent Int Unit
   , scrollButtons :: ScrollButtons
   , scrollable :: Boolean
   , textColor :: Color
@@ -65,9 +65,9 @@ type TabsClasses =
 
 
 tabs :: forall o eff
-      . Subrow o (TabsPropsO eff)
+      . SubRow o (TabsPropsO eff)
      => TabsProps o -> Array ReactElement -> ReactElement
-tabs = createElement tabsImpl
+tabs = unsafeCreateElement tabsImpl
 
 
 foreign import tabImpl :: forall props. ReactClass props
@@ -110,7 +110,7 @@ type TabClasses =
 
 
 tab :: forall o
-      . Subrow o TabPropsO
+      . SubRow o TabPropsO
      => TabProps o -> ReactElement
-tab props = createElement tabImpl props []
+tab props = unsafeCreateElement tabImpl props []
 

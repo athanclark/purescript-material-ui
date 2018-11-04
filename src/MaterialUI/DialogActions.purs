@@ -5,8 +5,8 @@ module MaterialUI.DialogActions
 
 import MaterialUI.Types (Styles, Classes)
 
-import React (ReactClass, createElement, ReactElement)
-import Data.Record.Class (class Subrow)
+import React (ReactClass, unsafeCreateElement, ReactElement)
+import Row.Class (class SubRow)
 import Unsafe.Coerce (unsafeCoerce)
 
 
@@ -19,8 +19,7 @@ type DialogActionsProps o =
 
 
 type DialogActionsPropsO =
-  ( children :: Array ReactElement
-  , classes :: Classes
+  ( classes :: Classes
   )
 
 type DialogActionsClasses =
@@ -30,12 +29,12 @@ type DialogActionsClasses =
   )
 
 createClasses :: forall classes
-               . Subrow classes DialogActionsClasses
+               . SubRow classes DialogActionsClasses
               => { | classes } -> Classes
 createClasses = unsafeCoerce
 
 
 dialogActions :: forall o
-         . Subrow o DialogActionsPropsO
+         . SubRow o DialogActionsPropsO
         => DialogActionsProps o -> Array ReactElement -> ReactElement
-dialogActions = createElement dialogActionsImpl
+dialogActions = unsafeCreateElement dialogActionsImpl

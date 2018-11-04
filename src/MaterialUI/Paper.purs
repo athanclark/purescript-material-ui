@@ -5,8 +5,8 @@ module MaterialUI.Paper
 
 import MaterialUI.Types (Styles, Classes)
 
-import React (ReactClass, createElement, ReactElement)
-import Data.Record.Class (class Subrow)
+import React (ReactClass, unsafeCreateElement, ReactElement)
+import Row.Class (class SubRow)
 import Unsafe.Coerce (unsafeCoerce)
 
 
@@ -19,8 +19,7 @@ type PaperProps o =
 
 
 type PaperPropsO componentProps =
-  ( component :: ReactClass componentProps
-  , classes :: Classes
+  ( classes :: Classes
   , elevation :: Int
   , square :: Boolean
   , style :: Styles
@@ -57,12 +56,12 @@ type PaperClasses =
   )
 
 createClasses :: forall classes
-               . Subrow classes PaperClasses
+               . SubRow classes PaperClasses
               => { | classes } -> Classes
 createClasses = unsafeCoerce
 
 
 paper :: forall o componentProps
-         . Subrow o (PaperPropsO componentProps)
+         . SubRow o (PaperPropsO componentProps)
         => PaperProps o -> Array ReactElement -> ReactElement
-paper = createElement paperImpl
+paper = unsafeCreateElement paperImpl

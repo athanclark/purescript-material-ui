@@ -4,8 +4,8 @@ module MaterialUI.MuiThemeProvider
 
 
 import Prelude
-import Data.Record.Class (class Subrow)
-import React (ReactClass, createElement, ReactElement)
+import Row.Class (class SubRow)
+import React (ReactClass, unsafeCreateElement, ReactElement)
 import Unsafe.Coerce (unsafeCoerce)
 
 
@@ -39,8 +39,8 @@ type PaletteOpts =
 
 
 createMuiTheme :: forall x palette
-                . Subrow x (CreateThemeOpts palette)
-               => Subrow palette PaletteOpts
+                . SubRow x (CreateThemeOpts palette)
+               => SubRow palette PaletteOpts
                => { | x } -> Theme
 createMuiTheme = createMuiThemeImpl
 
@@ -52,4 +52,4 @@ type MuiThemeProviderProps =
 
 
 muiThemeProvider :: MuiThemeProviderProps -> ReactElement -> ReactElement
-muiThemeProvider props = createElement muiThemeProviderImpl props <<< unsafeCoerce
+muiThemeProvider props = unsafeCreateElement muiThemeProviderImpl props <<< unsafeCoerce

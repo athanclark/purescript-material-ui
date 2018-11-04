@@ -5,8 +5,8 @@ module MaterialUI.Divider
 
 import MaterialUI.Types (Styles, Classes)
 
-import React (ReactClass, createElement, ReactElement)
-import Data.Record.Class (class Subrow)
+import React (ReactClass, unsafeCreateElement, ReactElement)
+import Row.Class (class SubRow)
 import Unsafe.Coerce (unsafeCoerce)
 
 
@@ -34,12 +34,12 @@ type DividerClasses =
   )
 
 createClasses :: forall classes
-               . Subrow classes DividerClasses
+               . SubRow classes DividerClasses
               => { | classes } -> Classes
 createClasses = unsafeCoerce
 
 
 divider :: forall o
-         . Subrow o DividerPropsO
+         . SubRow o DividerPropsO
         => DividerProps o -> ReactElement
-divider props = createElement dividerImpl props []
+divider props = unsafeCreateElement dividerImpl props []

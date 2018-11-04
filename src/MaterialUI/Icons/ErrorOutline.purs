@@ -1,11 +1,10 @@
 module MaterialUI.Icons.ErrorOutline where
 
-import Prelude (unit)
-import React (ReactElement, ReactClass, createElement)
+import React (ReactElement, ReactClass, unsafeCreateElement)
 
 
 foreign import errorOutlineIconImpl :: forall props. ReactClass props
 
 
 errorOutlineIcon :: ReactElement
-errorOutlineIcon = createElement errorOutlineIconImpl unit []
+errorOutlineIcon = unsafeCreateElement errorOutlineIconImpl {} []

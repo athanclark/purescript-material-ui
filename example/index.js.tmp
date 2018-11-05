@@ -2478,7 +2478,7 @@ var PS = {};
 (function(exports) {
     "use strict";
 
-  var ChevronLeft = require('@material-ui/core-icons/ChevronLeft').default;
+  var ChevronLeft = require('@material-ui/icons/ChevronLeft').default;
 
   exports.chevronLeftIconImpl = ChevronLeft;
 })(PS["MaterialUI.Icons.ChevronLeft"] = PS["MaterialUI.Icons.ChevronLeft"] || {});
@@ -2493,7 +2493,7 @@ var PS = {};
 (function(exports) {
     "use strict";
 
-  var Menu = require('@material-ui/core-icons/Menu').default;
+  var Menu = require('@material-ui/icons/Menu').default;
 
   exports.menuIconImpl = Menu;
 })(PS["MaterialUI.Icons.Menu"] = PS["MaterialUI.Icons.Menu"] || {});

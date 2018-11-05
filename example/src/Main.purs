@@ -1,6 +1,5 @@
 module Main where
 
-import MaterialUI.InjectTapEvent (injectTapEvent)
 import MaterialUI.MuiThemeProvider (muiThemeProvider, defaultMuiTheme)
 import MaterialUI.AppBar (appBar)
 import MaterialUI.AppBar as AppBar
@@ -130,7 +129,5 @@ spec = T.simpleSpec performAction render
 main :: Effect Unit
 main = do
   log "Hello sailor!"
-
-  injectTapEvent
 
   T.defaultMain spec initialState "Demo" {}

@@ -1,38 +1,37 @@
 module Main where
 
-import MaterialUI.InjectTapEvent (INJECT_TAP_EVENT, injectTapEvent)
-import MaterialUI.MuiThemeProvider (muiThemeProvider', createMuiTheme)
-import MaterialUI.AppBar (appBar')
+import MaterialUI.InjectTapEvent (injectTapEvent)
+import MaterialUI.MuiThemeProvider (muiThemeProvider, defaultMuiTheme)
+import MaterialUI.AppBar (appBar)
 import MaterialUI.AppBar as AppBar
-import MaterialUI.Toolbar (toolbar')
-import MaterialUI.Typography (typography')
+import MaterialUI.Toolbar (toolbar)
+import MaterialUI.Typography (typography)
 import MaterialUI.Typography as Typography
-import MaterialUI.IconButton (iconButton')
+import MaterialUI.IconButton (iconButton)
 import MaterialUI.IconButton as IconButton
-import MaterialUI.Drawer (drawer')
+import MaterialUI.Drawer (drawer)
 import MaterialUI.Drawer as Drawer
-import MaterialUI.List (list')
-import MaterialUI.ListItem (listItem')
-import MaterialUI.ListItemIcon (listItemIcon')
-import MaterialUI.ListItemText (listItemText')
-import MaterialUI.Card (card')
-import MaterialUI.CardContent (cardContent')
-import MaterialUI.CardActions (cardActions')
-import MaterialUI.Button (button')
+import MaterialUI.List (list)
+import MaterialUI.ListItem (listItem)
+import MaterialUI.ListItemIcon (listItemIcon)
+import MaterialUI.ListItemText (listItemText)
+import MaterialUI.Card (card)
+import MaterialUI.CardContent (cardContent)
+import MaterialUI.CardActions (cardActions)
+import MaterialUI.Button (button)
 import MaterialUI.Button as Button
 import MaterialUI.Icons.Menu (menuIcon)
 import MaterialUI.Icons.ChevronLeft (chevronLeftIcon)
 
 import Prelude
-import Control.Monad.Eff (Eff)
-import Control.Monad.Eff.Uncurried (mkEffFn1)
-import Control.Monad.Eff.Console (CONSOLE, log)
+import Effect (Effect)
+import Effect.Uncurried (mkEffectFn1)
+import Effect.Console (log)
 
 import Thermite as T
 import React as R
 import React.DOM as R
 import React.DOM.Props as RP
-import DOM (DOM)
 
 import Unsafe.Coerce (unsafeCoerce)
 
@@ -51,78 +50,74 @@ data Action
   = OpenDrawer
   | CloseDrawer
 
-spec :: T.Spec _ State _ Action
+spec :: T.Spec State _ Action
 spec = T.simpleSpec performAction render
   where
-    performAction :: T.PerformAction _ State _ Action
+    performAction :: T.PerformAction State _ Action
     performAction action props state = case action of
       OpenDrawer  -> void $ T.cotransform $ _ { drawerOpen = true }
       CloseDrawer -> void $ T.cotransform $ _ { drawerOpen = false }
 
     render :: T.Render State _ Action
     render dispatch props state children =
-      [ muiThemeProvider' {theme: createMuiTheme unit} $ R.div []
-        [ drawer'
-          { classes: {}
-          , open: true -- state.drawerOpen
-          , docked: true
-          -- , onRequestClose: mkEffFn1 \_ -> dispatch CloseDrawer
+      [ muiThemeProvider {theme: defaultMuiTheme} $ R.div []
+        [ drawer
+          { open: true -- state.drawerOpen
+          -- , docked: true
+          , variant: Drawer.permanent
+          -- , onRequestClose: mkEffectFn1 \_ -> dispatch CloseDrawer
           }
-          [ list' {classes: {}, disablePadding: true}
-            [ listItem' {classes: {}, button: true}
-              [ listItemIcon' {classes: {}} chevronLeftIcon
-              , listItemText' {classes: {}, primary: "Test", secondary: "nother test"}
+          [ list {disablePadding: true}
+            [ listItem {button: true}
+              [ listItemIcon {} chevronLeftIcon
+              , listItemText {primary: "Test", secondary: "nother test"}
               ]
             ]
           ]
         , R.div [ RP.style {marginLeft: "150px"}]
-          [ appBar' { position: AppBar.static
-                    , color: AppBar.primary
-                    , classes: {}
-                      -- {positionStatic: unsafeCoerce {marginLeft: "150px"}
-                      -- }
-                    }
-            [ toolbar' {classes: {}}
-              [ iconButton'
-                { classes: {}
-                , color: IconButton.contrast
-                , onTouchTap: mkEffFn1 \_ -> dispatch OpenDrawer
+          [ appBar { position: AppBar.static
+                   , color: AppBar.primary
+                     -- {positionStatic: unsafeCoerce {marginLeft: "150px"}
+                     -- }
+                   }
+            [ toolbar {}
+              [ iconButton
+                { color: IconButton.contrast
+                , onTouchTap: mkEffectFn1 \_ -> dispatch OpenDrawer
                 }
                 menuIcon
-              , typography'
-                { "type": Typography.title
+              , typography
+                { variant: Typography.title
                 , color: Typography.inheritColor
-                , classes: {}
                 } [R.text "bar"]
               ]
             ]
-          , card' {classes: {}}
-            [ cardContent' {classes: {}}
-              [ typography' {classes: {}, "type": Typography.headline}
+          , card {}
+            [ cardContent {}
+              [ typography {variant: Typography.headline}
                 [R.text "Headline"]
-              , typography' {classes: {}, "type": Typography.subheading}
+              , typography {variant: Typography.subheading}
                 [R.text "Subheading"]
-              , typography' {classes: {}, "type": Typography.title}
+              , typography {variant: Typography.title}
                 [R.text "Title"]
-              , typography' {classes: {}, "type": Typography.display1}
+              , typography {variant: Typography.display1}
                 [R.text "Display1"]
-              , typography' {classes: {}, "type": Typography.display2}
+              , typography {variant: Typography.display2}
                 [R.text "Display2"]
-              , typography' {classes: {}, "type": Typography.display3}
+              , typography {variant: Typography.display3}
                 [R.text "Display3"]
-              , typography' {classes: {}, "type": Typography.display4}
+              , typography {variant: Typography.display4}
                 [R.text "Display4"]
-              , typography' {classes: {}, "type": Typography.body1}
+              , typography {variant: Typography.body1}
                 [R.text "Body1"]
-              , typography' {classes: {}, "type": Typography.body2}
+              , typography {variant: Typography.body2}
                 [R.text "Body2"]
-              , typography' {classes: {}, "type": Typography.caption}
+              , typography {variant: Typography.caption}
                 [R.text "Caption"]
               ]
-            , cardActions' {classes: {}}
-              [ button'
-                { classes: {}
-                , color: Button.accent
+            , cardActions {}
+              [ button
+                { color: Button.secondary
                 } [R.text "Button!"]
               ]
             ]
@@ -132,14 +127,10 @@ spec = T.simpleSpec performAction render
 
 
 
-main :: forall eff
-      . Eff ( console        :: CONSOLE
-            , dom            :: DOM
-            , injectTapEvent :: INJECT_TAP_EVENT
-            | eff) Unit
+main :: Effect Unit
 main = do
   log "Hello sailor!"
 
   injectTapEvent
 
-  T.defaultMain spec initialState unit
+  T.defaultMain spec initialState "Demo" {}

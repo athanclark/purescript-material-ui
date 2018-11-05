@@ -10,9 +10,14 @@
     "purescript-prelude": "^4.1.0",
     "purescript-console": "^4.1.0",
     "purescript-material-ui": "../",
-    "purescript-thermite": "^4.1.1"
+    "purescript-thermite": "git://github.com/athanclark/purescript-thermite.git#2eb5dbcc66b5695578b7ef4492c00543afccaa3a",
+    "purescript-argonaut-traversals": "git://github.com/athanclark/purescript-argonaut-traversals.git#b7f2c2d77cb032129eac3ae6c1e5a79189f5eaa9"
   },
   "devDependencies": {
-    "purescript-psci-support": "^3.0.0"
+    "purescript-psci-support": "^4.0.0"
+  },
+  "resolutions": {
+    "purescript-argonaut-traversals": "b7f2c2d77cb032129eac3ae6c1e5a79189f5eaa9",
+    "purescript-profunctor-lenses": "^5.0.0"
   }
 }

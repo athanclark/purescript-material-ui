@@ -1,5 +1,5 @@
 "use strict";
 
-var ChevronLeft = require('@material-ui/core-icons/ChevronLeft').default;
+var ChevronLeft = require('@material-ui/icons/ChevronLeft').default;
 
 exports.chevronLeftIconImpl = ChevronLeft;

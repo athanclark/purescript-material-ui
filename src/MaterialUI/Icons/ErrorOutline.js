@@ -1,5 +1,5 @@
 "use strict";
 
-var ErrorOutline = require('@material-ui/core-icons/ErrorOutline').default;
+var ErrorOutline = require('@material-ui/icons/ErrorOutline').default;
 
 exports.errorOutlineIconImpl = ErrorOutline;

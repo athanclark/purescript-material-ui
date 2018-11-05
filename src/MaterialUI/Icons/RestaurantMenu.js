@@ -1,5 +1,5 @@
 "use strict";
 
-var RestaurantMenu = require('@material-ui/core-icons/RestaurantMenu').default;
+var RestaurantMenu = require('@material-ui/icons/RestaurantMenu').default;
 
 exports.restaurantMenuIconImpl = RestaurantMenu;

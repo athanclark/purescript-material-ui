@@ -1,5 +1,5 @@
 "use strict";
 
-var PictureInPicture = require('@material-ui/core-icons/PictureInPicture').default;
+var PictureInPicture = require('@material-ui/icons/PictureInPicture').default;
 
 exports.pictureInPictureIconImpl = PictureInPicture;

@@ -2103,7 +2103,7 @@ var PS = {};
 (function(exports) {
     "use strict";
 
-  var AppBar = require('material-ui/AppBar').default;       
+  var AppBar = require('@material-ui/core/AppBar').default;       
 
   exports.appBarImpl = AppBar;
 })(PS["MaterialUI.AppBar"] = PS["MaterialUI.AppBar"] || {});
@@ -2334,7 +2334,7 @@ var PS = {};
 (function(exports) {
     "use strict";
 
-  var Button = require('material-ui/Button').default;       
+  var Button = require('@material-ui/core/Button').default;       
 
   exports.buttonImpl = Button;
 })(PS["MaterialUI.Button"] = PS["MaterialUI.Button"] || {});
@@ -2361,7 +2361,7 @@ var PS = {};
 (function(exports) {
     "use strict";
 
-  var Card = require('material-ui/Card').default;
+  var Card = require('@material-ui/core/Card').default;
 
   exports.cardImpl = Card;
 })(PS["MaterialUI.Card"] = PS["MaterialUI.Card"] || {});
@@ -2381,7 +2381,7 @@ var PS = {};
 (function(exports) {
     "use strict";
 
-  var CardActions = require('material-ui/Card').CardActions;
+  var CardActions = require('@material-ui/core/Card').CardActions;
 
   exports.cardActionsImpl = CardActions;
 })(PS["MaterialUI.CardActions"] = PS["MaterialUI.CardActions"] || {});
@@ -2401,7 +2401,7 @@ var PS = {};
 (function(exports) {
     "use strict";
 
-  var CardContent = require('material-ui/Card').CardContent;
+  var CardContent = require('@material-ui/core/Card').CardContent;
 
   exports.cardContentImpl = CardContent;
 })(PS["MaterialUI.CardContent"] = PS["MaterialUI.CardContent"] || {});
@@ -2421,7 +2421,7 @@ var PS = {};
 (function(exports) {
     "use strict";
 
-  var Drawer = require('material-ui/Drawer').default;       
+  var Drawer = require('@material-ui/core/Drawer').default;       
 
   exports.drawerImpl = Drawer;
 })(PS["MaterialUI.Drawer"] = PS["MaterialUI.Drawer"] || {});
@@ -2448,7 +2448,7 @@ var PS = {};
 (function(exports) {
     "use strict";
 
-  var IconButton = require('material-ui/IconButton').default;
+  var IconButton = require('@material-ui/core/IconButton').default;
 
   exports.iconButtonImpl = IconButton;
 })(PS["MaterialUI.IconButton"] = PS["MaterialUI.IconButton"] || {});
@@ -2478,7 +2478,7 @@ var PS = {};
 (function(exports) {
     "use strict";
 
-  var ChevronLeft = require('material-ui-icons/ChevronLeft').default;
+  var ChevronLeft = require('@material-ui/core-icons/ChevronLeft').default;
 
   exports.chevronLeftIconImpl = ChevronLeft;
 })(PS["MaterialUI.Icons.ChevronLeft"] = PS["MaterialUI.Icons.ChevronLeft"] || {});
@@ -2493,7 +2493,7 @@ var PS = {};
 (function(exports) {
     "use strict";
 
-  var Menu = require('material-ui-icons/Menu').default;
+  var Menu = require('@material-ui/core-icons/Menu').default;
 
   exports.menuIconImpl = Menu;
 })(PS["MaterialUI.Icons.Menu"] = PS["MaterialUI.Icons.Menu"] || {});
@@ -2524,7 +2524,7 @@ var PS = {};
 (function(exports) {
     "use strict";
 
-  var List = require('material-ui/List').default;
+  var List = require('@material-ui/core/List').default;
 
   exports.listImpl = List;
 })(PS["MaterialUI.List"] = PS["MaterialUI.List"] || {});
@@ -2544,7 +2544,7 @@ var PS = {};
 (function(exports) {
     "use strict";
 
-  var ListItem = require('material-ui/List').ListItem;
+  var ListItem = require('@material-ui/core/List').ListItem;
 
   exports.listItemImpl = ListItem;
 })(PS["MaterialUI.ListItem"] = PS["MaterialUI.ListItem"] || {});
@@ -2567,7 +2567,7 @@ var PS = {};
 (function(exports) {
     "use strict";
 
-  var ListItemIcon = require('material-ui/List').ListItemIcon;
+  var ListItemIcon = require('@material-ui/core/List').ListItemIcon;
 
   exports.listItemIconImpl = ListItemIcon;
 })(PS["MaterialUI.ListItemIcon"] = PS["MaterialUI.ListItemIcon"] || {});
@@ -2593,7 +2593,7 @@ var PS = {};
 (function(exports) {
     "use strict";
 
-  var ListItemText = require('material-ui/List').ListItemText;
+  var ListItemText = require('@material-ui/core/List').ListItemText;
 
   exports.listItemTextImpl = ListItemText;
 })(PS["MaterialUI.ListItemText"] = PS["MaterialUI.ListItemText"] || {});
@@ -2614,7 +2614,7 @@ var PS = {};
 })(PS["MaterialUI.ListItemText"] = PS["MaterialUI.ListItemText"] || {});
 (function(exports) {
     "use strict";
-  var modules =require("material-ui/styles"); 
+  var modules =require("@material-ui/core/styles"); 
 
   var MuiThemeProvider = modules.MuiThemeProvider;
   var createMuiTheme = modules.createMuiTheme;
@@ -2644,7 +2644,7 @@ var PS = {};
 (function(exports) {
     "use strict";
 
-  var Toolbar = require('material-ui/Toolbar').default;
+  var Toolbar = require('@material-ui/core/Toolbar').default;
 
   exports.toolbarImpl = Toolbar;
 })(PS["MaterialUI.Toolbar"] = PS["MaterialUI.Toolbar"] || {});
@@ -2664,7 +2664,7 @@ var PS = {};
 (function(exports) {
     "use strict";
 
-  var Typography = require('material-ui/Typography').default;
+  var Typography = require('@material-ui/core/Typography').default;
 
   exports.typographyImpl = Typography;
 })(PS["MaterialUI.Typography"] = PS["MaterialUI.Typography"] || {});

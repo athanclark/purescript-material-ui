@@ -1,5 +1,5 @@
 "use strict";
 
-var InsertDriveFile = require('@material-ui/core-icons/InsertDriveFile').default;
+var InsertDriveFile = require('@material-ui/icons/InsertDriveFile').default;
 
 exports.insertDriveFileIconImpl = InsertDriveFile;

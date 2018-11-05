@@ -1,7 +1,7 @@
 "use strict";
 
-var AppBar = require('material-ui/AppBar').default;
-var withStyles = require('material-ui/styles').withStyles;
+var AppBar = require('@material-ui/core/AppBar').default;
+var withStyles = require('@material-ui/core/styles').withStyles;
 
 exports.appBarImpl = AppBar;
 exports.withStylesImpl = function withStylesImpl(stylesF,x) {

@@ -1,7 +1,7 @@
 "use strict";
 
-var Form = require('material-ui/Form');
-var withStyles = require('material-ui/styles').withStyles;
+var Form = require('@material-ui/core/Form');
+var withStyles = require('@material-ui/core/styles').withStyles;
 
 exports.formControlLabelImpl = Form.FormControlLabel;
 exports.formControlImpl = Form.FormControl;

@@ -1,5 +1,5 @@
 "use strict";
 
-var Dialog = require('material-ui/Dialog').default;
+var Dialog = require('@material-ui/core/Dialog').default;
 
 exports.dialogImpl = Dialog;

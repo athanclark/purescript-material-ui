@@ -1,5 +1,5 @@
 "use strict";
 
-var Badge = require('material-ui/Badge').default;
+var Badge = require('@material-ui/core/Badge').default;
 
 exports.badgeImpl = Badge;

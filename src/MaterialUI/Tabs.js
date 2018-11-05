@@ -1,6 +1,6 @@
 "use strict";
 
-var Tabs = require('material-ui/Tabs');
+var Tabs = require('@material-ui/core/Tabs');
 
 exports.tabsImpl = Tabs.default;
 

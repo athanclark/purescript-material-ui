@@ -1,5 +1,5 @@
 "use strict";
 
-var Collapse = require('material-ui/transitions/Collapse').default;
+var Collapse = require('@material-ui/core/transitions/Collapse').default;
 
 exports.collapseImpl = Collapse;

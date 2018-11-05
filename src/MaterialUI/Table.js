@@ -1,7 +1,7 @@
 "use strict";
 
-var T = require('material-ui/Table');
-var withStyles = require('material-ui/styles').withStyles;
+var T = require('@material-ui/core/Table');
+var withStyles = require('@material-ui/core/styles').withStyles;
 
 exports.tableImpl = T.default;
 exports.tableBodyImpl = T.TableBody;

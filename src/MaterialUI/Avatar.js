@@ -1,5 +1,5 @@
 "use strict";
 
-var Avatar = require('material-ui/Avatar').default;
+var Avatar = require('@material-ui/core/Avatar').default;
 
 exports.avatarImpl = Avatar;

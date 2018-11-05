@@ -1,6 +1,6 @@
 "use strict";
 
-var modules = require('material-ui/styles');
+var modules = require('@material-ui/core/styles');
 
 var MuiThemeProvider = modules.MuiThemeProvider;
 var createMuiTheme = modules.createMuiTheme;

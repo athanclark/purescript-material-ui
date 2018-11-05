@@ -1,5 +1,5 @@
 "use strict";
 
-var Close = require('material-ui-icons/Close').default;
+var Close = require('@material-ui/core-icons/Close').default;
 
 exports.closeIconImpl = Close;

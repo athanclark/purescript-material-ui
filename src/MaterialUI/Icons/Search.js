@@ -1,5 +1,5 @@
 "use strict";
 
-var Search = require('material-ui-icons/Search').default;
+var Search = require('@material-ui/core-icons/Search').default;
 
 exports.searchIconImpl = Search;

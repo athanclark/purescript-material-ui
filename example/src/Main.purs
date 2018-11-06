@@ -1,6 +1,7 @@
 module Main where
 
 import MaterialUI.MuiThemeProvider (muiThemeProvider, defaultMuiTheme)
+import MaterialUI.CssBaseline (cssBaseline)
 import MaterialUI.AppBar (appBar)
 import MaterialUI.AppBar as AppBar
 import MaterialUI.Toolbar (toolbar)
@@ -58,8 +59,12 @@ spec = T.simpleSpec performAction render
       CloseDrawer -> void $ T.cotransform $ _ { drawerOpen = false }
 
     render :: T.Render State _ Action
-    render dispatch props state children = [R.text "yo"]
-      -- [ muiThemeProvider {theme: defaultMuiTheme} $ R.div []
+    render dispatch props state children = -- [R.text "yo"]
+      [ muiThemeProvider {theme: defaultMuiTheme}
+        [ cssBaseline
+        , text "Yo"
+        ]
+      ]
       --   [ drawer
       --     { open: true -- state.drawerOpen
       --     -- , docked: true

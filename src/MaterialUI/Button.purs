@@ -1,20 +1,21 @@
 module MaterialUI.Button
   ( button, ButtonProps, ButtonPropsO, ButtonClasses
-  , Color, primary, secondary, default, inherit, contrast
-  , Size, small, medium, large, Variant, flat, raised, fab
+  , Color, primary, secondary, default, inherit
+  , Size, small, medium, large
+  , Variant, text, flat, outlined, contained, raised, fab, extendedFab
   , createClasses, withStyles
   ) where
 
+import MaterialUI.ButtonBase (ButtonBasePropsO)
+import MaterialUI.EventHandlers (ClickableComponent)
 import MaterialUI.Types (Styles, Classes, class CompileStyles, Theme)
 
-import Prelude
 import React (ReactClass, unsafeCreateElement, ReactElement, statelessComponent)
-import React.SyntheticEvent (SyntheticEvent)
 import Row.Class (class SubRow)
 import Data.Function.Uncurried (Fn2, runFn2)
-import Effect.Uncurried (EffectFn1)
 import Unsafe.Coerce (unsafeCoerce)
-import Type.Row (class RowToList, class ListToRow)
+import Type.Row (class RowToList, class ListToRow, class RowListRemove)
+import Prim.Row (class Union)
 
 
 foreign import buttonImpl :: forall props. ReactClass props
@@ -25,21 +26,17 @@ type ButtonProps o =
   | o }
 
 
-type ButtonPropsO componentProps =
+type ButtonPropsO =
   ( classes :: Classes
-  , style :: Styles
   , color :: Color
-  , component :: ReactClass componentProps
+  , disabled :: Boolean
   , disableFocusRipple :: Boolean
   , disableRipple :: Boolean
-  , disabled :: Boolean
-  , href :: String
-  , variant :: Variant
-  , onClick    :: EffectFn1 SyntheticEvent Unit
-  , onTouchTap :: EffectFn1 SyntheticEvent Unit
-  , mini :: Boolean
   , fullWidth :: Boolean
+  , href :: String
+  , mini :: Boolean
   , size :: Size
+  , variant :: Variant
   )
 
 newtype Color = Color String
@@ -56,20 +53,29 @@ default = Color "default"
 inherit :: Color
 inherit = Color "inherit"
 
-contrast :: Color
-contrast = Color "contrast"
-
 
 newtype Variant = Variant String
 
+text :: Variant
+text = Variant "text"
+
 flat :: Variant
 flat = Variant "flat"
+
+outlined :: Variant
+outlined = Variant "outlined"
+
+contained :: Variant
+contained = Variant "contained"
 
 raised :: Variant
 raised = Variant "raised"
 
 fab :: Variant
 fab = Variant "fab"
+
+extendedFab :: Variant
+extendedFab = Variant "extendedFab"
 
 
 newtype Size = Size String
@@ -87,15 +93,26 @@ large = Size "large"
 type ButtonClasses =
   ( root :: Styles
   , label :: Styles
+  , text :: Styles
+  , textPrimary :: Styles
+  , textSecondary :: Styles
+  , flat :: Styles
   , flatPrimary :: Styles
   , flatSecondary :: Styles
-  , colorInherit :: Styles
+  , outlined :: Styles
+  , outlinedPrimary :: Styles
+  , outlinedSecondary :: Styles
+  , contained :: Styles
+  , containedPrimary :: Styles
+  , containedSecondary :: Styles
   , raised :: Styles
-  , keyboardFocused :: Styles
   , raisedPrimary :: Styles
   , raisedSecondary :: Styles
-  , disabled :: Styles
   , fab :: Styles
+  , extendedFab :: Styles
+  , focusVisible :: Styles
+  , disabled :: Styles
+  , colorInherit :: Styles
   , mini :: Styles
   , sizeSmall :: Styles
   , sizeLarge :: Styles
@@ -105,15 +122,26 @@ type ButtonClasses =
 type ButtonClassesCompiled =
   ( root :: String
   , label :: String
+  , text :: String
+  , textPrimary :: String
+  , textSecondary :: String
+  , flat :: String
   , flatPrimary :: String
   , flatSecondary :: String
-  , colorInherit :: String
+  , outlined :: String
+  , outlinedPrimary :: String
+  , outlinedSecondary :: String
+  , contained :: String
+  , containedPrimary :: String
+  , containedSecondary :: String
   , raised :: String
-  , keyboardFocused :: String
   , raisedPrimary :: String
   , raisedSecondary :: String
-  , disabled :: String
   , fab :: String
+  , extendedFab :: String
+  , focusVisible :: String
+  , disabled :: String
+  , colorInherit :: String
   , mini :: String
   , sizeSmall :: String
   , sizeLarge :: String
@@ -126,8 +154,14 @@ createClasses :: forall classes
 createClasses = unsafeCoerce
 
 
-button :: forall o componentProps
-         . SubRow o (ButtonPropsO componentProps)
+button :: forall o all both componentProps touchRippleProps buttonBaseList
+           buttonBaseList' buttonBaseProps
+         . SubRow o all
+        => RowToList (ButtonBasePropsO componentProps touchRippleProps) buttonBaseList
+        => RowListRemove "classes" buttonBaseList buttonBaseList'
+        => ListToRow buttonBaseList' buttonBaseProps
+        => Union ClickableComponent buttonBaseProps both
+        => Union ButtonPropsO both all
         => ButtonProps o -> Array ReactElement -> ReactElement
 button = unsafeCreateElement buttonImpl
 

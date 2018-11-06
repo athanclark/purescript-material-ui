@@ -9,7 +9,7 @@ import MaterialUI.Types (Styles, Classes)
 import Foreign (Foreign)
 import React (ReactClass, unsafeCreateElement, ReactElement)
 import Row.Class (class SubRow)
-import Type.Row (class RowToList, class RowListSet, class ListToRow)
+import Type.Row (class RowToList, class RowListRemove, class ListToRow)
 import Prim.Row (class Union)
 import Unsafe.Coerce (unsafeCoerce)
 
@@ -51,7 +51,7 @@ bottomNavigationAction :: forall o both buttonBaseList buttonBaseList' buttonBas
                           componentProps touchRippleProps
                         . SubRow o both
                        => RowToList (ButtonBasePropsO componentProps touchRippleProps) buttonBaseList
-                       => RowListSet "classes" Classes buttonBaseList buttonBaseList'
+                       => RowListRemove "classes" buttonBaseList buttonBaseList'
                        => ListToRow buttonBaseList' buttonBaseProps
                        => Union BottomNavigationActionPropsO buttonBaseProps both
                        => BottomNavigationActionProps o -> Array ReactElement -> ReactElement

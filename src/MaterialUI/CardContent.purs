@@ -18,8 +18,9 @@ type CardContentProps o =
   | o }
 
 
-type CardContentPropsO =
+type CardContentPropsO componentProps =
   ( classes :: Classes
+  , component :: ReactClass componentProps
   )
 
 type CardContentClasses =
@@ -32,7 +33,7 @@ createClasses :: forall classes
 createClasses = unsafeCoerce
 
 
-cardContent :: forall o
-         . SubRow o CardContentPropsO
+cardContent :: forall o componentProps
+         . SubRow o (CardContentPropsO componentProps)
         => CardContentProps o -> Array ReactElement -> ReactElement
 cardContent = unsafeCreateElement cardContentImpl

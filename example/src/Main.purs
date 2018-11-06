@@ -79,8 +79,8 @@ spec = T.simpleSpec performAction render
         --       } [R.text "bar"]
         --     ]
         --   ]
-        -- , card {}
-        --   [ cardContent {}
+        , card {}
+          [ cardContent {}
             , typography {variant: Typography.headline}
               [R.text "Headline"]
             , typography {variant: Typography.subheading}
@@ -106,7 +106,7 @@ spec = T.simpleSpec performAction render
           --     { color: Button.secondary
           --     } [R.text "Button!"]
           --   ]
-          -- ]
+          ]
         ]
       ]
       --   [ drawer

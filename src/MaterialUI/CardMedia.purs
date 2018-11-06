@@ -18,12 +18,16 @@ type CardMediaProps o =
   | o }
 
 
-type CardMediaPropsO =
+type CardMediaPropsO componentProps =
   ( classes :: Classes
+  , component :: ReactClass componentProps
+  , image :: String
+  , src :: String
   )
 
 type CardMediaClasses =
   ( root :: Styles
+  , media :: Styles
   )
 
 createClasses :: forall classes
@@ -32,7 +36,7 @@ createClasses :: forall classes
 createClasses = unsafeCoerce
 
 
-cardMedia :: forall o
-         . SubRow o CardMediaPropsO
+cardMedia :: forall o componentProps
+         . SubRow o (CardMediaPropsO componentProps)
         => CardMediaProps o -> Array ReactElement -> ReactElement
 cardMedia = unsafeCreateElement cardMediaImpl

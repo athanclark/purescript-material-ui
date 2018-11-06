@@ -18,17 +18,25 @@ type CardHeaderProps o =
   | o }
 
 
-type CardHeaderPropsO =
-  ( avatar :: ReactElement
+type CardHeaderPropsO componentProps subheaderTypographyProps titleTypographyProps =
+  ( action :: ReactElement
+  , avatar :: ReactElement
   , classes :: Classes
+  , component :: ReactClass componentProps -- ^ Default: React.DOM.div'
+  , disableTypography :: Boolean
   , subheader :: ReactElement
+  , subheaderTypographyProps :: subheaderTypographyProps
   , title :: ReactElement
+  , titleTypographyProps :: titleTypographyProps
   )
 
 type CardHeaderClasses =
   ( root :: Styles
   , avatar :: Styles
+  , action :: Styles
   , content :: Styles
+  , title :: Styles
+  , subheader :: Styles
   )
 
 createClasses :: forall classes
@@ -37,7 +45,7 @@ createClasses :: forall classes
 createClasses = unsafeCoerce
 
 
-cardHeader :: forall o
-         . SubRow o CardHeaderPropsO
+cardHeader :: forall o componentProps subheaderTypographyProps titleTypographyProps
+         . SubRow o (CardHeaderPropsO componentProps subheaderTypographyProps titleTypographyProps)
         => CardHeaderProps o -> Array ReactElement -> ReactElement
 cardHeader = unsafeCreateElement cardHeaderImpl

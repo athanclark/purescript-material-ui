@@ -7,7 +7,6 @@ module MaterialUI.Button
   ) where
 
 import MaterialUI.ButtonBase (ButtonBasePropsO)
-import MaterialUI.EventHandlers (ClickableComponent)
 import MaterialUI.Types (Styles, Classes, class CompileStyles, Theme)
 
 import React (ReactClass, unsafeCreateElement, ReactElement, statelessComponent)
@@ -154,14 +153,13 @@ createClasses :: forall classes
 createClasses = unsafeCoerce
 
 
-button :: forall o all both componentProps touchRippleProps buttonBaseList
+button :: forall o both componentProps touchRippleProps buttonBaseList
            buttonBaseList' buttonBaseProps
-         . SubRow o all
+         . SubRow o both
         => RowToList (ButtonBasePropsO componentProps touchRippleProps) buttonBaseList
         => RowListRemove "classes" buttonBaseList buttonBaseList'
         => ListToRow buttonBaseList' buttonBaseProps
-        => Union ClickableComponent buttonBaseProps both
-        => Union ButtonPropsO both all
+        => Union ButtonPropsO buttonBaseProps both
         => ButtonProps o -> Array ReactElement -> ReactElement
 button = unsafeCreateElement buttonImpl
 

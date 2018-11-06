@@ -4,12 +4,14 @@ module MaterialUI.ButtonBase
   , createClasses
   ) where
 
+import MaterialUI.EventHandlers (ClickableComponent)
 import MaterialUI.Types (Styles, Classes)
 
 import Data.Nullable (Nullable)
 import React (ReactClass, unsafeCreateElement, ReactElement, ReactRef, SyntheticEventHandler)
 import React.SyntheticEvent (SyntheticEvent)
 import Row.Class (class SubRow)
+import Prim.Row (class Union)
 import Unsafe.Coerce (unsafeCoerce)
 
 
@@ -63,7 +65,8 @@ createClasses :: forall classes
 createClasses = unsafeCoerce
 
 
-buttonBase :: forall o componentProps touchRippleProps
-         . SubRow o (ButtonBasePropsO componentProps touchRippleProps)
+buttonBase :: forall o both componentProps touchRippleProps
+         . SubRow o both
+        => Union (ButtonBasePropsO componentProps touchRippleProps) ClickableComponent both
         => ButtonBaseProps o -> Array ReactElement -> ReactElement
 buttonBase = unsafeCreateElement buttonBaseImpl

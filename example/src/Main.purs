@@ -62,7 +62,7 @@ spec = T.simpleSpec performAction render
     render dispatch props state children = -- [R.text "yo"]
       [ muiThemeProvider {theme: defaultMuiTheme}
         [ cssBaseline
-        , text "Yo"
+        , R.text "Yo"
         ]
       ]
       --   [ drawer

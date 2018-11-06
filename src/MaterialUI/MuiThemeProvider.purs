@@ -6,7 +6,6 @@ module MaterialUI.MuiThemeProvider
 import Prelude
 import Row.Class (class SubRow)
 import React (ReactClass, unsafeCreateElement, ReactElement)
-import Unsafe.Coerce (unsafeCoerce)
 
 
 foreign import muiThemeProviderImpl :: forall props. ReactClass props
@@ -59,5 +58,5 @@ type MuiThemeProviderPropsO =
 
 muiThemeProvider :: forall o
                   . SubRow o MuiThemeProviderPropsO
-                 => MuiThemeProviderProps o -> ReactElement -> ReactElement
-muiThemeProvider props = unsafeCreateElement muiThemeProviderImpl props <<< unsafeCoerce
+                 => MuiThemeProviderProps o -> Array ReactElement -> ReactElement
+muiThemeProvider props = unsafeCreateElement muiThemeProviderImpl props

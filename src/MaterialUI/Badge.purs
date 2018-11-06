@@ -44,7 +44,8 @@ type BadgeClasses =
   ( root :: Styles
   , badge :: Styles
   , colorPrimary :: Styles
-  , colorAccent :: Styles
+  , colorSecondary :: Styles
+  , colorError :: Styles
   )
 
 createClasses :: forall classes

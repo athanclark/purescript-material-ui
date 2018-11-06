@@ -66,10 +66,12 @@ type AppBarClasses =
   ( root :: Styles
   , positionFixed :: Styles
   , positionAbsolute :: Styles
+  , positionSticky :: Styles
   , positionStatic :: Styles
+  , positionRelative :: Styles
   , colorDefault :: Styles
   , colorPrimary :: Styles
-  , colorAccent :: Styles
+  , colorSecondary :: Styles
   )
 
 

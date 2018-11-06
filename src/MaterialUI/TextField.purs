@@ -5,7 +5,7 @@ module MaterialUI.TextField
 import MaterialUI.Input (InputPropsO)
 
 import Prelude
-import React (ReactClass, unsafeCreateElement, ReactElement)
+import React (ReactClass, unsafeCreateElement, ReactElement, SyntheticEventHandler)
 import React.SyntheticEvent (SyntheticEvent)
 import Row.Class (class SubRow)
 import Effect.Uncurried (EffectFn1)
@@ -22,7 +22,7 @@ type TextFieldProps o =
 
 
 
-type TextFieldPropsO eff formHelperTextProps inputLabelProps selectProps =
+type TextFieldPropsO formHelperTextProps inputLabelProps selectProps =
   ( "FormHelperTextProps" :: formHelperTextProps
   , "InputClassName" :: String
   , "InputLabelProps" :: inputLabelProps
@@ -36,12 +36,14 @@ type TextFieldPropsO eff formHelperTextProps inputLabelProps selectProps =
   , required :: Boolean
   , select :: Boolean
   -- rootRef FIXME
-  , onClick :: EffectFn1 SyntheticEvent Unit
+  , onClick :: SyntheticEventHandler SyntheticEvent
   )
 
 
-textField :: forall o eff both inputProps inputProps' inputComponentProps inputLabelProps formHelperTextProps selectProps
-         . SubRow o both
-        => Union (TextFieldPropsO eff formHelperTextProps inputLabelProps selectProps) (InputPropsO eff inputComponentProps inputProps inputProps') both
-        => TextFieldProps o -> Array ReactElement -> ReactElement
+textField :: forall o eff both inputProps inputProps' inputComponentProps inputLabelProps
+             formHelperTextProps selectProps
+           . SubRow o both
+          => Union (TextFieldPropsO formHelperTextProps inputLabelProps selectProps)
+                   (InputPropsO eff inputComponentProps inputProps inputProps') both
+          => TextFieldProps o -> Array ReactElement -> ReactElement
 textField p = unsafeCreateElement textFieldImpl p

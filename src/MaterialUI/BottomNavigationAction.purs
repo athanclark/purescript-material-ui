@@ -3,11 +3,14 @@ module MaterialUI.BottomNavigationAction
   , createClasses
   ) where
 
+import MaterialUI.ButtonBase (ButtonBasePropsO)
 import MaterialUI.Types (Styles, Classes)
 
 import Foreign (Foreign)
 import React (ReactClass, unsafeCreateElement, ReactElement)
 import Row.Class (class SubRow)
+import Type.Row (class RowToList, class RowListSet, class ListToRow)
+import Prim.Row (class Union)
 import Unsafe.Coerce (unsafeCoerce)
 
 
@@ -44,7 +47,12 @@ createClasses :: forall classes
 createClasses = unsafeCoerce
 
 
-bottomNavigationAction :: forall o
-         . SubRow o BottomNavigationActionPropsO
-        => BottomNavigationActionProps o -> Array ReactElement -> ReactElement
+bottomNavigationAction :: forall o both buttonBaseList buttonBaseList' buttonBaseProps
+                          componentProps touchRippleProps
+                        . SubRow o both
+                       => RowToList (ButtonBasePropsO componentProps touchRippleProps) buttonBaseList
+                       => RowListSet "classes" Classes buttonBaseList buttonBaseList'
+                       => ListToRow buttonBaseList' buttonBaseProps
+                       => Union BottomNavigationActionPropsO buttonBaseProps both
+                       => BottomNavigationActionProps o -> Array ReactElement -> ReactElement
 bottomNavigationAction = unsafeCreateElement bottomNavigationActionImpl

@@ -6,10 +6,11 @@ module MaterialUI.BottomNavigation
 import MaterialUI.Types (Styles, Classes)
 
 import Prelude
+import Foreign (Foreign)
 import React (ReactClass, unsafeCreateElement, ReactElement)
 import React.SyntheticEvent (SyntheticEvent)
 import Row.Class (class SubRow)
-import Effect.Uncurried (EffectFn1)
+import Effect.Uncurried (EffectFn2)
 import Unsafe.Coerce (unsafeCoerce)
 
 
@@ -23,9 +24,9 @@ type BottomNavigationProps o =
 
 type BottomNavigationPropsO eff =
   ( classes :: Classes
-  , onChange :: EffectFn1 SyntheticEvent Unit
+  , onChange :: EffectFn2 SyntheticEvent Foreign Unit
   , showLabels :: Boolean
-  , value :: String
+  , value :: Foreign
   )
 
 

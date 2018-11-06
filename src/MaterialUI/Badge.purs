@@ -1,6 +1,6 @@
 module MaterialUI.Badge
   ( badge, BadgeProps, BadgePropsO, BadgeClasses
-  , Color, primary, accent, default
+  , Color, primary, secondary, default, error
   , createClasses
   ) where
 
@@ -15,14 +15,14 @@ foreign import badgeImpl :: forall props. ReactClass props
 
 
 type BadgeProps o =
-  {
+  { badgeContent :: ReactElement
   | o }
 
 
-type BadgePropsO =
-  ( badgeContent :: ReactElement
-  , color :: Color
+type BadgePropsO componentProps =
+  ( color :: Color
   , classes :: Classes
+  , component :: ReactClass componentProps
   )
 
 newtype Color = Color String
@@ -30,11 +30,14 @@ newtype Color = Color String
 primary :: Color
 primary = Color "primary"
 
-accent :: Color
-accent = Color "accent"
+secondary :: Color
+secondary = Color "secondary"
 
 default :: Color
 default = Color "default"
+
+error :: Color
+error = Color "error"
 
 
 type BadgeClasses =
@@ -50,7 +53,7 @@ createClasses :: forall classes
 createClasses = unsafeCoerce
 
 
-badge :: forall o
-         . SubRow o BadgePropsO
+badge :: forall o componentProps
+         . SubRow o (BadgePropsO componentProps)
         => BadgeProps o -> Array ReactElement -> ReactElement
 badge = unsafeCreateElement badgeImpl

@@ -1,7 +1,7 @@
 module MaterialUI.AppBar
   ( appBar, AppBarProps, AppBarPropsO, AppBarClasses
-  , Color, inherit, primary, accent, default
-  , Position, static, fixed, absolute
+  , Color, inherit, primary, secondary, default
+  , Position, static, sticky, fixed, absolute, relative
   , createClasses
   , withStyles
   ) where
@@ -31,8 +31,8 @@ inherit = Color "inherit"
 primary :: Color
 primary = Color "primary"
 
-accent :: Color
-accent = Color "accent"
+secondary :: Color
+secondary = Color "secondary"
 
 default :: Color
 default = Color "default"
@@ -42,18 +42,23 @@ newtype Position = Position String
 static :: Position
 static = Position "static"
 
+sticky :: Position
+sticky = Position "sticky"
+
 fixed :: Position
 fixed = Position "fixed"
 
 absolute :: Position
 absolute = Position "absolute"
 
+relative :: Position
+relative = Position "relative"
+
 
 type AppBarPropsO =
   ( color :: Color
   , position :: Position
   , classes :: Classes
-  , key :: String
   )
 
 

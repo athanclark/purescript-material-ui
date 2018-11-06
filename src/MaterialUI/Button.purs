@@ -25,7 +25,7 @@ type ButtonProps o =
   | o }
 
 
-type ButtonPropsO eff componentProps =
+type ButtonPropsO componentProps =
   ( classes :: Classes
   , style :: Styles
   , color :: Color
@@ -126,8 +126,8 @@ createClasses :: forall classes
 createClasses = unsafeCoerce
 
 
-button :: forall o eff componentProps
-         . SubRow o (ButtonPropsO eff componentProps)
+button :: forall o componentProps
+         . SubRow o (ButtonPropsO componentProps)
         => ButtonProps o -> Array ReactElement -> ReactElement
 button = unsafeCreateElement buttonImpl
 

@@ -45,11 +45,19 @@ createMuiTheme :: forall x palette
 createMuiTheme = createMuiThemeImpl
 
 
-type MuiThemeProviderProps =
+type MuiThemeProviderProps o =
   { theme :: Theme
+  | o
   }
 
 
+type MuiThemeProviderPropsO =
+  ( disableStylesGeneration :: Boolean
+  , sheetsManager :: Void -- FIXME
+  )
 
-muiThemeProvider :: MuiThemeProviderProps -> ReactElement -> ReactElement
+
+muiThemeProvider :: forall o
+                  . SubRow o MuiThemeProviderPropsO
+                 => MuiThemeProviderProps o -> ReactElement -> ReactElement
 muiThemeProvider props = unsafeCreateElement muiThemeProviderImpl props <<< unsafeCoerce

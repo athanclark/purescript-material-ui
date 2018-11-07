@@ -62,51 +62,52 @@ spec = T.simpleSpec performAction render
     render dispatch props state children = -- [R.text "yo"]
       [ muiThemeProvider {theme: defaultMuiTheme}
         [ cssBaseline
-        -- , appBar { position: AppBar.static
-        --          , color: AppBar.primary
-        --            -- {positionStatic: unsafeCoerce {marginLeft: "150px"}
-        --            -- }
-        --          }
-        --   [ toolbar {}
-        --     [ iconButton
-        --       { color: IconButton.contrast
-        --       , onTouchTap: mkEffectFn1 \_ -> dispatch OpenDrawer
-        --       }
-        --       menuIcon
-        --     , typography
-        --       { variant: Typography.title
-        --       , color: Typography.inheritColor
-        --       } [R.text "bar"]
-        --     ]
-        --   ]
-        , card {}
-          [ cardContent {}
-            , typography {variant: Typography.headline}
-              [R.text "Headline"]
-            , typography {variant: Typography.subheading}
-              [R.text "Subheading"]
-            , typography {variant: Typography.title}
-              [R.text "Title"]
-            , typography {variant: Typography.display1}
-              [R.text "Display1"]
-            , typography {variant: Typography.display2}
-              [R.text "Display2"]
-            , typography {variant: Typography.display3}
-              [R.text "Display3"]
-            , typography {variant: Typography.display4}
-              [R.text "Display4"]
-            , typography {variant: Typography.body1}
-              [R.text "Body1"]
-            , typography {variant: Typography.body2}
-              [R.text "Body2"]
-            , typography {variant: Typography.caption}
-              [R.text "Caption"]
-          -- , cardActions {}
+        , appBar { position: AppBar.static
+                 , color: AppBar.primary
+                   -- {positionStatic: unsafeCoerce {marginLeft: "150px"}
+                   -- }
+                 }
+          [ toolbar {}
+            [ iconButton
+              { color: IconButton.contrast
+              , onTouchTap: mkEffectFn1 \_ -> dispatch OpenDrawer
+              }
+              menuIcon
+            , typography
+              { variant: Typography.title
+              , color: Typography.inheritColor
+              } [R.text "bar"]
+            ]
+          ]
+        -- , card {}
+          -- [ cardContent {}
+          --   [ typography {variant: Typography.headline}
+          --     [R.text "Headline"]
+          --   , typography {variant: Typography.subheading}
+          --     [R.text "Subheading"]
+          --   , typography {variant: Typography.title}
+          --     [R.text "Title"]
+          --   , typography {variant: Typography.display1}
+          --     [R.text "Display1"]
+          --   , typography {variant: Typography.display2}
+          --     [R.text "Display2"]
+          --   , typography {variant: Typography.display3}
+          --     [R.text "Display3"]
+          --   , typography {variant: Typography.display4}
+          --     [R.text "Display4"]
+          --   , typography {variant: Typography.body1}
+          --     [R.text "Body1"]
+          --   , typography {variant: Typography.body2}
+          --     [R.text "Body2"]
+          --   , typography {variant: Typography.caption}
+          --     [R.text "Caption"]
+          --   ]
+          -- [ cardActions {}
           --   [ button
           --     { color: Button.secondary
           --     } [R.text "Button!"]
           --   ]
-          ]
+          -- ]
         ]
       ]
       --   [ drawer

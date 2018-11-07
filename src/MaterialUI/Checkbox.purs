@@ -1,12 +1,14 @@
 module MaterialUI.Checkbox
   ( checkbox, CheckboxProps, CheckboxPropsO, CheckboxClasses
+  , Color, primary, secondary, default
   , createClasses
   ) where
 
 import MaterialUI.Types (Styles, Classes)
 
 import Prelude
-import React (ReactClass, unsafeCreateElement, ReactElement)
+import Data.Nullable (Nullable)
+import React (ReactClass, unsafeCreateElement, ReactElement, SyntheticEventHandler, ReactRef)
 import React.SyntheticEvent (SyntheticEvent)
 import Row.Class (class SubRow)
 import Effect.Uncurried (EffectFn2)
@@ -23,25 +25,40 @@ type CheckboxProps o =
 
 type CheckboxPropsO eff inputProps =
   ( checked :: Boolean
-  , checkedClassName :: String
   , checkedIcon :: ReactElement
   , classes :: Classes
-  , disableRipple :: Boolean
+  , color :: Color
   , disabled :: Boolean
-  , disabledClassName :: String
+  , disableRipple :: Boolean
   , icon :: ReactElement
-  , indeterminate :: Boolean
+  , id :: String
+  , indeterminate :: Boolean -- ^ Default: `false`
   , indeterminateIcon :: ReactElement
   , inputProps :: inputProps
-  , name :: String
+  , inputRef :: SyntheticEventHandler (Nullable ReactRef)
   , onChange :: EffectFn2 SyntheticEvent Boolean Unit
+  , "type" :: String -- ^ Input type
   , value :: String
   )
 
+newtype Color = Color String
+
+primary :: Color
+primary = Color "primary"
+
+secondary :: Color
+secondary = Color "secondary"
+
+default :: Color
+default = Color "default"
+
 type CheckboxClasses =
-  ( "default" :: Styles
+  ( root :: Styles
   , checked :: Styles
   , disabled :: Styles
+  , indeterminate :: Styles
+  , colorPrimary :: Styles
+  , colorSecondary :: Styles
   )
 
 createClasses :: forall classes

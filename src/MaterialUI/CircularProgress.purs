@@ -1,6 +1,7 @@
 module MaterialUI.CircularProgress
   ( circularProgress, CircularProgressProps, CircularProgressPropsO, CircularProgressClasses
-  , Mode, determinate, indeterminate, Color, primary, accent
+  , Variant, determinate, indeterminate, static
+  , Color, primary, secondary, inherit
   , createClasses
   ) where
 
@@ -19,43 +20,51 @@ type CircularProgressProps o =
   | o }
 
 
-newtype Mode = Mode String
+type CircularProgressPropsO =
+  ( classes :: Classes
+  , color :: Color -- ^ Default: 'primary'
+  , disableShrink :: Boolean -- ^ Default: `false`
+  , size :: Int -- ^ Default: `40`
+  , thickness :: Number -- ^ Default: `3.6`
+  , value :: Int -- ^ Between 0 and 100, Default: `0`
+  , variant :: Variant -- ^ Default: 'indeterminate'
+  )
 
-determinate :: Mode
-determinate = Mode "determinate"
 
-indeterminate :: Mode
-indeterminate = Mode "indeterminate"
+newtype Variant = Variant String
+
+determinate :: Variant
+determinate = Variant "determinate"
+
+indeterminate :: Variant
+indeterminate = Variant "indeterminate"
+
+static :: Variant
+static = Variant "static"
 
 newtype Color = Color String
 
 primary :: Color
 primary = Color "primary"
 
-accent :: Color
-accent = Color "accent"
+secondary :: Color
+secondary = Color "secondary"
 
-
-type CircularProgressPropsO =
-  ( color :: Color
-  , size :: Int
-  , max :: Int
-  , min :: Int
-  , mode :: Mode
-  , value :: Int
-  , classes :: Classes
-  )
+inherit :: Color
+inherit = Color "inherit"
 
 
 type CircularProgressClasses =
   ( root :: Styles
-  , primaryColor :: Styles
-  , accentColor :: Styles
+  , static :: Styles
+  , indeterminate :: Styles
+  , colorPrimary :: Styles
+  , colorSecondary :: Styles
   , svg :: Styles
-  , indeterminateSvg :: Styles
   , circle :: Styles
-  , indeterminateCircle :: Styles
-  , determinateCircle :: Styles
+  , circleStatic :: Styles
+  , circleIndeterminate :: Styles
+  , circleDisableShrink :: Styles
   )
 
 createClasses :: forall classes

@@ -5,11 +5,10 @@ module MaterialUI.Collapse
 
 import MaterialUI.Types (Styles, Classes)
 
-import Prelude
+import React.Transition (TransitionProps)
 import React (ReactClass, unsafeCreateElement, ReactElement)
-import React.SyntheticEvent (SyntheticEvent)
 import Row.Class (class SubRow)
-import Effect.Uncurried (EffectFn1)
+import Type.Row (type (+))
 import Unsafe.Coerce (unsafeCoerce)
 
 
@@ -21,23 +20,17 @@ type CollapseProps o =
   | o }
 
 
-type CollapsePropsO eff =
+type CollapsePropsO componentProps r =
   ( classes :: Classes
-  , style :: Styles
-  , in :: Boolean
-  , onEnter :: EffectFn1 SyntheticEvent Unit
-  , onEntered :: EffectFn1 SyntheticEvent Unit
-  , onEntering :: EffectFn1 SyntheticEvent Unit
-  , onExit :: EffectFn1 SyntheticEvent Unit
-  , onExited :: EffectFn1 SyntheticEvent Unit
-  , onExiting :: EffectFn1 SyntheticEvent Unit
-  , transitionDuration :: Number
-  , unmountOnExit :: Boolean
-  )
+  , collapsedHeight :: String
+  , component :: ReactClass componentProps -- ^ Default: React.DOM.div'
+  | r)
 
 type CollapseClasses =
   ( container :: Styles
   , entered :: Styles
+  , wrapper :: Styles
+  , wrapperInner :: Styles
   )
 
 createClasses :: forall classes
@@ -46,7 +39,7 @@ createClasses :: forall classes
 createClasses = unsafeCoerce
 
 
-collapse :: forall o eff
-         . SubRow o (CollapsePropsO eff)
+collapse :: forall o componentProps
+         . SubRow o (CollapsePropsO componentProps + TransitionProps + ())
         => CollapseProps o -> Array ReactElement -> ReactElement
 collapse = unsafeCreateElement collapseImpl

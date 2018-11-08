@@ -1,5 +1,5 @@
 "use strict";
 
-var CardActionArea = require('@material-ui/core/Card').CardActionArea;
+var CardActionArea = require('@material-ui/core/CardActionArea').default;
 
 exports.cardActionAreaImpl = CardActionArea;

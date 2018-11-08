@@ -11,7 +11,7 @@
     "purescript-prelude": "^4.1.0",
     "purescript-console": "^4.1.0",
     "purescript-material-ui": "../",
-    "purescript-thermite": "git://github.com/athanclark/purescript-thermite.git#e5ed8e3d82e8f6e1b919d229f76c23a21ae8955d",
+    "purescript-thermite": "git://github.com/athanclark/purescript-thermite.git#ebff0a8478c878933433fb613dec56d9a3242724",
     "purescript-argonaut-traversals": "git://github.com/athanclark/purescript-argonaut-traversals.git#b7f2c2d77cb032129eac3ae6c1e5a79189f5eaa9"
   },
   "devDependencies": {

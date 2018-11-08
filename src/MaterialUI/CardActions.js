@@ -1,5 +1,5 @@
 "use strict";
 
-var CardActions = require('@material-ui/core/Card').CardActions;
+var CardActions = require('@material-ui/core/CardActions').default;
 
 exports.cardActionsImpl = CardActions;

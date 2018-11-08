@@ -8,12 +8,11 @@ module MaterialUI.Drawer
 
 import MaterialUI.Types (Styles, Classes, class CompileStyles, Theme)
 
-import Prelude
-import React (ReactClass, unsafeCreateElement, ReactElement, statelessComponent)
+import React.Transition (Timeout)
+import React (ReactClass, unsafeCreateElement, ReactElement, statelessComponent, SyntheticEventHandler)
 import React.SyntheticEvent (SyntheticEvent)
 import Row.Class (class SubRow)
 import Data.Function.Uncurried (Fn2, runFn2)
-import Effect.Uncurried (EffectFn1)
 import Unsafe.Coerce (unsafeCoerce)
 import Type.Row (class RowToList, class ListToRow)
 
@@ -52,38 +51,46 @@ temporary :: DrawerVariant
 temporary = DrawerVariant "temporary"
 
 
-type DrawerPropsO eff slideProps =
-  ( "SlideProps" :: slideProps
-  , anchor :: Anchor
+type DrawerPropsO modalProps paperProps slideProps =
+  ( anchor :: Anchor -- ^ Default: `left`
   , classes :: Classes
-  , elevation :: Int
-  , onClose :: EffectFn1 SyntheticEvent Unit
-  , open :: Boolean
-  , transitionDuration :: Number
-  , variant :: DrawerVariant
+  , elevation :: Int -- ^ Default: `16`
+  , "ModalProps" :: modalProps
+  , onClose :: SyntheticEventHandler SyntheticEvent
+  , open :: Boolean -- ^ Default: `false`
+  , "PaperProps" :: paperProps
+  , "SlideProps" :: slideProps
+  , transitionDuration :: Timeout
+  , variant :: DrawerVariant -- ^ Default: `temporary`
   )
 
 type DrawerClasses =
-  ( paper :: Styles
+  ( root :: Styles
+  , docked :: Styles
+  , paper :: Styles
   , paperAnchorLeft :: Styles
   , paperAnchorRight :: Styles
-  , paperAnchorDockedLeft :: Styles
-  , paperAnchorDockedRight :: Styles
   , paperAnchorTop :: Styles
   , paperAnchorBottom :: Styles
-  , docked :: Styles
+  , paperAnchorDockedLeft :: Styles
+  , paperAnchorDockedRight :: Styles
+  , paperAnchorDockedTop :: Styles
+  , paperAnchorDockedBottom :: Styles
   , modal :: Styles
   )
 
 type DrawerClassesCompiled =
-  ( paper :: String
+  ( root :: String
+  , docked :: String
+  , paper :: String
   , paperAnchorLeft :: String
   , paperAnchorRight :: String
-  , paperAnchorDockedLeft :: String
-  , paperAnchorDockedRight :: String
   , paperAnchorTop :: String
   , paperAnchorBottom :: String
-  , docked :: String
+  , paperAnchorDockedLeft :: String
+  , paperAnchorDockedRight :: String
+  , paperAnchorDockedTop :: String
+  , paperAnchorDockedBottom :: String
   , modal :: String
   )
 
@@ -93,8 +100,8 @@ createClasses :: forall classes
 createClasses = unsafeCoerce
 
 
-drawer :: forall o eff slideProps
-         . SubRow o (DrawerPropsO eff slideProps)
+drawer :: forall o modalProps paperProps slideProps
+         . SubRow o (DrawerPropsO modalProps paperProps slideProps)
         => DrawerProps o -> Array ReactElement -> ReactElement
 drawer = unsafeCreateElement drawerImpl
 

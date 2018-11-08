@@ -20,12 +20,12 @@ type DialogActionsProps o =
 
 type DialogActionsPropsO =
   ( classes :: Classes
+  , disableActionSpacing :: Boolean -- ^ Default: `false`
   )
 
 type DialogActionsClasses =
   ( root :: Styles
   , action :: Styles
-  , button :: Styles
   )
 
 createClasses :: forall classes

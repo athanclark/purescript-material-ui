@@ -20,7 +20,6 @@ type DialogContentProps o =
 
 type DialogContentPropsO =
   ( classes :: Classes
-  , style :: Styles
   )
 
 type DialogContentClasses =

@@ -1,5 +1,5 @@
 "use strict";
 
-var DialogContentText = require('@material-ui/core/Dialog').DialogContentText;
+var DialogContentText = require('@material-ui/core/DialogContentText').default;
 
 exports.dialogContentTextImpl = DialogContentText;

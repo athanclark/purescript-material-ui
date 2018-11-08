@@ -18,19 +18,19 @@ type DividerProps o =
   | o }
 
 
-type DividerPropsO =
-  ( absolute :: Boolean
-  , inset :: Boolean
-  , light :: Boolean
+type DividerPropsO componentProps =
+  ( absolute :: Boolean -- ^ Default: `false`
   , classes :: Classes
+  , component :: ReactClass componentProps -- ^ Default: `React.DOM.hr'`
+  , inset :: Boolean -- ^ Default: `false`
+  , light :: Boolean -- ^ Default: `false`
   )
 
 type DividerClasses =
   ( root :: Styles
-  , default :: Styles
+  , absolute :: Styles
   , inset :: Styles
   , light :: Styles
-  , absolute :: Styles
   )
 
 createClasses :: forall classes
@@ -39,7 +39,7 @@ createClasses :: forall classes
 createClasses = unsafeCoerce
 
 
-divider :: forall o
-         . SubRow o DividerPropsO
+divider :: forall o componentProps
+         . SubRow o (DividerPropsO componentProps)
         => DividerProps o -> ReactElement
 divider props = unsafeCreateElement dividerImpl props []

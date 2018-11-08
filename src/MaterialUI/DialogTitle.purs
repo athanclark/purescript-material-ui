@@ -20,7 +20,7 @@ type DialogTitleProps o =
 
 type DialogTitlePropsO =
   ( classes :: Classes
-  , disableTypography :: Boolean
+  , disableTypography :: Boolean -- ^ Default: `false`
   )
 
 type DialogTitleClasses =

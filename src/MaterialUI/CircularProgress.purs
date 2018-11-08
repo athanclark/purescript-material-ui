@@ -74,6 +74,6 @@ createClasses = unsafeCoerce
 
 
 circularProgress :: forall o
-                   . SubRow o CircularProgressPropsO
-                  => CircularProgressProps o -> ReactElement
+                  . SubRow o CircularProgressPropsO
+                 => CircularProgressProps o -> ReactElement
 circularProgress props = unsafeCreateElement circularProgressImpl props []

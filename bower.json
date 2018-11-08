@@ -12,6 +12,7 @@
     "purescript-console": "^4.1.0",
     "purescript-row-extra": "^0.0.0",
     "purescript-react": "^6.1.0",
+    "purescript-react-event-listener": "^0.0.0",
     "purescript-web-html": "^1.2.0",
     "purescript-typelevel-prelude": "^3.0.0",
     "purescript-argonaut": "^4.0.1"

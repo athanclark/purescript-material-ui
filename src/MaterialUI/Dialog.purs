@@ -1,16 +1,16 @@
 module MaterialUI.Dialog
   ( dialog, DialogProps, DialogPropsO, DialogClasses
-  , MaxWidth, xs, sm, md
+  , MaxWidth, xs, sm, md, lg, none
+  , Scroll, body, paper
   , createClasses
   ) where
 
 import MaterialUI.Types (Styles, Classes)
 
-import Prelude
-import React (ReactClass, unsafeCreateElement, ReactElement)
+import React.Transition (Timeout)
+import React (ReactClass, unsafeCreateElement, ReactElement, SyntheticEventHandler)
 import React.SyntheticEvent (SyntheticEvent)
 import Row.Class (class SubRow)
-import Effect.Uncurried (EffectFn1)
 import Unsafe.Coerce (unsafeCoerce)
 
 
@@ -33,37 +33,59 @@ sm = MaxWidth "sm"
 md :: MaxWidth
 md = MaxWidth "md"
 
+lg :: MaxWidth
+lg = MaxWidth "lg"
 
-type DialogPropsO eff containerProps transitionProps =
+none :: MaxWidth
+none = MaxWidth (unsafeCoerce false)
+
+
+newtype Scroll = Scroll String
+
+body :: Scroll
+body = Scroll "body"
+
+paper :: Scroll
+paper = Scroll "paper"
+
+type DialogPropsO transitionProps paperProps =
   ( classes                 :: Classes
-  , disableBackdropClick    :: Boolean
-  , disableEscapeKeyDown    :: Boolean
-  , fullScreen              :: Boolean
-  , fullWidth               :: Boolean
-  , maxWidth                :: MaxWidth
-  , container               :: ReactClass containerProps
-  , onBackdropClick         :: EffectFn1 SyntheticEvent Unit
-  , onClose                 :: EffectFn1 SyntheticEvent Unit
-  , onEnter                 :: EffectFn1 SyntheticEvent Unit
-  , onEntered               :: EffectFn1 SyntheticEvent Unit
-  , onEntering              :: EffectFn1 SyntheticEvent Unit
-  , onEscapeKeyDown         :: EffectFn1 SyntheticEvent Unit
-  , onExit                  :: EffectFn1 SyntheticEvent Unit
-  , onExited                :: EffectFn1 SyntheticEvent Unit
-  , onExiting               :: EffectFn1 SyntheticEvent Unit
-  , transitionDuration      :: Number
-  , transition              :: ReactClass transitionProps
+  , disableBackdropClick    :: Boolean -- ^ Default: `false`
+  , disableEscapeKeyDown    :: Boolean -- ^ Default: `false`
+  , fullScreen              :: Boolean -- ^ Default: `false`
+  , fullWidth               :: Boolean -- ^ Default: `false`
+  , maxWidth                :: MaxWidth -- ^ Default: `sm`
+  , onBackdropClick         :: SyntheticEventHandler SyntheticEvent
+  , onClose                 :: SyntheticEventHandler SyntheticEvent
+  , onEnter                 :: SyntheticEventHandler SyntheticEvent
+  , onEntered               :: SyntheticEventHandler SyntheticEvent
+  , onEntering              :: SyntheticEventHandler SyntheticEvent
+  , onEscapeKeyDown         :: SyntheticEventHandler SyntheticEvent
+  , onExit                  :: SyntheticEventHandler SyntheticEvent
+  , onExited                :: SyntheticEventHandler SyntheticEvent
+  , onExiting               :: SyntheticEventHandler SyntheticEvent
+  , "PaperProps"            :: paperProps
+  , scroll                  :: Scroll -- ^ Default `paper`
+  , "TransitionComponent"   :: ReactClass transitionProps -- ^ Default: `Fade`
+  , transitionDuration      :: Timeout
+  , "TransitionProps"       :: transitionProps
   )
 
 
 type DialogClasses =
   ( root :: Styles
+  , scrollPaper :: Styles
+  , scrollBody :: Styles
+  , container :: Styles
   , paper :: Styles
+  , paperScrollPaper :: Styles
+  , paperScrollBody :: Styles
   , paperWidthXs :: Styles
   , paperWidthSm :: Styles
   , paperWidthMd :: Styles
-  , fullScreen :: Styles
-  , fullWidth :: Styles
+  , paperWidthLg :: Styles
+  , paperFullWidth :: Styles
+  , paperFullScreen :: Styles
   )
 
 
@@ -73,7 +95,10 @@ createClasses :: forall classes
 createClasses = unsafeCoerce
 
 
-dialog :: forall eff o containerProps transitionProps
-         . SubRow o (DialogPropsO eff containerProps transitionProps)
+-- FIXME inherit from Modal
+
+
+dialog :: forall o transitionProps paperProps
+         . SubRow o (DialogPropsO transitionProps paperProps)
         => DialogProps o -> Array ReactElement -> ReactElement
 dialog = unsafeCreateElement dialogImpl

@@ -6,11 +6,13 @@ module MaterialUI.Dialog
   ) where
 
 import MaterialUI.Types (Styles, Classes)
+import MaterialUI.Modal (ModalPropsO)
 
 import React.Transition (Timeout)
 import React (ReactClass, unsafeCreateElement, ReactElement, SyntheticEventHandler)
 import React.SyntheticEvent (SyntheticEvent)
 import Row.Class (class SubRow)
+import Type.Row (type (+))
 import Unsafe.Coerce (unsafeCoerce)
 
 
@@ -48,19 +50,14 @@ body = Scroll "body"
 paper :: Scroll
 paper = Scroll "paper"
 
-type DialogPropsO transitionProps paperProps =
+type DialogPropsO transitionProps paperProps r =
   ( classes                 :: Classes
-  , disableBackdropClick    :: Boolean -- ^ Default: `false`
-  , disableEscapeKeyDown    :: Boolean -- ^ Default: `false`
   , fullScreen              :: Boolean -- ^ Default: `false`
   , fullWidth               :: Boolean -- ^ Default: `false`
   , maxWidth                :: MaxWidth -- ^ Default: `sm`
-  , onBackdropClick         :: SyntheticEventHandler SyntheticEvent
-  , onClose                 :: SyntheticEventHandler SyntheticEvent
   , onEnter                 :: SyntheticEventHandler SyntheticEvent
   , onEntered               :: SyntheticEventHandler SyntheticEvent
   , onEntering              :: SyntheticEventHandler SyntheticEvent
-  , onEscapeKeyDown         :: SyntheticEventHandler SyntheticEvent
   , onExit                  :: SyntheticEventHandler SyntheticEvent
   , onExited                :: SyntheticEventHandler SyntheticEvent
   , onExiting               :: SyntheticEventHandler SyntheticEvent
@@ -69,7 +66,7 @@ type DialogPropsO transitionProps paperProps =
   , "TransitionComponent"   :: ReactClass transitionProps -- ^ Default: `Fade`
   , transitionDuration      :: Timeout
   , "TransitionProps"       :: transitionProps
-  )
+  | r)
 
 
 type DialogClasses =
@@ -95,10 +92,8 @@ createClasses :: forall classes
 createClasses = unsafeCoerce
 
 
--- FIXME inherit from Modal
 
-
-dialog :: forall o transitionProps paperProps
-         . SubRow o (DialogPropsO transitionProps paperProps)
+dialog :: forall o transitionProps paperProps backdropProps
+         . SubRow o (DialogPropsO transitionProps paperProps + ModalPropsO backdropProps)
         => DialogProps o -> Array ReactElement -> ReactElement
 dialog = unsafeCreateElement dialogImpl

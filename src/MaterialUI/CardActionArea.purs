@@ -8,8 +8,7 @@ import MaterialUI.Types (Styles, Classes)
 
 import React (ReactClass, unsafeCreateElement, ReactElement)
 import Row.Class (class SubRow)
-import Prim.Row (class Union)
-import Type.Row (class RowToList, class ListToRow, class RowListRemove)
+import Type.Row (class RowToList, class ListToRow, class RowListRemove, type (+))
 import Unsafe.Coerce (unsafeCoerce)
 
 
@@ -21,9 +20,9 @@ type CardActionAreaProps o =
   | o }
 
 
-type CardActionAreaPropsO =
+type CardActionAreaPropsO r =
   ( classes :: Classes
-  )
+  | r)
 
 type CardActionAreaClasses =
   ( root :: Styles
@@ -37,12 +36,11 @@ createClasses :: forall classes
 createClasses = unsafeCoerce
 
 
-cardActionArea :: forall o both componentProps touchRippleProps buttonBaseList buttonBaseList'
+cardActionArea :: forall o componentProps touchRippleProps buttonBaseList buttonBaseList'
                   buttonBaseProps
-                . SubRow o both
-               => RowToList (ButtonBasePropsO componentProps touchRippleProps) buttonBaseList
+                . SubRow o (CardActionAreaPropsO + buttonBaseProps)
+               => RowToList (ButtonBasePropsO componentProps touchRippleProps ()) buttonBaseList
                => RowListRemove "classes" buttonBaseList buttonBaseList'
                => ListToRow buttonBaseList' buttonBaseProps
-               => Union CardActionAreaPropsO buttonBaseProps both
                => CardActionAreaProps o -> Array ReactElement -> ReactElement
 cardActionArea = unsafeCreateElement cardActionAreaImpl

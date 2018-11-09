@@ -9,8 +9,7 @@ import MaterialUI.Types (Styles, Classes)
 import Foreign (Foreign)
 import React (ReactClass, unsafeCreateElement, ReactElement)
 import Row.Class (class SubRow)
-import Type.Row (class RowToList, class RowListRemove, class ListToRow)
-import Prim.Row (class Union)
+import Type.Row (class RowToList, class RowListRemove, class ListToRow, type (+))
 import Unsafe.Coerce (unsafeCoerce)
 
 
@@ -22,13 +21,13 @@ type BottomNavigationActionProps o =
   | o }
 
 
-type BottomNavigationActionPropsO =
+type BottomNavigationActionPropsO r =
   ( icon :: ReactElement
   , label :: ReactElement
   , showLabel :: Boolean
   , classes :: Classes
   , value :: Foreign
-  )
+  | r)
 
 
 type BottomNavigationActionClasses =
@@ -47,12 +46,11 @@ createClasses :: forall classes
 createClasses = unsafeCoerce
 
 
-bottomNavigationAction :: forall o both buttonBaseList buttonBaseList' buttonBaseProps
+bottomNavigationAction :: forall o buttonBaseList buttonBaseList' buttonBaseProps
                           componentProps touchRippleProps
-                        . SubRow o both
-                       => RowToList (ButtonBasePropsO componentProps touchRippleProps) buttonBaseList
+                        . SubRow o (BottomNavigationActionPropsO + buttonBaseProps)
+                       => RowToList (ButtonBasePropsO componentProps touchRippleProps ()) buttonBaseList
                        => RowListRemove "classes" buttonBaseList buttonBaseList'
                        => ListToRow buttonBaseList' buttonBaseProps
-                       => Union BottomNavigationActionPropsO buttonBaseProps both
                        => BottomNavigationActionProps o -> Array ReactElement -> ReactElement
 bottomNavigationAction = unsafeCreateElement bottomNavigationActionImpl

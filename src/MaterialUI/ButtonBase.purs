@@ -11,7 +11,7 @@ import Data.Nullable (Nullable)
 import React (ReactClass, unsafeCreateElement, ReactElement, ReactRef, SyntheticEventHandler)
 import React.SyntheticEvent (SyntheticEvent)
 import Row.Class (class SubRow)
-import Prim.Row (class Union)
+import Type.Row (type (+))
 import Unsafe.Coerce (unsafeCoerce)
 
 
@@ -23,7 +23,7 @@ type ButtonBaseProps o =
   | o }
 
 
-type ButtonBasePropsO componentProps touchRippleProps =
+type ButtonBasePropsO componentProps touchRippleProps r =
   -- ( action :: ?
   ( classes :: Classes
   , buttonRef :: SyntheticEventHandler (Nullable ReactRef)
@@ -37,7 +37,7 @@ type ButtonBasePropsO componentProps touchRippleProps =
   , onFocusVisible :: SyntheticEventHandler SyntheticEvent
   , "TouchRippleProps" :: touchRippleProps
   , "type" :: ButtonType -- ^ Default: 'buttonType'
-  )
+  | r)
 
 
 newtype ButtonType = ButtonType String
@@ -65,8 +65,7 @@ createClasses :: forall classes
 createClasses = unsafeCoerce
 
 
-buttonBase :: forall o both componentProps touchRippleProps
-         . SubRow o both
-        => Union (ButtonBasePropsO componentProps touchRippleProps) ClickableComponent both
+buttonBase :: forall o componentProps touchRippleProps
+         . SubRow o (ButtonBasePropsO componentProps touchRippleProps + ClickableComponent)
         => ButtonBaseProps o -> Array ReactElement -> ReactElement
 buttonBase = unsafeCreateElement buttonBaseImpl

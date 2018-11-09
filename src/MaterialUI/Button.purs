@@ -13,8 +13,7 @@ import React (ReactClass, unsafeCreateElement, ReactElement, statelessComponent)
 import Row.Class (class SubRow)
 import Data.Function.Uncurried (Fn2, runFn2)
 import Unsafe.Coerce (unsafeCoerce)
-import Type.Row (class RowToList, class ListToRow, class RowListRemove)
-import Prim.Row (class Union)
+import Type.Row (class RowToList, class ListToRow, class RowListRemove, type (+))
 
 
 foreign import buttonImpl :: forall props. ReactClass props
@@ -25,7 +24,7 @@ type ButtonProps o =
   | o }
 
 
-type ButtonPropsO =
+type ButtonPropsO r =
   ( classes :: Classes
   , color :: Color
   , disabled :: Boolean
@@ -36,7 +35,7 @@ type ButtonPropsO =
   , mini :: Boolean
   , size :: Size
   , variant :: Variant
-  )
+  | r)
 
 newtype Color = Color String
 
@@ -153,13 +152,12 @@ createClasses :: forall classes
 createClasses = unsafeCoerce
 
 
-button :: forall o both componentProps touchRippleProps buttonBaseList
+button :: forall o componentProps touchRippleProps buttonBaseList
            buttonBaseList' buttonBaseProps
-         . SubRow o both
-        => RowToList (ButtonBasePropsO componentProps touchRippleProps) buttonBaseList
+         . SubRow o (ButtonPropsO + buttonBaseProps)
+        => RowToList (ButtonBasePropsO componentProps touchRippleProps ()) buttonBaseList
         => RowListRemove "classes" buttonBaseList buttonBaseList'
         => ListToRow buttonBaseList' buttonBaseProps
-        => Union ButtonPropsO buttonBaseProps both
         => ButtonProps o -> Array ReactElement -> ReactElement
 button = unsafeCreateElement buttonImpl
 

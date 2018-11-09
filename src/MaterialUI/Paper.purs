@@ -20,39 +20,39 @@ type PaperProps o =
 
 type PaperPropsO componentProps =
   ( classes :: Classes
-  , elevation :: Int
-  , square :: Boolean
-  , style :: Styles
+  , component :: ReactClass componentProps -- ^ Default: `React.DOM.div'`
+  , elevation :: Int -- ^ Default: `2`
+  , square :: Boolean -- ^ Default: `false`
   )
 
 type PaperClasses =
   ( root :: Styles
   , rounded :: Styles
-  , shadow0 :: Styles
-  , shadow1 :: Styles
-  , shadow2 :: Styles
-  , shadow3 :: Styles
-  , shadow4 :: Styles
-  , shadow5 :: Styles
-  , shadow6 :: Styles
-  , shadow7 :: Styles
-  , shadow8 :: Styles
-  , shadow9 :: Styles
-  , shadow10 :: Styles
-  , shadow11 :: Styles
-  , shadow12 :: Styles
-  , shadow13 :: Styles
-  , shadow14 :: Styles
-  , shadow15 :: Styles
-  , shadow16 :: Styles
-  , shadow17 :: Styles
-  , shadow18 :: Styles
-  , shadow19 :: Styles
-  , shadow20 :: Styles
-  , shadow21 :: Styles
-  , shadow22 :: Styles
-  , shadow23 :: Styles
-  , shadow24 :: Styles
+  , elevation0 :: Styles
+  , elevation1 :: Styles
+  , elevation2 :: Styles
+  , elevation3 :: Styles
+  , elevation4 :: Styles
+  , elevation5 :: Styles
+  , elevation6 :: Styles
+  , elevation7 :: Styles
+  , elevation8 :: Styles
+  , elevation9 :: Styles
+  , elevation10 :: Styles
+  , elevation11 :: Styles
+  , elevation12 :: Styles
+  , elevation13 :: Styles
+  , elevation14 :: Styles
+  , elevation15 :: Styles
+  , elevation16 :: Styles
+  , elevation17 :: Styles
+  , elevation18 :: Styles
+  , elevation19 :: Styles
+  , elevation20 :: Styles
+  , elevation21 :: Styles
+  , elevation22 :: Styles
+  , elevation23 :: Styles
+  , elevation24 :: Styles
   )
 
 createClasses :: forall classes

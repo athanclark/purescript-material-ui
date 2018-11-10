@@ -5,7 +5,7 @@ import Type.Row (kind RowList, Nil, Cons, class RowToList, class RowListRemove, 
 
 
 
-class RemoveSymbol (symbol :: Symbol) (a :: # Type) (b :: # Type)
+class RemoveSymbol (symbol :: Symbol) (a :: # Type) (b :: # Type) | symbol a -> b
 instance removeClasses :: (RowToList a a', RowListRemove sym a' a'', ListToRow a'' a''') => RemoveSymbol sym a a'''
 
 

@@ -1,16 +1,16 @@
 module MaterialUI.IconButton
   ( iconButton, IconButtonProps, IconButtonPropsO, IconButtonClasses
-  , Color, inherit, primary, accent, default, contrast
+  , Color, inherit, primary, secondary, default
   , createClasses
   ) where
 
-import MaterialUI.Types (Styles, Classes)
+import MaterialUI.Types (Styles, Classes, class RemoveSymbol)
+import MaterialUI.ButtonBase (ButtonBasePropsO)
 
-import Prelude
+import Prelude ((<<<))
 import React (ReactClass, unsafeCreateElement, ReactElement)
-import React.SyntheticEvent (SyntheticEvent)
 import Row.Class (class SubRow)
-import Effect.Uncurried (EffectFn1)
+import Type.Row (type (+))
 import Unsafe.Coerce (unsafeCoerce)
 
 
@@ -22,15 +22,13 @@ type IconButtonProps o =
   | o }
 
 
-type IconButtonPropsO eff =
+type IconButtonPropsO r =
   ( classes :: Classes
   , style :: Styles
   , color :: Color
-  , disableRipple :: Boolean
   , disabled :: Boolean
-  -- , rootRef FIXME
-  , onTouchTap :: EffectFn1 SyntheticEvent Unit
-  )
+  , disableRipple :: Boolean
+  | r)
 
 newtype Color = Color String
 
@@ -43,23 +41,17 @@ inherit = Color "inherit"
 primary :: Color
 primary = Color "primary"
 
-accent :: Color
-accent = Color "accent"
-
-contrast :: Color
-contrast = Color "contrast"
+secondary :: Color
+secondary = Color "secondary"
 
 
 type IconButtonClasses =
   ( root :: Styles
-  , disabled :: Styles
-  , colorAccent :: Styles
-  , colorContrast :: Styles
-  , colorPrimary :: Styles
   , colorInherit :: Styles
+  , colorPrimary :: Styles
+  , colorSecondary :: Styles
+  , disabled :: Styles
   , label :: Styles
-  , icon :: Styles
-  , keyboardFocused :: Styles
   )
 
 createClasses :: forall classes
@@ -68,7 +60,8 @@ createClasses :: forall classes
 createClasses = unsafeCoerce
 
 
-iconButton :: forall o eff
-         . SubRow o (IconButtonPropsO eff)
+iconButton :: forall o componentProps touchRippleProps buttonBaseProps
+         . SubRow o (IconButtonPropsO + buttonBaseProps)
+        => RemoveSymbol "classes" (ButtonBasePropsO componentProps touchRippleProps) buttonBaseProps
         => IconButtonProps o -> ReactElement -> ReactElement
 iconButton p = unsafeCreateElement iconButtonImpl p <<< unsafeCoerce

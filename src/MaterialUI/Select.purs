@@ -4,7 +4,7 @@ module MaterialUI.Select
   , withStyles
   ) where
 
-import MaterialUI.Types (Styles, Classes, class CompileStyles, Theme)
+import MaterialUI.Types (Styles, Classes, class CompileStyles, Theme, class RemoveSymbol)
 import MaterialUI.Input (InputPropsO)
 import MaterialUI.InputBase (Value, InputBasePropsO)
 
@@ -16,8 +16,7 @@ import Data.Function.Uncurried (Fn2, runFn2)
 import Data.Nullable (Nullable)
 import Effect.Uncurried (EffectFn2)
 import Unsafe.Coerce (unsafeCoerce)
-import Type.Row (class RowToList, class ListToRow, class RowListRemove, type (+))
-import Prim.Row (class Union)
+import Type.Row (class RowToList, class ListToRow, type (+))
 
 
 foreign import selectImpl :: forall props. ReactClass props
@@ -72,16 +71,11 @@ createClasses = unsafeCoerce
 
 
 select :: forall o menuProps iconComponentProps selectDisplayProps inputProps inputProps'
-          inputBasePropsList inputBasePropsList' inputBasePropsList'' inputBaseProps
-          inputPropsList inputPropsList'
+          inputBaseProps inputBaseProps'
         . SubRow o (SelectPropsO iconComponentProps menuProps selectDisplayProps + inputProps')
-       => RowToList (InputBasePropsO inputProps) inputBasePropsList
-       => RowListRemove "classes" inputBasePropsList inputBasePropsList'
-       => RowListRemove "onChange" inputBasePropsList' inputBasePropsList''
-       => ListToRow inputBasePropsList'' inputBaseProps
-       => RowToList (InputPropsO + inputBaseProps) inputPropsList
-       => RowListRemove "classes" inputPropsList inputPropsList'
-       => ListToRow inputPropsList' inputProps'
+       => RemoveSymbol "classes" (InputBasePropsO inputProps) inputBaseProps'
+       => RemoveSymbol "onChange" inputBaseProps' inputBaseProps
+       => RemoveSymbol "classes" (InputPropsO + inputBaseProps) inputProps'
        => SelectProps o -> Array ReactElement -> ReactElement
 select = unsafeCreateElement selectImpl
 

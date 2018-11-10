@@ -8,7 +8,7 @@ import MaterialUI.ButtonBase (ButtonBasePropsO)
 
 import React (ReactClass, unsafeCreateElement, ReactElement)
 import Row.Class (class SubRow)
-import Type.Row (class RowToList, class RowListRemove, class ListToRow, type (+))
+import Type.Row (type (+))
 import Unsafe.Coerce (unsafeCoerce)
 
 
@@ -41,8 +41,8 @@ createClasses :: forall classes
 createClasses = unsafeCoerce
 
 
-expansionPanelSummary :: forall o componentProps touchRippleProps buttonBaseList
-                         buttonBaseList' buttonBaseProps iconButtonProps
+expansionPanelSummary :: forall o componentProps touchRippleProps
+                         buttonBaseProps iconButtonProps
                        . SubRow o (ExpansionPanelSummaryPropsO iconButtonProps + buttonBaseProps)
                       => RemoveSymbol "classes" (ButtonBasePropsO componentProps touchRippleProps) buttonBaseProps
                       => ExpansionPanelSummaryProps o -> Array ReactElement -> ReactElement

@@ -4,13 +4,13 @@ module MaterialUI.ExpansionPanel
   ) where
 
 import MaterialUI.Paper (PaperPropsO)
-import MaterialUI.Types (Styles, Classes)
+import MaterialUI.Types (Styles, Classes, class RemoveSymbol)
 
 import Prelude (Unit)
 import React (ReactClass, unsafeCreateElement, ReactElement)
 import React.SyntheticEvent (SyntheticEvent)
 import Row.Class (class SubRow)
-import Type.Row (class RowToList, class RowListRemove, class ListToRow, type (+))
+import Type.Row (type (+))
 import Unsafe.Coerce (unsafeCoerce)
 import Effect.Uncurried (EffectFn2)
 
@@ -44,10 +44,8 @@ createClasses :: forall classes
 createClasses = unsafeCoerce
 
 
-expansionPanel :: forall o collapseProps componentProps paperPropsList paperPropsList' paperProps
+expansionPanel :: forall o collapseProps componentProps paperProps
                 . SubRow o (ExpansionPanelPropsO collapseProps + paperProps)
-               => RowToList (PaperPropsO componentProps) paperPropsList
-               => RowListRemove "classes" paperPropsList paperPropsList'
-               => ListToRow paperPropsList' paperProps
+               => RemoveSymbol "classes" (PaperPropsO componentProps) paperProps
                => ExpansionPanelProps o -> Array ReactElement -> ReactElement
 expansionPanel = unsafeCreateElement expansionPanelImpl

@@ -6,15 +6,9 @@ module MaterialUI.Menu
 import MaterialUI.Types (Styles, Classes, class RemoveSymbol)
 import MaterialUI.Modal (ModalPropsO)
 import MaterialUI.Popover (PopoverPropsO)
-import MaterialUI.ListItem (ListItemPropsO)
-import MaterialUI.InputBase (Value)
 
-import Prelude
 import React (ReactClass, unsafeCreateElement, ReactElement)
-import React.SyntheticEvent (SyntheticEvent)
 import Row.Class (class SubRow)
-import Effect.Uncurried (EffectFn1)
-import Web.DOM.Internal.Types (Element)
 import Unsafe.Coerce (unsafeCoerce)
 import Type.Row (type (+))
 

@@ -12,7 +12,6 @@ import React.SyntheticEvent (SyntheticEvent, SyntheticMouseEvent, SyntheticTouch
 import Foreign (Foreign)
 import Foreign.Object (Object)
 import Row.Class (class SubRow)
-import Type.Row (type (+))
 import Unsafe.Coerce (unsafeCoerce)
 
 

@@ -6,19 +6,9 @@ module MaterialUI.Input
 import MaterialUI.Types (Styles, Classes, class RemoveSymbol)
 import MaterialUI.InputBase (InputBasePropsO)
 
-import Prelude
 import React (ReactClass, unsafeCreateElement, ReactElement)
-import React.SyntheticEvent (SyntheticEvent)
 import Row.Class (class SubRow)
-import Data.Either (Either)
-import Data.Maybe (Maybe (Nothing))
-import Foreign (readNumber, readString, readInt, readNull, unsafeToForeign, MultipleErrors)
-import Data.Nullable (toNullable)
-import Control.Alternative ((<|>))
-import Control.Monad.Except (runExcept)
-import Effect.Uncurried (EffectFn1)
 import Unsafe.Coerce (unsafeCoerce)
-import Web.DOM.Internal.Types (Node)
 import Type.Row (type (+))
 
 

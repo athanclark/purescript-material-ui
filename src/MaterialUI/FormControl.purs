@@ -6,13 +6,8 @@ module MaterialUI.FormControl
 
 import MaterialUI.Types (Styles, Classes, class CompileStyles, Theme)
 
-import Prelude
-import React (ReactClass, unsafeCreateElement, ReactElement, statelessComponent)
-import React.SyntheticEvent (SyntheticEvent)
+import React (ReactClass, unsafeCreateElement, ReactElement)
 import Row.Class (class SubRow)
-import Data.Function.Uncurried (Fn2, runFn2)
-import Effect.Uncurried (EffectFn2)
-import Type.Row (class RowToList, class ListToRow)
 
 
 foreign import formControlImpl :: forall props. ReactClass props

@@ -5,16 +5,18 @@ module MaterialUI.Select
   ) where
 
 import MaterialUI.Types (Styles, Classes, class CompileStyles, Theme)
-import MaterialUI.Input (InputPropsO, Value)
+import MaterialUI.Input (InputPropsO)
+import MaterialUI.InputBase (Value, InputBasePropsO)
 
 import Prelude
-import React (ReactClass, unsafeCreateElement, ReactElement, statelessComponent)
+import React (ReactClass, unsafeCreateElement, ReactElement, statelessComponent, SyntheticEventHandler)
 import React.SyntheticEvent (SyntheticEvent)
 import Row.Class (class SubRow)
 import Data.Function.Uncurried (Fn2, runFn2)
-import Effect.Uncurried (EffectFn1)
+import Data.Nullable (Nullable)
+import Effect.Uncurried (EffectFn2)
 import Unsafe.Coerce (unsafeCoerce)
-import Type.Row (class RowToList, class ListToRow)
+import Type.Row (class RowToList, class ListToRow, class RowListRemove, type (+))
 import Prim.Row (class Union)
 
 
@@ -26,28 +28,28 @@ type SelectProps o =
   | o }
 
 
-type SelectPropsO eff menuProps iconComponentProps selectDisplayProps =
-  ( autoWidth :: Boolean
-  -- , classes :: Classes
-  , displayEmpty :: Boolean
-  , "IconComponent" :: ReactClass iconComponentProps
-  , input :: ReactElement
-  -- , inputProps :: inputProps
+type SelectPropsO iconComponentProps menuProps selectDisplayProps r =
+  ( autoWidth :: Boolean -- ^ Default: `false`
+  , classes :: Classes
+  , displayEmpty :: Boolean -- ^ Default: `false`
+  , "IconComponent" :: ReactClass iconComponentProps -- ^ Default: `ArrowDropDownIcon`
+  , input :: ReactElement -- ^ Default: `Input`
   , "MenuProps" :: menuProps
-  , multiple :: Boolean
-  , native :: Boolean
-  -- , onChange :: EffectFn2 SyntheticEvent (Nullable ReactElement) Unit
-  , onClose :: EffectFn1 SyntheticEvent Unit
-  , onOpen :: EffectFn1 SyntheticEvent Unit
+  , multiple :: Boolean -- ^ Default: `false`
+  , native :: Boolean -- ^ Default: `false`
+  , onChange :: EffectFn2 SyntheticEvent (Nullable ReactElement) Unit
+  , onClose :: SyntheticEventHandler SyntheticEvent
+  , onOpen :: SyntheticEventHandler SyntheticEvent
   , open :: Boolean
   , renderValue :: Value -> ReactElement
   , "SelectDisplayProps" :: selectDisplayProps
-  -- , value :: Value
-  )
+  | r)
 
 type SelectClasses =
   ( root :: Styles
   , select :: Styles
+  , filled :: Styles
+  , outlined :: Styles
   , selectMenu :: Styles
   , disabled :: Styles
   , icon :: Styles
@@ -56,6 +58,8 @@ type SelectClasses =
 type SelectClassesCompiled =
   ( root :: String
   , select :: String
+  , filled :: String
+  , outlined :: String
   , selectMenu :: String
   , disabled :: String
   , icon :: String
@@ -67,10 +71,18 @@ createClasses :: forall classes
 createClasses = unsafeCoerce
 
 
-select :: forall o menuProps iconComponentProps selectDisplayProps eff inputProps inputProps' inputComponentProps both
-         . Union (SelectPropsO eff menuProps iconComponentProps selectDisplayProps) (InputPropsO eff inputComponentProps inputProps inputProps') both
-        => SubRow o both
-        => SelectProps o -> Array ReactElement -> ReactElement
+select :: forall o menuProps iconComponentProps selectDisplayProps inputProps inputProps'
+          inputBasePropsList inputBasePropsList' inputBasePropsList'' inputBaseProps
+          inputPropsList inputPropsList'
+        . SubRow o (SelectPropsO iconComponentProps menuProps selectDisplayProps + inputProps')
+       => RowToList (InputBasePropsO inputProps) inputBasePropsList
+       => RowListRemove "classes" inputBasePropsList inputBasePropsList'
+       => RowListRemove "onChange" inputBasePropsList' inputBasePropsList''
+       => ListToRow inputBasePropsList'' inputBaseProps
+       => RowToList (InputPropsO + inputBaseProps) inputPropsList
+       => RowListRemove "classes" inputPropsList inputPropsList'
+       => ListToRow inputPropsList' inputProps'
+       => SelectProps o -> Array ReactElement -> ReactElement
 select = unsafeCreateElement selectImpl
 
 

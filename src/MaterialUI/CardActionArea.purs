@@ -4,11 +4,11 @@ module MaterialUI.CardActionArea
   ) where
 
 import MaterialUI.ButtonBase (ButtonBasePropsO)
-import MaterialUI.Types (Styles, Classes)
+import MaterialUI.Types (Styles, Classes, class RemoveSymbol)
 
 import React (ReactClass, unsafeCreateElement, ReactElement)
 import Row.Class (class SubRow)
-import Type.Row (class RowToList, class ListToRow, class RowListRemove, type (+))
+import Type.Row (type (+))
 import Unsafe.Coerce (unsafeCoerce)
 
 
@@ -36,11 +36,9 @@ createClasses :: forall classes
 createClasses = unsafeCoerce
 
 
-cardActionArea :: forall o componentProps touchRippleProps buttonBaseList buttonBaseList'
+cardActionArea :: forall o componentProps touchRippleProps
                   buttonBaseProps
                 . SubRow o (CardActionAreaPropsO + buttonBaseProps)
-               => RowToList (ButtonBasePropsO componentProps touchRippleProps ()) buttonBaseList
-               => RowListRemove "classes" buttonBaseList buttonBaseList'
-               => ListToRow buttonBaseList' buttonBaseProps
+               => RemoveSymbol "classes" (ButtonBasePropsO componentProps touchRippleProps) buttonBaseProps
                => CardActionAreaProps o -> Array ReactElement -> ReactElement
 cardActionArea = unsafeCreateElement cardActionAreaImpl

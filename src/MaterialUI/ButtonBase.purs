@@ -4,12 +4,13 @@ module MaterialUI.ButtonBase
   , createClasses
   ) where
 
-import MaterialUI.EventHandlers (ClickableComponent)
 import MaterialUI.Types (Styles, Classes)
 
 import Data.Nullable (Nullable)
 import React (ReactClass, unsafeCreateElement, ReactElement, ReactRef, SyntheticEventHandler)
-import React.SyntheticEvent (SyntheticEvent)
+import React.SyntheticEvent (SyntheticEvent, SyntheticMouseEvent, SyntheticTouchEvent)
+import Foreign (Foreign)
+import Foreign.Object (Object)
 import Row.Class (class SubRow)
 import Type.Row (type (+))
 import Unsafe.Coerce (unsafeCoerce)
@@ -23,9 +24,9 @@ type ButtonBaseProps o =
   | o }
 
 
-type ButtonBasePropsO componentProps touchRippleProps r =
-  -- ( action :: ?
-  ( classes :: Classes
+type ButtonBasePropsO componentProps touchRippleProps =
+  ( action :: SyntheticEventHandler (Object Foreign)
+  , classes :: Classes
   , buttonRef :: SyntheticEventHandler (Nullable ReactRef)
   , centerRipple :: Boolean -- ^ Default: `false`
   , component :: ReactClass componentProps -- ^ Default: 'React.DOM.button'
@@ -37,7 +38,9 @@ type ButtonBasePropsO componentProps touchRippleProps r =
   , onFocusVisible :: SyntheticEventHandler SyntheticEvent
   , "TouchRippleProps" :: touchRippleProps
   , "type" :: ButtonType -- ^ Default: 'buttonType'
-  | r)
+  , onClick :: SyntheticEventHandler SyntheticMouseEvent
+  , onTouchTap :: SyntheticEventHandler SyntheticTouchEvent
+  )
 
 
 newtype ButtonType = ButtonType String
@@ -66,6 +69,6 @@ createClasses = unsafeCoerce
 
 
 buttonBase :: forall o componentProps touchRippleProps
-         . SubRow o (ButtonBasePropsO componentProps touchRippleProps + ClickableComponent)
+         . SubRow o (ButtonBasePropsO componentProps touchRippleProps)
         => ButtonBaseProps o -> Array ReactElement -> ReactElement
 buttonBase = unsafeCreateElement buttonBaseImpl

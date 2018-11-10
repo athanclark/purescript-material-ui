@@ -3,7 +3,7 @@ module MaterialUI.ExpansionPanelSummary
   , createClasses
   ) where
 
-import MaterialUI.Types (Styles, Classes)
+import MaterialUI.Types (Styles, Classes, class RemoveSymbol)
 import MaterialUI.ButtonBase (ButtonBasePropsO)
 
 import React (ReactClass, unsafeCreateElement, ReactElement)
@@ -44,8 +44,6 @@ createClasses = unsafeCoerce
 expansionPanelSummary :: forall o componentProps touchRippleProps buttonBaseList
                          buttonBaseList' buttonBaseProps iconButtonProps
                        . SubRow o (ExpansionPanelSummaryPropsO iconButtonProps + buttonBaseProps)
-                      => RowToList (ButtonBasePropsO componentProps touchRippleProps ()) buttonBaseList
-                      => RowListRemove "classes" buttonBaseList buttonBaseList'
-                      => ListToRow buttonBaseList' buttonBaseProps
+                      => RemoveSymbol "classes" (ButtonBasePropsO componentProps touchRippleProps) buttonBaseProps
                       => ExpansionPanelSummaryProps o -> Array ReactElement -> ReactElement
 expansionPanelSummary = unsafeCreateElement expansionPanelSummaryImpl

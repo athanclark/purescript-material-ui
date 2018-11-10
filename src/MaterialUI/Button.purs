@@ -7,13 +7,13 @@ module MaterialUI.Button
   ) where
 
 import MaterialUI.ButtonBase (ButtonBasePropsO)
-import MaterialUI.Types (Styles, Classes, class CompileStyles, Theme)
+import MaterialUI.Types (Styles, Classes, class CompileStyles, Theme, class RemoveSymbol)
 
 import React (ReactClass, unsafeCreateElement, ReactElement, statelessComponent)
 import Row.Class (class SubRow)
 import Data.Function.Uncurried (Fn2, runFn2)
 import Unsafe.Coerce (unsafeCoerce)
-import Type.Row (class RowToList, class ListToRow, class RowListRemove, type (+))
+import Type.Row (class ListToRow, class RowToList, type (+))
 
 
 foreign import buttonImpl :: forall props. ReactClass props
@@ -152,12 +152,9 @@ createClasses :: forall classes
 createClasses = unsafeCoerce
 
 
-button :: forall o componentProps touchRippleProps buttonBaseList
-           buttonBaseList' buttonBaseProps
+button :: forall o componentProps touchRippleProps buttonBaseProps
          . SubRow o (ButtonPropsO + buttonBaseProps)
-        => RowToList (ButtonBasePropsO componentProps touchRippleProps ()) buttonBaseList
-        => RowListRemove "classes" buttonBaseList buttonBaseList'
-        => ListToRow buttonBaseList' buttonBaseProps
+        => RemoveSymbol "classes" (ButtonBasePropsO componentProps touchRippleProps) buttonBaseProps
         => ButtonProps o -> Array ReactElement -> ReactElement
 button = unsafeCreateElement buttonImpl
 

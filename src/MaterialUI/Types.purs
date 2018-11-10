@@ -1,8 +1,12 @@
 module MaterialUI.Types where
 
 import Unsafe.Coerce (unsafeCoerce)
-import Type.Row (kind RowList, Nil, Cons)
+import Type.Row (kind RowList, Nil, Cons, class RowToList, class RowListRemove, class ListToRow)
 
+
+
+class RemoveSymbol (symbol :: Symbol) (a :: # Type) (b :: # Type)
+instance removeClasses :: (RowToList a a', RowListRemove sym a' a'', ListToRow a'' a''') => RemoveSymbol sym a a'''
 
 
 -- | Represents an untyped JSS object - unsafeCoerce it to your liking.

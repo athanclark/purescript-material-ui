@@ -2,14 +2,14 @@ module MaterialUI.TextField
   ( textField, TextFieldProps, TextFieldPropsO
   ) where
 
-import MaterialUI.Input (InputPropsO)
+import MaterialUI.FormControl (FormControlPropsO)
+import MaterialUI.InputBase (InputType, Value)
 
-import Prelude
-import React (ReactClass, unsafeCreateElement, ReactElement, SyntheticEventHandler)
+import React (ReactClass, unsafeCreateElement, ReactElement, SyntheticEventHandler, ReactRef)
 import React.SyntheticEvent (SyntheticEvent)
+import Data.Nullable (Nullable)
 import Row.Class (class SubRow)
-import Effect.Uncurried (EffectFn1)
-import Prim.Row (class Union)
+import Type.Row (type (+))
 
 
 foreign import textFieldImpl :: forall props. ReactClass props
@@ -21,29 +21,34 @@ type TextFieldProps o =
 
 
 
-
-type TextFieldPropsO formHelperTextProps inputLabelProps selectProps =
-  ( "FormHelperTextProps" :: formHelperTextProps
-  , "InputClassName" :: String
-  , "InputLabelProps" :: inputLabelProps
-  , "SelectProps" :: selectProps
+type TextFieldPropsO formHelperTextProps inputLabelProps inputProps selectProps r =
+  ( autoComplete :: String
+  , autoFocus :: Boolean
+  , defaultValue :: Value
+  , "FormHelperTextProps" :: formHelperTextProps
   , helperText :: ReactElement
-  , helperTextClassName :: String
-  , inputClassName :: String
-  -- , inputRef FIXME
+  , id :: String
+  , "InputLabelProps" :: inputLabelProps
+  , "InputProps" :: inputProps
+  , inputProps :: inputProps
+  , inputRef :: SyntheticEventHandler (Nullable ReactRef)
   , label :: ReactElement
-  , labelClassName :: String
-  , required :: Boolean
+  , multiline :: Boolean
+  , name :: String
+  , onChange :: SyntheticEventHandler SyntheticEvent
+  , placeholder :: String
+  , rows :: Int
+  , rowsMax :: Int
   , select :: Boolean
-  -- rootRef FIXME
-  , onClick :: SyntheticEventHandler SyntheticEvent
-  )
+  , "SelectProps" :: selectProps
+  , "type" :: InputType
+  , value :: Value
+  | r)
 
 
-textField :: forall o eff both inputProps inputProps' inputComponentProps inputLabelProps
-             formHelperTextProps selectProps
-           . SubRow o both
-          => Union (TextFieldPropsO formHelperTextProps inputLabelProps selectProps)
-                   (InputPropsO eff inputComponentProps inputProps inputProps') both
+textField :: forall o inputProps inputLabelProps
+             formHelperTextProps selectProps componentProps
+           . SubRow o (TextFieldPropsO formHelperTextProps inputLabelProps inputProps selectProps
+                       + FormControlPropsO componentProps)
           => TextFieldProps o -> Array ReactElement -> ReactElement
 textField p = unsafeCreateElement textFieldImpl p

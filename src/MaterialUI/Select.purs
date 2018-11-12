@@ -1,6 +1,5 @@
 module MaterialUI.Select
   ( select, SelectProps, SelectPropsO, SelectClasses
-  , createClasses
   , withStyles
   ) where
 
@@ -53,21 +52,6 @@ type SelectClasses =
   , disabled :: Styles
   , icon :: Styles
   )
-
-type SelectClassesCompiled =
-  ( root :: String
-  , select :: String
-  , filled :: String
-  , outlined :: String
-  , selectMenu :: String
-  , disabled :: String
-  , icon :: String
-  )
-
-createClasses :: forall classes
-               . SubRow classes SelectClassesCompiled
-              => { | classes } -> Classes
-createClasses = unsafeCoerce
 
 
 select :: forall o menuProps iconComponentProps selectDisplayProps inputProps inputProps'

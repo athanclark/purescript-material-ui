@@ -20,11 +20,42 @@ createStyles = unsafeCoerce
 foreign import data Classes :: Type
 
 
-class CompileStyles (styles :: RowList) (compiledStyles :: RowList) | styles -> compiledStyles
+createClasses :: forall styles compiled
+               . CompileStyles styles compiled
+              => { | compiled } -> Classes
+createClasses = unsafeCoerce
 
-instance compileStylesNil :: CompileStyles Nil Nil
 
-instance compileStylesCons :: CompileStyles xs cs => CompileStyles (Cons k t xs) (Cons k String cs)
+-- | Means that the component should expect compiled, but rendered could
+--   expect either? createClasses should be closed, too...?
+foreign import withStylesImpl :: forall styles compiled props
+                               . Theme
+                              -> { | styles }
+                              -> ReactClass {classes :: { | compiled } | props}
+                              -> ReactClass {classes :: Classes | props}
+
+withStyles :: forall styles classes compiled props
+            . SubRow styles classes
+           => CompileStyles classes compiled
+           => Proxy classes
+           -> (Theme -> { | styles })
+           -> ReactClass { classes :: { | compiled } | props }
+           -> ReactClass { classes :: Classes | props }
+withStyles stylesF createElem =
+  unsafeCreateElement (withStylesImpl stylesF (statelessComponent createElem)) {} []
+
+
+class MapStylesToString (styles :: RowList) (compiled :: RowList) | styles -> compiled
+instance mapStylesToStringNil :: MapStylesToString Nil Nil
+instance mapStylesToStringCons :: MapStylesToString xs cs
+                               => MapStylesToString (Cons k Styles xs) (Cons k String cs)
+
+-- | Maps `Styles` to `String`s
+class CompileStyles (styles :: # Type) (compiled :: # Type) | styles -> compiled
+instance compileStylesCons :: ( RowToList styles stylesList
+                              , MapStylesToString stylesList stylesList'
+                              , ListToRow stylesList' compiled
+                              ) => CompileStyles styles compiled
 
 
 type ColorScale =

@@ -1,12 +1,12 @@
 module MaterialUI.Table
-  ( table, TableProps, TablePropsO, TableClasses, createClasses
-  , tableBody, TableBodyProps, TableBodyPropsO, TableBodyClasses, createClassesBody
-  , tableCell, TableCellProps, TableCellPropsO, TableCellClasses, createClassesCell, withStylesCell
-  , tableHead, TableHeadProps, TableHeadPropsO, TableHeadClasses, createClassesHead
-  , tableRow, TableRowProps, TableRowPropsO, TableRowClasses, createClassesRow
-  , tableFooter, TableFooterProps, TableFooterPropsO, TableFooterClasses, createClassesFooter
-  , tablePagination, TablePaginationProps, TablePaginationPropsO, TablePaginationClasses, createClassesPagination
-  , tableSortLabel, TableSortLabelProps, TableSortLabelPropsO, TableSortLabelClasses, createClassesSortLabel
+  ( table, TableProps, TablePropsO, TableClasses
+  , tableBody, TableBodyProps, TableBodyPropsO, TableBodyClasses
+  , tableCell, TableCellProps, TableCellPropsO, TableCellClasses, withStylesCell
+  , tableHead, TableHeadProps, TableHeadPropsO, TableHeadClasses
+  , tableRow, TableRowProps, TableRowPropsO, TableRowClasses
+  , tableFooter, TableFooterProps, TableFooterPropsO, TableFooterClasses
+  , tablePagination, TablePaginationProps, TablePaginationPropsO, TablePaginationClasses
+  , tableSortLabel, TableSortLabelProps, TableSortLabelPropsO, TableSortLabelClasses
   , Padding, checkbox, dense, none
   , Direction, asc, desc
   ) where
@@ -40,11 +40,6 @@ type TableClasses =
   ( root :: Styles
   )
 
-createClasses :: forall classes
-               . SubRow classes TableClasses
-              => { | classes } -> Classes
-createClasses = unsafeCoerce
-
 
 table :: forall o componentProps
          . SubRow o (TablePropsO componentProps)
@@ -70,11 +65,6 @@ type TableBodyPropsO componentProps =
 type TableBodyClasses =
   ( root :: Styles
   )
-
-createClassesBody :: forall classes
-               . SubRow classes TableBodyClasses
-              => { | classes } -> Classes
-createClassesBody = unsafeCoerce
 
 
 tableBody :: forall o componentProps
@@ -139,11 +129,6 @@ type TableCellClassesCompiled =
   , footer :: String
   )
 
-createClassesCell :: forall classes
-               . SubRow classes TableCellClassesCompiled
-              => { | classes } -> Classes
-createClassesCell = unsafeCoerce
-
 
 tableCell :: forall eff o componentProps
          . SubRow o (TableCellPropsO eff componentProps)
@@ -183,11 +168,6 @@ type TableHeadClasses =
   ( root :: Styles
   )
 
-createClassesHead :: forall classes
-               . SubRow classes TableHeadClasses
-              => { | classes } -> Classes
-createClassesHead = unsafeCoerce
-
 
 tableHead :: forall o componentProps
          . SubRow o (TableHeadPropsO componentProps)
@@ -221,11 +201,6 @@ type TableRowClasses =
   , selected :: Styles
   )
 
-createClassesRow :: forall classes
-               . SubRow classes TableRowClasses
-              => { | classes } -> Classes
-createClassesRow = unsafeCoerce
-
 
 tableRow :: forall o componentProps eff
          . SubRow o (TableRowPropsO eff componentProps)
@@ -251,11 +226,6 @@ type TableFooterPropsO componentProps =
 type TableFooterClasses =
   ( root :: Styles
   )
-
-createClassesFooter :: forall classes
-               . SubRow classes TableFooterClasses
-              => { | classes } -> Classes
-createClassesFooter = unsafeCoerce
 
 
 tableFooter :: forall o componentProps
@@ -290,11 +260,6 @@ type TablePaginationPropsO componentProps =
 type TablePaginationClasses =
   ( root :: Styles
   )
-
-createClassesPagination :: forall classes
-               . SubRow classes TablePaginationClasses
-              => { | classes } -> Classes
-createClassesPagination = unsafeCoerce
 
 
 tablePagination :: forall eff o componentProps
@@ -335,11 +300,6 @@ type TableSortLabelClasses =
   , desc :: Styles
   , asc :: Styles
   )
-
-createClassesSortLabel :: forall classes
-               . SubRow classes TableSortLabelClasses
-              => { | classes } -> Classes
-createClassesSortLabel = unsafeCoerce
 
 
 tableSortLabel :: forall o componentProps
